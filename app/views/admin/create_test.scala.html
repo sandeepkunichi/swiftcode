@@ -1,0 +1,55 @@
+@(testForm: Form[models.test.Test])
+<html lang="en">
+    <head>
+        @shared.header()
+        <script src="/javascripts/angular/app.js" type="text/javascript"> </script>
+    </head>
+    <body data-ng-app="swiftCodeApp">
+        <div id="wrap">
+            <div id="main">
+                <div class="container-fluid" ng-controller="testController">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3 white-panel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6 col-md-offset-3 center">
+                                            <h3><b> TEST </b></h3>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <form method="POST" ng-submit="createTest()" >
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-6">
+                                                    Title: <input type="text" ng-model="test.title" />
+                                                    <input type="button" class="btn btn-info" ng-click="addNewQuestion()" value="ADD QUESTION">
+                                                    <fieldset data-ng-repeat="testQuestion in test.testQuestions track by $index">
+                                                        <textarea ng-model="testQuestion.question"></textarea>
+                                                        <input type="button" class="btn btn-info" ng-click="removeQuestion($index)" value="REMOVE QUESTION">
+                                                        <input type="button" class="btn btn-info" ng-click="addNewAnswer(testQuestion)" value="ADD ANSWER">
+                                                        <fieldset data-ng-repeat="testAnswer in testQuestion.testAnswers track by $index">
+                                                            <textarea ng-model="testAnswer.answer"></textarea>
+                                                            <input type="button" class="btn btn-info" ng-click="removeAnswer(testQuestion, $index)" value="REMOVE ANSWER">
+                                                        </fieldset>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-md-6 col-md-offset-3 center">
+                                                <button type="submit" class="btn btn-primary margin-top-20"> CREATE </button>
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

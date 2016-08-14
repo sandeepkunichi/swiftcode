@@ -24,4 +24,8 @@ public class TestAnswer extends Model {
     @Constraints.Required
     public Boolean isCorrect;
 
+    public Boolean selected;
+
+    public static Finder<Long, TestAnswer> find = new Finder<Long, TestAnswer>(TestAnswer.class);
+
 }

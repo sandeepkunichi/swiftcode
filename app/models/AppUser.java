@@ -29,4 +29,7 @@ public class AppUser extends Model{
         this.email = email;
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
+
+    public static Model.Finder<Long, AppUser> find = new Model.Finder<Long, AppUser>(AppUser.class);
+
 }

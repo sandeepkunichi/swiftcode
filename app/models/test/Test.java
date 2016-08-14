@@ -18,17 +18,13 @@ public class Test extends Model {
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long id;
 
-    public Date startTime;
-
-    public Date endTime;
-
-    public Long score;
+    @Constraints.Required
+    public String title;
 
     @Constraints.Required
     @OneToMany(cascade = CascadeType.ALL)
     public List<TestQuestion> testQuestions;
 
-    @ManyToOne
-    public AppUser testTaker;
+    public static Finder<Long, Test> find = new Finder<Long, Test>(Test.class);
 
 }

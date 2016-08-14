@@ -1,0 +1,58 @@
+@(testSession: models.test.TestSession)
+<html lang="en">
+    <head>
+        @shared.header()
+    </head>
+    <body>
+        <div id="wrap">
+            <div id="main">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3 white-panel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6 col-md-offset-3 center">
+                                            <h3><b> TEST </b></h3>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <form method="POST" action="/test/submit" >
+                                        <input type="hidden" name="testTaker.id" value="@testSession.testTaker.id" />
+                                        <input type="hidden" name="id" value="@testSession.id" />
+                                        <input type="hidden" name="test.id" value="@testSession.test.id" />
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-6">
+                                                    @for((x,i) <- testSession.test.testQuestions.view.zipWithIndex){
+                                                        <p>@x.question</p>
+                                                        <ul>
+                                                            @for((y,j) <- x.testAnswers.view.zipWithIndex){
+                                                                <p>@y.answer</p>
+                                                                <li>
+                                                                    <input type="radio" name="test.testQuestions[@i].testAnswers[@j].selected" value="1"/>
+                                                                    <input type="hidden" name="test.testQuestions[@i].testAnswers[@j].id" value="@testSession.test.testQuestions(i).testAnswers(j).id" />
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-md-6 col-md-offset-3 center">
+                                                <button type="submit" class="btn btn-primary margin-top-20"> SUBMIT </button>
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

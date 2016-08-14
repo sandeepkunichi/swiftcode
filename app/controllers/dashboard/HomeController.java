@@ -1,13 +1,24 @@
 package controllers.dashboard;
 
+import models.test.TestSession;
 import play.mvc.*;
+import services.SessionService;
 
-import views.html.*;
+import javax.inject.Inject;
+import java.io.IOException;
 
 public class HomeController extends Controller {
 
-    public Result index() {
-        return ok(index.render("Your new application is ready."));
+    @Inject
+    SessionService sessionService;
+
+    public Result index() throws IOException {
+        return ok(
+            views.html.dashboard.index.render(TestSession.find.where().eq(
+                "test_taker_id",
+                sessionService.getSessionUser().id
+            ).findList())
+        );
     }
 
 }

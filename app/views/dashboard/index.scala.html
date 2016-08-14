@@ -1,0 +1,5 @@
+@(testSessions: List[models.test.TestSession])
+@for(testSession <- testSessions){
+    <p>Test Title: @testSession.test.title</p>
+    <p>Test Score: @testSession.score</p>
+}

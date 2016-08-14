@@ -1,0 +1,23 @@
+@(errors: com.fasterxml.jackson.databind.JsonNode)
+@shared.header()
+<div class="panel-white">
+    <form method="POST" action="/login">
+        <div class="login-table">
+            <h3 class="center margin-bottom-20"> LOGIN </h3>
+            <input name="email" type="email" required class="form-input margin-bottom-20" placeholder="Email">
+            <input name="password" type="password" required class="form-input margin-bottom-20" placeholder="Password">
+            <div class="row margin-bottom-10">
+                <div class="col-md-6 pull-right">
+                    <p> <a href="#" class="underline pull-right"> Forgot password? </a> </p>
+                </div>
+            </div>
+            <div class="center">
+                @if(errors != null && errors.get("message") != null){
+                    <p class="validation-msg">@errors.get("message").get(0).asText()</p>
+                }
+                <button type="submit" class="btn btn-primary"> LOGIN </button>
+                <hr class="gray-line" />
+            </div>
+        </div>
+    </form>
+</div>
