@@ -6,7 +6,6 @@ import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
-import services.AppUserService;
 import services.SessionService;
 
 import javax.inject.Inject;
@@ -39,4 +38,5 @@ public class SignupController extends Controller{
         }
         return redirect("/dashboard");
     }
+
 }

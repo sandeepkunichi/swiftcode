@@ -1,11 +1,9 @@
 package models.test;
 
 import com.avaje.ebean.Model;
-import models.AppUser;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 /**

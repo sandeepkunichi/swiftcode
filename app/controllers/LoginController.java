@@ -1,7 +1,6 @@
 package controllers;
 
 import forms.LoginForm;
-import models.AppUser;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;

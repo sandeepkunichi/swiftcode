@@ -1,6 +1,5 @@
 package controllers.test;
 
-import models.AppUser;
 import models.test.Test;
 import models.test.TestAnswer;
 import models.test.TestSession;
@@ -51,4 +50,5 @@ public class TestSessionController extends Controller {
         TestSession.db().update(testSession);
         return redirect("/dashboard");
     }
+
 }
