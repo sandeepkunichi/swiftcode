@@ -21,7 +21,11 @@ public class Comment extends Model {
     public Post post;
 
     @Constraints.Required
+    public String text;
+
+    @Constraints.Required
     @ManyToOne
     public AppUser commentRaiser;
 
+    public static Finder<Long, Comment> find = new Finder<Long, Comment>(Comment.class);
 }

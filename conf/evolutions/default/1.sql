@@ -15,12 +15,14 @@ create table app_user (
 create table comment (
   id                        bigint auto_increment not null,
   post_id                   bigint,
+  text                      varchar(255),
   comment_raiser_id         bigint,
   constraint pk_comment primary key (id))
 ;
 
 create table post (
   id                        bigint auto_increment not null,
+  text                      varchar(255),
   constraint pk_post primary key (id))
 ;
 

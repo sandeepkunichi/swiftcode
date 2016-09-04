@@ -1,5 +1,33 @@
 @(testSessions: List[models.test.TestSession], tests: List[models.test.Test], user: models.AppUser)
 @shared.header()
+<script type="text/javascript" charset="utf-8">
+/*
+    if (!!window.EventSource) {
+        var postSource = new EventSource("/posts");
+            postSource.addEventListener('message', function(e) {
+            appendPost(JSON.parse(e.data));
+        });
+    } else {
+        alert("Sorry. This browser doesn't seem to support our test. Check http://html5test.com/compare/feature/communication-eventSource.html for browser compatibility.");
+    }
+
+    function createPost(){
+        $.ajax({
+            type:"POST",
+            url:"/post",
+            data:$("#post-form").serialize(),
+            success:function(a){}
+        });
+    }
+
+    function appendPost(posts){
+        var json = JSON.parse(posts);
+        jQuery.each(json, function(i, val) {
+            //$("#post-list").append("<div class='row'><div class='col-md-1'><li style='color:white'>" + json[i]["text"] + "</li></div></div>");
+        });
+    }
+*/
+</script>
 <div class="patient-dashboard">
     <div class="container-fluid">
         <div class="row dashboard">
@@ -17,6 +45,7 @@
         <div class="row dashboardbody">
             <br /><br />
             <div class="col-md-2 dashboard-first-half">
+                <ul id="post-list"></ul>
             </div><!-- /. dashboard-first-half -->
             <div class="col-md-10 tab-content main-tab-content">
                 <br/>
@@ -24,6 +53,18 @@
                     <div class="body">
                         <div class="tab-content">
                             <p>@user.email</p>
+                            <div class="row">
+                                <form id="post-form">
+                                    <div class="col-sm-12">
+                                        <input type="text" required class="form-control test-input" name="text" />
+                                    </div>
+                                    <!--
+                                    <div class="col-sm-1">
+                                        <input type="button" onclick="createPost();" class="btn btn-default pull-right" value="POST" />
+                                    </div>
+                                    -->
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -37,69 +78,55 @@
                             <li role="presentation">
                                 <a aria-controls="profile" data-target="#contact" data-toggle="tab" role="tab" style="cursor:default">Tests Available</a>
                             </li>
-                            @if(user.role.toString == "ADMIN"){
-                                <li role="presentation">
-                                    <a aria-controls="home" data-target="#tests" data-toggle="tab" role="tab" style="cursor:default">All Tests</a>
-                                </li>
-                                <li role="presentation">
-                                    <a aria-controls="profile" data-target="#createtest" data-toggle="tab" role="tab" style="cursor:default">Create Test</a>
-                                </li>
-                                <li role="presentation">
-                                    <a aria-controls="home" data-target="#users" data-toggle="tab" role="tab" style="cursor:default">All Users</a>
-                                </li>
-                                <li role="presentation">
-                                    <a aria-controls="profile" data-target="#createuser" data-toggle="tab" role="tab" style="cursor:default">Create User</a>
-                                </li>
-                            }
                         </ul><!-- Tab panes -->
                         <div class="tab-content">
                             <div class="tab-pane active" id="personal" role="tabpanel">
                                 @if(testSessions.length == 0){
-                                    <p>No tests taken yet</p>
+                                <p>No tests taken yet</p>
                                 }else{
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <h3>Title</h3>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <h3 class="pull-right">Score</h3>
-                                        </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h3>Title</h3>
                                     </div>
+                                    <div class="col-sm-6">
+                                        <h3 class="pull-right">Score</h3>
+                                    </div>
+                                </div>
                                 }
                                 @for(testSession <- testSessions){
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <p>@testSession.test.title</p>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <p class="pull-right">@testSession.score</p>
-                                        </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p>@testSession.test.title</p>
                                     </div>
+                                    <div class="col-sm-6">
+                                        <p class="pull-right">@testSession.score</p>
+                                    </div>
+                                </div>
                                 }
                             </div><!-- /.personal -->
                             <div class="tab-pane" id="contact" role="tabpanel">
                                 @if(tests.length == 0){
-                                    <p>No tests are available</p>
+                                <p>No tests are available</p>
                                 }else{
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <h3>Title</h3>
-                                        </div>
-                                        <div class="col-sm-6">
-                                        </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h3>Title</h3>
                                     </div>
+                                    <div class="col-sm-6">
+                                    </div>
+                                </div>
                                 }
                                 <br/>
                                 @for(test <- tests){
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            @test.title
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <a class="pull-right" href="/test/start/@test.id">Start</a>
-                                        </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        @test.title
                                     </div>
-                                    <br/>
+                                    <div class="col-sm-6">
+                                        <a class="pull-right" href="/test/start/@test.id">Start</a>
+                                    </div>
+                                </div>
+                                <br/>
                                 }
                             </div><!-- /.contact -->
                         </div><!-- /.tab-content -->
