@@ -1,4 +1,4 @@
-@(tests: List[models.test.Test], user: models.AppUser, users: List[models.AppUser])
+@(tests: List[models.test.Test], user: models.AppUser, users: List[models.AppUser], testSessions: List[models.test.TestSession])
 @shared.header()
 <div class="patient-dashboard">
     <div class="container-fluid">
@@ -40,6 +40,9 @@
                                 </li>
                                 <li role="presentation">
                                     <a aria-controls="home" data-target="#users" data-toggle="tab" role="tab" style="cursor:default">All Users</a>
+                                </li>
+                                <li role="presentation">
+                                    <a aria-controls="home" data-target="#results" data-toggle="tab" role="tab" style="cursor:default">Results</a>
                                 </li>
                             }else{
                                 <script>window.location = "/logout"</script>
@@ -85,6 +88,52 @@
                                     </div>
                                 }
                             </div><!-- /.users -->
+                            <div class="tab-pane" id="results" role="tabpanel">
+                                @if(testSessions.length == 0){
+                                <p>No test sessions taken</p>
+                                }else{
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <h3>Test Title</h3>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <h3>Start</h3>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <h3>End</h3>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <h3>Score</h3>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <h3>Email</h3>
+                                    </div>
+                                    <div class="col-sm-2">
+                                    </div>
+                                </div>
+                                }
+                                @for(testSession <- testSessions){
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <p>@testSession.test.title</p>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <p>@testSession.startTime</p>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <p>@testSession.endTime</p>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <p>@testSession.score</p>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <p>@testSession.testTaker.email</p>
+                                    </div>
+                                    <div class="col-sm-2">
+                                    </div>
+                                </div>
+                                }
+                            </div><!-- /.results -->
                         </div><!-- /.tab-content -->
                         <br>
                     </div><!-- /.body -->
