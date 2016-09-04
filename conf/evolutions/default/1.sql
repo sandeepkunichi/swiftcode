@@ -7,6 +7,8 @@ create table app_user (
   id                        bigint auto_increment not null,
   email                     varchar(255),
   password                  varchar(255),
+  role                      varchar(5),
+  constraint ck_app_user_role check (role in ('ADMIN','USER')),
   constraint pk_app_user primary key (id))
 ;
 
@@ -32,8 +34,7 @@ create table test_answer (
   id                        bigint auto_increment not null,
   answer                    varchar(255),
   test_question_id          bigint,
-  is_correct                tinyint(1) default 0,
-  selected                  tinyint(1) default 0,
+  is_correct                CHAR(1) DEFAULT '0',
   constraint pk_test_answer primary key (id))
 ;
 

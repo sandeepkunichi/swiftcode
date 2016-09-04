@@ -30,6 +30,7 @@
                                                         <input type="button" class="btn btn-info" ng-click="addNewAnswer(testQuestion)" value="ADD ANSWER">
                                                         <fieldset data-ng-repeat="testAnswer in testQuestion.testAnswers track by $index">
                                                             <textarea ng-model="testAnswer.answer"></textarea>
+                                                            <input type="checkbox" ng-model="testAnswer.isCorrect" ng-init="testAnswer.isCorrect = '0'"/>
                                                             <input type="button" class="btn btn-info" ng-click="removeAnswer(testQuestion, $index)" value="REMOVE ANSWER">
                                                         </fieldset>
                                                     </fieldset>

@@ -6,6 +6,27 @@
     <body>
         <div id="wrap">
             <div id="main">
+                <h1 id="clock"></h1>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+                <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+                <script type="text/javascript" charset="utf-8">
+                   if (!!window.EventSource) {
+                     var stringSource = new EventSource("/test/liveClock/@testSession.id");
+                     stringSource.addEventListener('message', function(e) {
+                        $("#clock").html(secondsToHms(e.data));
+                     });
+                   } else {
+                     $("#clock").html("Sorry. This browser doesn't seem to support Server sent event. Check <a href='http://html5test.com/compare/feature/communication-eventSource.html'>html5test</a> for browser compatibility.");
+                   }
+
+                   function secondsToHms(d) {
+                        d = Number(d);
+                        var h = Math.floor(d / 3600);
+                        var m = Math.floor(d % 3600 / 60);
+                        var s = Math.floor(d % 3600 % 60);
+                        return ((h > 0 ? h + ":" + (m < 10 ? "0" : "") : "") + m + ":" + (s < 10 ? "0" : "") + s);
+                    }
+                </script>
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6 col-md-offset-3 white-panel">

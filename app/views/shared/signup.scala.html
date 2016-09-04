@@ -1,18 +1,38 @@
 @(errors: com.fasterxml.jackson.databind.JsonNode)
 @shared.header()
-<div class="panel-white">
-    <form method="POST" action="/signup">
-        <div class="login-table">
-            <h3 class="center margin-bottom-20"> SIGNUP </h3>
-            <input name="email" type="email" required class="form-input margin-bottom-20" placeholder="Email">
-            @if(errors != null && errors.get("message") != null){
-                <p class="validation-msg">@errors.get("message").get(0).asText()</p>
-            }
-            <input name="password" type="password" required class="form-input margin-bottom-20" placeholder="Password">
-            <div class="center">
-                <button type="submit" class="btn btn-primary"> SIGNUP </button>
-                <hr class="gray-line" />
-            </div>
-        </div>
-    </form>
+<div class="signup-main outer">
+    <div class="middle">
+        <div class="inner">
+            <div class="container-fluid">
+                <h2 class="center up white-font"> Come, walk on the path to your success. </h2>
+                <br />
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4" />
+                    <div class="signup-tab">
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="talent">
+                                <form method="POST" action="/signup">
+                                    <input class="input-signup" name="email" type="text" placeholder="Email" />
+                                    <br />
+                                    <input class="input-signup" name="password" type="password" placeholder="Password" />
+                                    <br />
+                                    <button type="submit" class="form-control btn"> GET STARTED </button>
+                                    @if(errors != null && errors.get("message") != null){
+                                        <p class="validation">@errors.get("message").get(0).asText()</p>
+                                    }
+                                    <br />
+                                    <br />
+                                    <center><a href="/login">Click here if you are a SwiftCoder</a></center>
+                                </form>
+                            </div>
+                        </div> <!-- end tab-content -->
+                    </div> <!-- end signup-tab -->
+                </div> <!-- end col-md-offset-4 -->
+            </div> <!-- end row -->
+        </div> <!-- end container-fluid -->
+    </div>
 </div>
+</div>
+@shared.footer()

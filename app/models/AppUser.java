@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.avaje.ebean.annotation.EnumValue;
 import org.mindrot.jbcrypt.BCrypt;
 import play.data.validation.Constraints;
 
@@ -25,11 +26,21 @@ public class AppUser extends Model{
     @Constraints.Required
     public String password;
 
+    public Role role;
+
     public AppUser(String email, String password){
         this.email = email;
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+        this.role = Role.USER;
     }
 
     public static Model.Finder<Long, AppUser> find = new Model.Finder<Long, AppUser>(AppUser.class);
+
+    public enum Role {
+        @EnumValue("ADMIN")
+        ADMIN,
+        @EnumValue("USER")
+        USER
+    }
 
 }

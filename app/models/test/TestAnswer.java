@@ -22,8 +22,10 @@ public class TestAnswer extends Model {
     public TestQuestion testQuestion;
 
     @Constraints.Required
+    @Column(columnDefinition = "CHAR(1) DEFAULT '0'")
     public Boolean isCorrect;
 
+    @Transient
     public Boolean selected;
 
     public static Finder<Long, TestAnswer> find = new Finder<Long, TestAnswer>(TestAnswer.class);

@@ -2,6 +2,7 @@ package services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.AppUser;
+import models.test.TestSession;
 import play.mvc.Http;
 
 import javax.inject.Inject;
@@ -33,4 +34,5 @@ public class SessionService {
     public void destroySession(){
         Http.Context.current().session().clear();
     }
+
 }

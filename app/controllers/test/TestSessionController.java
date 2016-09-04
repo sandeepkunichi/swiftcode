@@ -1,5 +1,6 @@
 package controllers.test;
 
+import models.AppUser;
 import models.test.Test;
 import models.test.TestAnswer;
 import models.test.TestSession;
@@ -7,6 +8,7 @@ import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
+import services.AppUserService;
 import services.SessionService;
 
 import javax.inject.Inject;
@@ -24,11 +26,19 @@ public class TestSessionController extends Controller {
     @Inject
     SessionService sessionService;
 
+    @Inject
+    AppUserService appUserService;
+
     public Result startTest(Long testId) throws IOException {
+        if(Test.find.byId(testId) == null)
+            return redirect("/dashboard");
+        AppUser loggedInUser = sessionService.getSessionUser();
+        if(appUserService.hasTakenTest(loggedInUser.id, testId))
+            return redirect("/dashboard");
         TestSession testSession = new TestSession();
         testSession.startTime = new Date();
         testSession.test = Test.find.byId(testId);
-        testSession.testTaker = sessionService.getSessionUser();
+        testSession.testTaker = loggedInUser;
         TestSession.db().insert(testSession);
         return ok(views.html.test.test_session.render(testSession));
     }
@@ -41,7 +51,7 @@ public class TestSessionController extends Controller {
         testSession.test.testQuestions.forEach(
                 testQuestion -> testQuestion.testAnswers.forEach(
                         testAnswer -> {
-                            if(testAnswer.selected != null & TestAnswer.find.byId(testAnswer.id).isCorrect && testAnswer.selected){
+                            if(testAnswer.selected != null && TestAnswer.find.byId(testAnswer.id).isCorrect && testAnswer.selected){
                                 testSession.score++;
                             }
                         }

@@ -1,0 +1,402 @@
+/* ---------------------------------------------------------
+Vertical align all content to page center
+------------------------------------------------------------ */
+/* ---------------------------------------------------------
+SIGNUP
+------------------------------------------------------------ */
+.signup-main {
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-image: url('/images/bg1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.inner {
+    margin-left: auto;
+    margin-right: auto;
+}
+.up {
+	margin-top: -40px;
+}
+.input-signup {
+	width: 100%;
+	padding: 10px 10px;
+	margin-top: 20px;
+	border-right: 0px;
+	border-left: 0px;
+	border-top: 0px;
+    border-bottom: 2px solid #AAA;
+    box-shadow: none;
+    font-size: 16px;
+    color: #f6f6f6;
+    background: transparent;
+}
+.input-signup:focus {
+    border-bottom: 2px solid #2D4961;
+}
+.full-width {
+	width: 100%;
+}
+.signup-tab .btn {
+	margin-top: 40px;
+	font-size: 16px;
+	border-radius: 0px;
+	background: rgba(255, 255, 255, 0.5);
+	color: #000;
+}
+.signup-tab .nav li {
+	width: 50%;
+	text-align: center;
+}
+.signup-tab .nav {
+	border: 0px;
+}
+.signup-tab .nav li a, .signup-tab .nav li a:hover {
+	border-radius: 0px;
+	border: 0px;
+	padding-top: 15px;
+	cursor: pointer;
+	color: #FFF;
+	background: transparent;
+}
+.signup-tab .nav .active a, .signup-tab .nav li a:hover {
+	background: rgba(40, 96, 144, 0.5);
+}
+.signup-tab .nav li:first-child a {
+	border-left: 0px;
+}
+.signup-tab .nav li:last-child a {
+	border-right: 0px;
+	margin-right: 0px;
+}
+.signup-tab {
+	background: rgba(0,0,0,0.8);
+}
+.signup-tab form {
+	padding: 10px 40px 25px 40px;
+}
+.signup-tab .validation {
+ 	margin-top: 20px;
+ 	color: #CCC;
+ 	text-align: center;
+}
+
+.login-main {
+	display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-image: url('/images/bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+/* enable absolute positioning */
+.inner-addon {
+    position: relative;
+}
+
+/* style icon */
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  top: 23px;
+  color: #CCC;
+  pointer-events: none;
+}
+
+/* align icon */
+.left-addon .glyphicon  { left:  0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+
+/* ---------------------------------------------------------
+LOGIN
+------------------------------------------------------------ */
+
+.login-tab .btn {
+	margin-top: 20px;
+	font-size: 16px;
+	border-radius: 0px;
+	background: rgba(255, 255, 255, 0.5);
+	color: #000;
+}
+.login-tab {
+	background: rgba(0,0,0,0.8);
+	padding: 10px 50px 25px 50px;
+}
+.login-tab .validation {
+ 	margin-top: 20px;
+ 	color: #CCC;
+ 	text-align: center;
+}
+
+/* ---------------------------------------------------------
+MISC
+------------------------------------------------------------ */
+
+* {
+	font-family: 'Muli', sans-serif;
+}
+*:focus {
+	outline: none;
+}
+footer {
+	position: absolute;
+	padding: 10px 50px 5px 50px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	background: rgba(0,0,0,0.5);
+	color: #ccc;
+}
+footer a {
+	color: #f6f6f6;
+	text-decoration: underline;
+}
+footer a:hover {
+	color: #CCC;
+	text-decoration: underline;
+}
+.blue-font {
+	color: #1784BD;
+}
+.center {
+	text-align: center;
+}
+.white-font {
+	color: #f6f6f6;
+}
+
+/* ---------------------------------------------------------
+DASHBOARD
+------------------------------------------------------------ */
+.dashboardbody  {
+	position: absolute;
+	min-height: 95%;
+	width: 100%;
+}
+.dashboardbody {
+	display: flex;
+}
+.header-first-half, .header-second-half {
+	padding: 0px;
+}
+.dashboard-first-half {
+	background: #222D32;
+	padding: 0px;
+}
+.dashboard-second-half {
+	padding: 0px;
+	background: #F2F2F3;
+}
+.dashboard header {
+	height: 50px;
+}
+.header-first-half header {
+	background: #E3E6E8;
+	width: 100%;
+}
+.header-second-half header {
+	background: #3C8DBC;
+	width: 100%;
+}
+.margin-top-5 {
+	margin-top: 5px;
+}
+.logoutbtn {
+	margin-top: 10px;
+	margin-right: 10px;
+	box-shadow: 1px 1px 1px 1px #666;
+}
+.user-panel {
+	margin-top: 10px;
+	color: #84BDCE;
+	line-height: 75%;
+}
+.contact-panel {
+	padding: 0px 20px;
+	line-height: 100%;
+	color: #84BDCE;
+}
+.white {
+	color: #fff;
+}
+.red {
+	color: #ff0000;
+}
+.user-panel-nav li a {
+	color: #CCC;
+}
+.user-panel-nav .active a, .user-panel-nav a:hover {
+	color: orange !important;
+	text-decoration: none !important;
+}
+.user-panel-nav, .contact-panel {
+	border-top: 1px dashed #666;
+}
+.dashboard-second-half .body {
+	padding: 0px 20px;
+}
+.dashboard-second-half .nav, .dashboard-second-half .tab-content {
+	background: #fff;
+	box-shadow: 1px 1px 1px 1px #CCC;
+}
+.dashboard-second-half .nav li:first-child a{
+	border-left: 0px !important;
+}
+.dashboard-second-half .nav .active a {
+	border-radius: 0px;
+}
+.dashboard-second-half .nav .active a {
+	border-top: 2px solid #367FA9 !important;
+}
+.dashboard-second-half .nav a {
+	border-top: 2px solid transparent !important;
+}
+.dashboard-second-half .nav a:hover {
+	border-radius: 0px;
+	border-top: 2px solid #367FA9 !important;
+	background: #fff !important;
+}
+.dashboard-second-half .tab-content {
+	padding: 10px 15px;
+	font-size: 16px;
+}
+.dashboard-second-half .leftdetail {
+	color: #888;
+}
+.input-rounded {
+	border-radius: 5px;
+	padding: 5px 10px;
+	border: 1px solid #CCC;
+	width: 60%;
+}
+.dashboard-second-half .tab-content p {
+	margin: 20px 0px;
+}
+.border-right {
+	border-right: 1px solid #CCC;
+}
+.heading {
+	margin-top: 15px;
+}
+.panel-white {
+	background: #fff;
+	box-shadow: 1px 1px 1px 1px #CCC;
+	padding: 15px 15px 10px 15px;
+	font-size: 16px;
+}
+.border-blue {
+	border-top: 2px solid #367FA9;
+}
+.border-green {
+	border-top: 2px solid #6cb444;
+}
+.border-orange {
+	border-top: 2px solid #ffa500;
+}
+.border-red {
+	border-top: 2px solid #AE0202;
+}
+.border-purple {
+	border-top: 2px solid #7E0B80;
+}
+.border-pink {
+	border-top: 2px solid #FF1494;
+}
+.margin-neg6 {
+	margin-top: -6px;
+}
+.main-nav, .main-nav li, .main-nav li a, .main-nav .active, .main-nav .active a {
+	background: none !important;
+	border: 0px !important;
+	padding: 0px 0px 0px 10px;
+	margin: 0px;
+}
+.main-tab-content {
+	padding: 0px !important;
+	margin: 0px !important;
+	background: #F2F2F3;
+}
+#vitalstab {
+	padding: 0px 20px;
+}
+
+/* ----------------------------------------------------------
+ADMIN DASBOARD
+------------------------------------------------------------- */
+.admin-dashboard .main-nav li {
+	margin-top: 20px;
+	font-size: 16px;
+}
+.admin-dashboard .user-panel-nav {
+	border-top: 0px;
+}
+.admin-dashboard .tab-pane p {
+	margin: 20px 0px;
+	font-size: 16px;
+}
+.admin-dashboard .tab-pane .panel-white {
+	margin: 0px 0px;
+}
+#viewpatients p, #viewproviders p {
+	margin: 10px 0px;
+}
+.provider-dashboard .panel-white p {
+	font-size: 16px;
+	margin: 20px 0px;
+}
+.provider-dashboard .main-tab-content .body {
+	margin: 0px 20px;
+}
+.provider-dashboard .panel-white {
+	margin: 0px 0px;
+}
+.img-rounded {
+	border-radius: 8px;
+	border: 2px solid #CCC;
+	margin-top: 10px;
+}
+.average {
+	text-align: center;
+	margin: 10px auto;
+	padding-top: 5px;
+	font-size: 20px;
+	width: 170px;
+	font-weight: bold;
+	padding-bottom: 5px;
+}
+.orange {
+	color: #ffa500;
+}
+.green {
+	color: #6cb444;
+}
+.pink {
+	color: #FF1494;
+}
+.dashboardbody .inner-addon .glyphicon {
+  position: absolute;
+  padding: 6px 10px;
+  pointer-events: none;
+}
+input[type="search"] {
+	width: 100%;
+}
+.warning td {
+	background: #FCD68A !important;
+	color: #fff;
+}
+.danger td {
+	background: #FFA07A !important;
+	color: #fff;
+}
