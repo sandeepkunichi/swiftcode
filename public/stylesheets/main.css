@@ -400,3 +400,8 @@ input[type="search"] {
 	background: #FFA07A !important;
 	color: #fff;
 }
+
+.test-input {
+    width: 100%;
+    resize:vertical;
+}

@@ -30,10 +30,10 @@ app.controller('testController', function($scope, $http) {
             data: $scope.test
         });
         request.success(function(data) {
-            console.log("success" + data);
+            location.reload();
         });
         request.error(function(data) {
-            console.log("Error" + data);
+            alert("Something went wrong while creating the test");
         });
     }
 

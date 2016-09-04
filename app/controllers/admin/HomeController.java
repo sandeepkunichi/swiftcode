@@ -1,12 +1,15 @@
 package controllers.admin;
 
+import models.AppUser;
 import models.test.Test;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
+import services.SessionService;
 
 import javax.inject.Inject;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -17,13 +20,13 @@ public class HomeController extends Controller {
     @Inject
     FormFactory formFactory;
 
-    public Result index(){
-        List<Test> tests = Test.find.all();
-        return ok(views.html.admin.index.render(tests));
-    }
+    @Inject
+    SessionService sessionService;
 
-    public Result loadCreateTest(){
-        return ok(views.html.admin.create_test.render(formFactory.form(Test.class)));
+    public Result index() throws IOException {
+        List<Test> tests = Test.find.all();
+        List<AppUser> users = AppUser.find.all();
+        return ok(views.html.admin.index.render(tests, sessionService.getSessionUser(), users));
     }
 
     public Result createTest(){

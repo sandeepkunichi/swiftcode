@@ -15,21 +15,19 @@
             </div><!-- /. dashboard-second-half -->
         </div>
         <div class="row dashboardbody">
+            <br /><br />
             <div class="col-md-2 dashboard-first-half">
-                <div class="body">
-                    <div class="contact-panel">
-                        <br />
-                        <p>@user.email</p>
-                        @if(user.role.toString == "ADMIN"){
-                            <p>ADMINISTRATION</p>
-                            <br /><br />
-                            <a href="/test/create" target="_blank">Create Test</a>
-                        }
-                    </div>
-                </div>
-                <br /><br />
             </div><!-- /. dashboard-first-half -->
             <div class="col-md-10 tab-content main-tab-content">
+                <br/>
+                <div class="dashboard-second-half tab-pane active" role="tabpanel">
+                    <div class="body">
+                        <div class="tab-content">
+                            <p>@user.email</p>
+                        </div>
+                    </div>
+                </div>
+                <br/>
                 <div class="dashboard-second-half tab-pane active" role="tabpanel" id="hometab">
                     <div class="body">
                         <ul class="nav nav-tabs" role="tablist">
@@ -39,6 +37,20 @@
                             <li role="presentation">
                                 <a aria-controls="profile" data-target="#contact" data-toggle="tab" role="tab" style="cursor:default">Tests Available</a>
                             </li>
+                            @if(user.role.toString == "ADMIN"){
+                                <li role="presentation">
+                                    <a aria-controls="home" data-target="#tests" data-toggle="tab" role="tab" style="cursor:default">All Tests</a>
+                                </li>
+                                <li role="presentation">
+                                    <a aria-controls="profile" data-target="#createtest" data-toggle="tab" role="tab" style="cursor:default">Create Test</a>
+                                </li>
+                                <li role="presentation">
+                                    <a aria-controls="home" data-target="#users" data-toggle="tab" role="tab" style="cursor:default">All Users</a>
+                                </li>
+                                <li role="presentation">
+                                    <a aria-controls="profile" data-target="#createuser" data-toggle="tab" role="tab" style="cursor:default">Create User</a>
+                                </li>
+                            }
                         </ul><!-- Tab panes -->
                         <div class="tab-content">
                             <div class="tab-pane active" id="personal" role="tabpanel">
@@ -50,17 +62,17 @@
                                             <h3>Title</h3>
                                         </div>
                                         <div class="col-sm-6">
-                                            <h3>Score</h3>
+                                            <h3 class="pull-right">Score</h3>
                                         </div>
                                     </div>
                                 }
                                 @for(testSession <- testSessions){
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            @testSession.test.title
+                                            <p>@testSession.test.title</p>
                                         </div>
                                         <div class="col-sm-6">
-                                            @testSession.score
+                                            <p class="pull-right">@testSession.score</p>
                                         </div>
                                     </div>
                                 }
@@ -77,15 +89,17 @@
                                         </div>
                                     </div>
                                 }
+                                <br/>
                                 @for(test <- tests){
                                     <div class="row">
                                         <div class="col-sm-6">
                                             @test.title
                                         </div>
                                         <div class="col-sm-6">
-                                            <a href="/test/start/@test.id">Start</a>
+                                            <a class="pull-right" href="/test/start/@test.id">Start</a>
                                         </div>
                                     </div>
+                                    <br/>
                                 }
                             </div><!-- /.contact -->
                         </div><!-- /.tab-content -->

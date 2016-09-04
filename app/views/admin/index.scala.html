@@ -1,1 +1,92 @@
-@(tests: List[models.test.Test])
+@(tests: List[models.test.Test], user: models.AppUser, users: List[models.AppUser])
+@shared.header()
+<div class="patient-dashboard">
+    <div class="container-fluid">
+        <div class="row dashboard">
+            <div class="col-md-2 header-first-half">
+                <header class="center">
+                    <img class="margin-top-5" src="/images/logo.png" width="150">
+                </header>
+            </div><!-- /. dashboard-first-half -->
+            <div class="col-md-10 header-second-half">
+                <header>
+                    <button class="btn btn-default btn-sm pull-right logoutbtn" onclick="window.location = '/logout'">Logout</button>
+                </header>
+            </div><!-- /. dashboard-second-half -->
+        </div>
+        <div class="row dashboardbody">
+            <div class="col-md-2 dashboard-first-half">
+                <div class="body">
+                    <div class="contact-panel">
+                        <br />
+                        <p>@user.email</p>
+                    </div>
+                </div>
+                <br /><br />
+            </div><!-- /. dashboard-first-half -->
+            <div class="col-md-10 tab-content main-tab-content">
+                <div class="dashboard-second-half tab-pane active" role="tabpanel" id="hometab">
+                    <div class="body">
+                        <ul class="nav nav-tabs" role="tablist">
+                            @if(user.role.toString == "ADMIN"){
+                                <li class="active" role="presentation">
+                                    <a aria-controls="home" data-target="#tests" data-toggle="tab" role="tab" style="cursor:default">All Tests</a>
+                                </li>
+                                <li role="presentation">
+                                    <a aria-controls="profile" data-target="#createtest" data-toggle="tab" role="tab" style="cursor:default">Create Test</a>
+                                </li>
+                                <li role="presentation">
+                                    <a aria-controls="home" data-target="#users" data-toggle="tab" role="tab" style="cursor:default">All Users</a>
+                                </li>
+                            }else{
+                                <script>window.location = "/logout"</script>
+                            }
+                        </ul><!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tests" role="tabpanel">
+                                @if(tests.length == 0){
+                                    <p>No tests created yet</p>
+                                }else{
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h3>Title</h3>
+                                        </div>
+                                    </div>
+                                }
+                                @for(test <- tests){
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <p>@test.title</p>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <div class="tab-pane" id="createtest" role="tabpanel">
+                                @create_test()
+                            </div>
+                            <div class="tab-pane" id="users" role="tabpanel">
+                                @if(users.length == 0){
+                                    <p>No users created yet</p>
+                                }else{
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h3>Email</h3>
+                                        </div>
+                                    </div>
+                                }
+                                @for(user <- users){
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <p>@user.email</p>
+                                        </div>
+                                    </div>
+                                }
+                            </div><!-- /.users -->
+                        </div><!-- /.tab-content -->
+                        <br>
+                    </div><!-- /.body -->
+                </div><!-- /.dashboard-second-half hometab -->
+            </div><!-- /.dashboard-second-half vitalstab -->
+        </div><!-- /.tab-content -->
+    </div>
+</div>
