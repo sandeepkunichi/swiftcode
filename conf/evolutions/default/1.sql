@@ -52,6 +52,7 @@ create table test_session (
   score                     bigint,
   test_taker_id             bigint,
   test_id                   bigint,
+  submitted                 tinyint(1) default 0,
   constraint pk_test_session primary key (id))
 ;
 

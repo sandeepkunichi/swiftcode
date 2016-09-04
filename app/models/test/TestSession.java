@@ -31,6 +31,8 @@ public class TestSession extends Model {
     @ManyToOne
     public Test test;
 
+    public Boolean submitted;
+
     public static Model.Finder<Long, TestSession> find = new Model.Finder<Long, TestSession>(TestSession.class);
 
 }

@@ -202,7 +202,7 @@ DASHBOARD
 	height: 50px;
 }
 .header-first-half header {
-	background: #E3E6E8;
+	background: #222D32;
 	width: 100%;
 }
 .header-second-half header {
@@ -404,4 +404,21 @@ input[type="search"] {
 .test-input {
     width: 100%;
     resize:vertical;
+}
+
+/* ----------------------------------------------------------
+TEST SESSION
+------------------------------------------------------------- */
+.test-body {
+    background: #F2F2F3;
+    margin:0px;
+    padding:0px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.test-container {
+    background: #F2F2F3;
+    margin:0px;
+    padding:0px;
 }

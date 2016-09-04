@@ -1,79 +1,80 @@
 @(testSession: models.test.TestSession)
 <html lang="en">
-    <head>
-        @shared.header()
-    </head>
-    <body>
-        <div id="wrap">
-            <div id="main">
-                <h1 id="clock"></h1>
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-                <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-                <script type="text/javascript" charset="utf-8">
-                   if (!!window.EventSource) {
-                     var stringSource = new EventSource("/test/liveClock/@testSession.id");
-                     stringSource.addEventListener('message', function(e) {
-                        $("#clock").html(secondsToHms(e.data));
-                     });
-                   } else {
-                     $("#clock").html("Sorry. This browser doesn't seem to support Server sent event. Check <a href='http://html5test.com/compare/feature/communication-eventSource.html'>html5test</a> for browser compatibility.");
-                   }
+<head>
+    @shared.header()
+</head>
+<body class="test-body">
+<div id="wrap">
+    <div id="main">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+        <script type="text/javascript" src="/javascripts/test.min.js" charset="utf-8"></script>
 
-                   function secondsToHms(d) {
-                        d = Number(d);
-                        var h = Math.floor(d / 3600);
-                        var m = Math.floor(d % 3600 / 60);
-                        var s = Math.floor(d % 3600 % 60);
-                        return ((h > 0 ? h + ":" + (m < 10 ? "0" : "") : "") + m + ":" + (s < 10 ? "0" : "") + s);
-                    }
-                </script>
-                <div class="container-fluid">
+        <script type="text/javascript" charset="utf-8">
+
+            if (!!window.EventSource) {
+                var stringSource = new EventSource("/test/liveClock/@testSession.id");
+                stringSource.addEventListener('message', function(e) {
+                    $("#clock").html(secondsToHms(e.data));
+                    $("#title").html("SwiftCode - " + secondsToHms(e.data));
+                });
+            } else {
+                alert("Sorry. This browser doesn't seem to support our test. Check http://html5test.com/compare/feature/communication-eventSource.html for browser compatibility.");
+            	warn = false;
+            	submit = false;
+            	window.location = "/dashboard";
+            }
+
+        </script>
+        <div class="container-fluid test-container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 white-panel">
                     <div class="row">
-                        <div class="col-md-6 col-md-offset-3 white-panel">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="row">
-                                        <div class="col-md-6 col-md-offset-3 center">
-                                            <h3><b> TEST </b></h3>
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <form method="POST" action="/test/submit" >
-                                        <input type="hidden" name="testTaker.id" value="@testSession.testTaker.id" />
-                                        <input type="hidden" name="id" value="@testSession.id" />
-                                        <input type="hidden" name="test.id" value="@testSession.test.id" />
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="col-sm-6">
-                                                    @for((x,i) <- testSession.test.testQuestions.view.zipWithIndex){
-                                                        <p>@x.question</p>
-                                                        <ul>
-                                                            @for((y,j) <- x.testAnswers.view.zipWithIndex){
-                                                                <p>@y.answer</p>
-                                                                <li>
-                                                                    <input type="radio" name="test.testQuestions[@i].testAnswers[@j].selected" value="1"/>
-                                                                    <input type="hidden" name="test.testQuestions[@i].testAnswers[@j].id" value="@testSession.test.testQuestions(i).testAnswers(j).id" />
-                                                                </li>
-                                                            }
-                                                        </ul>
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <br />
-                                        <div class="row">
-                                            <div class="col-md-6 col-md-offset-3 center">
-                                                <button type="submit" class="btn btn-primary margin-top-20"> SUBMIT </button>
-                                            </div>
-                                        </div>
-                                        <br />
-                                    </form>
+                        <div class="col-md-12">
+                            <h1 id="clock" class="pull-right"></h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3 center">
+                            <h3><b> @testSession.test.title </b></h3>
+                        </div>
+                    </div>
+                    <br />
+                    <div id="test-div">
+                    <form id="test-data" method="POST" action="/test/submit">
+                        <input type="hidden" name="testTaker.id" value="@testSession.testTaker.id" />
+                        <input type="hidden" name="id" value="@testSession.id" />
+                        <input type="hidden" name="test.id" value="@testSession.test.id" />
+                        @for((x,i) <- testSession.test.testQuestions.view.zipWithIndex){
+                        <div class="panel panel-default">
+                            <div class="panel-heading clearfix">
+                                <h3 class="panel-title pull-left">@(i+1))&nbsp;&nbsp;@x.question</h3>
+                            </div>
+                            <div class="list-group">
+                                @for((y,j) <- x.testAnswers.view.zipWithIndex){
+                                <div class="list-group-item">
+                                    <h4 class="list-group-item-text">
+                                        <input type="radio" class="test.testQuestions[@i]" name="test.testQuestions[@i].testAnswers[@j].selected" value="1" onclick="choose(@i,@j)"/>
+                                        <input type="hidden" name="test.testQuestions[@i].testAnswers[@j].id" value="@testSession.test.testQuestions(i).testAnswers(j).id" />@y.answer
+                                    </h4>
                                 </div>
+                                }
                             </div>
                         </div>
+                        }
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3 center">
+                                <button type="submit" onclick="warn=false;" id="testSubmit" class="btn btn-primary margin-top-20"> SUBMIT </button>
+                            </div>
+                        </div>
+                        <br />
+                    </form>
                     </div>
                 </div>
             </div>
         </div>
-    </body>
+    </div>
+</div>
+</body>
 </html>

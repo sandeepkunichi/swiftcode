@@ -39,6 +39,7 @@ public class TestSessionController extends Controller {
         testSession.startTime = new Date();
         testSession.test = Test.find.byId(testId);
         testSession.testTaker = loggedInUser;
+        testSession.submitted = false;
         TestSession.db().insert(testSession);
         return ok(views.html.test.test_session.render(testSession));
     }
@@ -48,6 +49,7 @@ public class TestSessionController extends Controller {
         TestSession testSession = testSessionForm.get();
         testSession.score = 0L;
         testSession.endTime = new Date();
+        testSession.submitted = true;
         testSession.test.testQuestions.forEach(
                 testQuestion -> testQuestion.testAnswers.forEach(
                         testAnswer -> {
