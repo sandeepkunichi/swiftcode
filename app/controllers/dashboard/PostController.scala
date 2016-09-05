@@ -10,7 +10,6 @@ import services.PostService
 /**
   * Created by Sandeep.K on 9/4/2016.
   */
-
 @Singleton
 class PostController extends Controller with PostService {
 

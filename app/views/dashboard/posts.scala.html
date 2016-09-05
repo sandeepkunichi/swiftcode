@@ -1,0 +1,16 @@
+@(channelId: String)
+<script type="text/javascript" charset="utf-8">
+    if (!!window.EventSource) {
+        var postSource = new EventSource("/messages/@channelId");
+        postSource.addEventListener('message', function(e) {
+            $("#message-list").html(e.data);
+        });
+    } else {
+        alert("Sorry. This browser doesn't seem to support our test. Check http://html5test.com/compare/feature/communication-eventSource.html for browser compatibility.");
+    }
+</script>
+<div id="message-list">
+    <center>
+        <img alt="Loading" height="100" width="150" src="/images/loader_img.gif" />
+    </center>
+</div>

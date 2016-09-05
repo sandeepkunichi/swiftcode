@@ -1,0 +1,15 @@
+@(posts: List[data.Message])
+@for(post <- posts){
+<div class="panel panel-default">
+    <div class="panel-heading clearfix">
+        <h3 class="panel-title pull-left">@post.getUser</h3>
+    </div>
+    <div class="list-group">
+        <div class="list-group-item">
+            <h4 class="list-group-item-text">
+                @post.getText
+            </h4>
+        </div>
+    </div>
+</div>
+}

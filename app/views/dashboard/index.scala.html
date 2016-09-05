@@ -1,33 +1,5 @@
 @(testSessions: List[models.test.TestSession], tests: List[models.test.Test], user: models.AppUser)
 @shared.header()
-<script type="text/javascript" charset="utf-8">
-/*
-    if (!!window.EventSource) {
-        var postSource = new EventSource("/posts");
-            postSource.addEventListener('message', function(e) {
-            appendPost(JSON.parse(e.data));
-        });
-    } else {
-        alert("Sorry. This browser doesn't seem to support our test. Check http://html5test.com/compare/feature/communication-eventSource.html for browser compatibility.");
-    }
-
-    function createPost(){
-        $.ajax({
-            type:"POST",
-            url:"/post",
-            data:$("#post-form").serialize(),
-            success:function(a){}
-        });
-    }
-
-    function appendPost(posts){
-        var json = JSON.parse(posts);
-        jQuery.each(json, function(i, val) {
-            //$("#post-list").append("<div class='row'><div class='col-md-1'><li style='color:white'>" + json[i]["text"] + "</li></div></div>");
-        });
-    }
-*/
-</script>
 <div class="patient-dashboard">
     <div class="container-fluid">
         <div class="row dashboard">
@@ -45,7 +17,6 @@
         <div class="row dashboardbody">
             <br /><br />
             <div class="col-md-2 dashboard-first-half">
-                <ul id="post-list"></ul>
             </div><!-- /. dashboard-first-half -->
             <div class="col-md-10 tab-content main-tab-content">
                 <br/>
@@ -53,18 +24,12 @@
                     <div class="body">
                         <div class="tab-content">
                             <p>@user.email</p>
-                            <div class="row">
-                                <form id="post-form">
-                                    <div class="col-sm-12">
-                                        <input type="text" required class="form-control test-input" name="text" />
-                                    </div>
-                                    <!--
-                                    <div class="col-sm-1">
-                                        <input type="button" onclick="createPost();" class="btn btn-default pull-right" value="POST" />
-                                    </div>
-                                    -->
-                                </form>
-                            </div>
+                            @if(user.externalId==null){
+                                <span class="pull-right">
+                                    <input type="image" class="slack-btn" src="/images/slack-icon-10.png" onclick="window.location='https://slack.com/oauth/authorize?scope=channels:history,channels:read&client_id=71033447682.76105352755&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Fexternal_auth'"/>
+                                </span>
+                            }
+                            <br/><br/>
                         </div>
                     </div>
                 </div>
@@ -76,8 +41,13 @@
                                 <a aria-controls="home" data-target="#personal" data-toggle="tab" role="tab" style="cursor:default">Your Tests</a>
                             </li>
                             <li role="presentation">
-                                <a aria-controls="profile" data-target="#contact" data-toggle="tab" role="tab" style="cursor:default">Tests Available</a>
+                                <a aria-controls="home" data-target="#contact" data-toggle="tab" role="tab" style="cursor:default">Tests Available</a>
                             </li>
+                            @if(user.externalId!=null){
+                            <li role="presentation">
+                                <a aria-controls="home" data-target="#posts" data-toggle="tab" role="tab" style="cursor:default"><img src="/images/slack-icon-10.png" style="height:20px;width:20px;"/></a>
+                            </li>
+                            }
                         </ul><!-- Tab panes -->
                         <div class="tab-content">
                             <div class="tab-pane active" id="personal" role="tabpanel">
@@ -116,7 +86,6 @@
                                     </div>
                                 </div>
                                 }
-                                <br/>
                                 @for(test <- tests){
                                 <div class="row">
                                     <div class="col-sm-6">
@@ -129,6 +98,11 @@
                                 <br/>
                                 }
                             </div><!-- /.contact -->
+                            @if(user.externalId!=null){
+                            <div class="tab-pane" id="posts" role="tabpanel">
+                                @posts(user.channels{0}.getId)
+                            </div><!-- /.posts -->
+                            }
                         </div><!-- /.tab-content -->
                         <br>
                     </div><!-- /.body -->

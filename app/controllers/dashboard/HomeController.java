@@ -1,21 +1,32 @@
 package controllers.dashboard;
 
+import akka.stream.javadsl.Source;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import models.AppUser;
 import models.forum.Post;
 import models.test.Test;
 import models.test.TestSession;
 import play.data.Form;
 import play.data.FormFactory;
-import play.mvc.*;
+import play.libs.EventSource;
+import play.libs.ws.WSClient;
+import play.mvc.Controller;
+import play.mvc.Http;
+import play.mvc.Result;
 import services.AppUserService;
+import services.MessageService;
 import services.SessionService;
 
 import javax.inject.Inject;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
-public class HomeController extends Controller {
+/**
+ * Created by Sandeep.K on 8/14/2016.
+ */
+public class HomeController extends Controller implements MessageService {
 
     @Inject
     SessionService sessionService;
@@ -25,6 +36,12 @@ public class HomeController extends Controller {
 
     @Inject
     FormFactory formFactory;
+
+    @Inject
+    WSClient wsClient;
+
+    @Inject
+    ObjectMapper objectMapper;
 
     public Result index() throws IOException {
         AppUser loggedInUser = sessionService.getSessionUser();
@@ -49,6 +66,12 @@ public class HomeController extends Controller {
             Post.db().insert(post);
         }
         return ok();
+    }
+
+    public Result getMessages(String channelId) throws ExecutionException, InterruptedException, IOException {
+        String token = sessionService.getValue("access_token");
+        final Source<EventSource.Event, ?> eventSource = getMessageSource(token, channelId, wsClient, objectMapper).map(x->EventSource.Event.event(x.body()));
+        return ok().chunked(eventSource.via(EventSource.flow())).as(Http.MimeTypes.EVENT_STREAM);
     }
 
 }
