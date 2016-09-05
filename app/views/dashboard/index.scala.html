@@ -23,13 +23,18 @@
                 <div class="dashboard-second-half tab-pane active" role="tabpanel">
                     <div class="body">
                         <div class="tab-content">
-                            <p>@user.email</p>
-                            @if(user.externalId==null){
-                                <span class="pull-right">
-                                    <input type="image" class="slack-btn" src="/images/slack-icon-10.png" onclick="window.location='https://slack.com/oauth/authorize?scope=channels:history,channels:read&client_id=71033447682.76105352755&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Fexternal_auth'"/>
-                                </span>
-                            }
-                            <br/><br/>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <p>@user.email</p>
+                                </div>
+                                <div class="col-md-2">
+                                    @if(user.externalId==null){
+                                        <span class="pull-right">
+                                            <input type="image" class="slack-btn" src="/images/slack-icon-10.png" onclick="window.location='https://slack.com/oauth/authorize?scope=channels:history,channels:read&client_id=71033447682.76105352755&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Fexternal_auth'"/>
+                                        </span>
+                                    }
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

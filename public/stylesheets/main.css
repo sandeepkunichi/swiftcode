@@ -327,14 +327,15 @@ DASHBOARD
 	margin: 0px !important;
 	background: #F2F2F3;
 }
+
 #vitalstab {
 	padding: 0px 20px;
 }
 
 .slack-btn {
-    height: 30px;
-    width: 30px;
+    height:5%;
 }
+
 /* ----------------------------------------------------------
 ADMIN DASBOARD
 ------------------------------------------------------------- */
@@ -425,4 +426,13 @@ TEST SESSION
     background: #F2F2F3;
     margin:0px;
     padding:0px;
+}
+
+@media only screen and (max-device-width: 480px) {
+    .main-tab-content {
+    	padding: 0px !important;
+    	margin: 0px !important;
+    	background: #F2F2F3;
+    	width: 100%;
+    }
 }
