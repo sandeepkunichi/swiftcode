@@ -1,9 +1,18 @@
 @(channelId: String)
+<link href="/stylesheets/emoji.css" rel="stylesheet" type="text/css" />
+<script src="/javascripts/libs/emoji.js" type="text/javascript"></script>
 <script type="text/javascript" charset="utf-8">
+    var emoji = new EmojiConvertor();
+
+    emoji.img_sets.apple.path = 'http://unicodey.com/emoji-data/img-apple-64/';
+
     if (!!window.EventSource) {
         var postSource = new EventSource("/messages/@channelId");
         postSource.addEventListener('message', function(e) {
             $("#message-list").html(e.data);
+            $(".list-group-item-text").each(function( index ) {
+                $(this).replaceWith(emoji.replace_colons($(this).text()));
+            });
         });
     } else {
         alert("Sorry. This browser doesn't seem to support our test. Check http://html5test.com/compare/feature/communication-eventSource.html for browser compatibility.");
