@@ -8,6 +8,7 @@ create table app_user (
   email                     varchar(255),
   password                  varchar(255),
   role                      varchar(5),
+  resume_submitted          tinyint(1) default 0,
   constraint ck_app_user_role check (role in ('ADMIN','USER')),
   constraint pk_app_user primary key (id))
 ;

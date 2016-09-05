@@ -32,7 +32,10 @@ public class AppUser extends Model{
         this.email = email;
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
         this.role = Role.USER;
+        this.resumeSubmitted = false;
     }
+
+    public Boolean resumeSubmitted;
 
     @Transient
     public String externalId;

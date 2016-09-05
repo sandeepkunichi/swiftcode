@@ -1,6 +1,6 @@
 name := """swiftcode"""
 
-version := "1.1.0-SNAPSHOT"
+version := "1.2.0-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava, PlayEbean)
 
@@ -13,5 +13,8 @@ libraryDependencies ++= Seq(
   filters,
   evolutions,
   "mysql" % "mysql-connector-java" % "5.1.18",
-  "org.mindrot" % "jbcrypt" % "0.3m"
+  "org.mindrot" % "jbcrypt" % "0.3m",
+  "com.google.api-client" % "google-api-client" % "1.20.0",
+  "com.google.oauth-client" % "google-oauth-client-jetty" % "1.20.0",
+  "com.google.apis" % "google-api-services-drive" % "v3-rev6-1.20.0"
 )

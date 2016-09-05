@@ -26,6 +26,15 @@
                             <div class="row">
                                 <div class="col-md-10">
                                     <p>@user.email</p>
+                                    @if(!user.resumeSubmitted){
+                                    <div id="resume-upload">
+                                        <p>We see that you haven't uploaded your resume yet. Please upload your resume in PDF format.</p>
+                                        <form enctype="multipart/form-data">
+                                            <input name="resume" type="file" size="60" /><br/>
+                                            <input id="upload-picture" class="btn btn-default btn-sm" type="button" value="Upload" />
+                                        </form>
+                                    </div>
+                                    }
                                 </div>
                                 <div class="col-md-2">
                                     @if(user.externalId==null){
@@ -120,4 +129,25 @@
     function slackRedirect(){
         window.location = 'https://slack.com/oauth/authorize?scope=channels:history,channels:read&client_id=71033447682.76105352755&redirect_uri='+'@play.Play.application().configuration().getString("slack.api.redirect_url")';
     }
+
+    $('#upload-picture').click(function(){
+        $("#upload-picture").prop('disabled',true);
+        var formData = new FormData($('form')[0]);
+        $.ajax({
+            url: '/resume/upload',
+            type: 'POST',
+            success: function(data){
+                window.location='/dashboard';
+            },
+            error: function(data){
+                $("#upload-picture").prop('disabled',false);
+                alert("Upload failed. Please check if the file type is PDF.");
+            },
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+    });
+
 </script>
