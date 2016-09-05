@@ -30,7 +30,7 @@
                                 <div class="col-md-2">
                                     @if(user.externalId==null){
                                         <span class="pull-right">
-                                            <input type="image" class="slack-btn" src="/images/slack-icon-10.png" onclick="window.location='https://slack.com/oauth/authorize?scope=channels:history,channels:read&client_id=71033447682.76105352755&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Fexternal_auth'"/>
+                                            <input type="image" class="slack-btn" src="/images/slack-icon-10.png" onclick="slackRedirect();"/>
                                         </span>
                                     }
                                 </div>
@@ -116,3 +116,8 @@
         </div><!-- /.tab-content -->
     </div>
 </div>
+<script>
+    function slackRedirect(){
+        window.location = 'https://slack.com/oauth/authorize?scope=channels:history,channels:read&client_id=71033447682.76105352755&redirect_uri='+'@play.Play.application().configuration().getString("slack.api.redirect_url")';
+    }
+</script>
