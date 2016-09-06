@@ -68,10 +68,11 @@ public class LoginController extends Controller {
 
     @NoAuthRequired
     public Result externalLogin() throws ExecutionException, InterruptedException, IOException {
-        AppUser loggedInUser = sessionService.getSessionUser();
         DynamicForm data = formFactory.form().bindFromRequest();
         String code = data.data().get("code");
         String error = data.data().get("error");
+        String userId = data.data().get("state");
+        AppUser loggedInUser = appUserService.findById(Long.valueOf(userId));
         String clientId = configuration.getString("slack.api.client_id");
         String clientSecret = configuration.getString("slack.api.client_secret");
         if(error == null){

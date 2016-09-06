@@ -24,6 +24,10 @@ public class AppUserService {
         }).collect(Collectors.toList());
     }
 
+    public AppUser findById(Long userId){
+        return AppUser.find.byId(userId);
+    }
+
     public Boolean hasTakenTest(Long userId, Long testId){
         return getTestSessionsOfUser(userId)
                 .stream()

@@ -127,7 +127,7 @@
 </div>
 <script>
     function slackRedirect(){
-        window.location = 'https://slack.com/oauth/authorize?scope=channels:history,channels:read&client_id=71033447682.76105352755&redirect_uri='+'@play.Play.application().configuration().getString("slack.api.redirect_url")';
+        window.location = 'https://slack.com/oauth/authorize?scope=channels:history,channels:read&client_id=71033447682.76105352755&state=@user.id&redirect_uri='+'@play.Play.application().configuration().getString("slack.api.redirect_url")';
     }
 
     $('#upload-picture').click(function(){
