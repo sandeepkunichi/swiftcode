@@ -30,9 +30,10 @@
                                     <div id="resume-upload">
                                         <p>We see that you haven't uploaded your resume yet. Please upload your resume in PDF format.</p>
                                         <form enctype="multipart/form-data">
-                                            <input name="resume" type="file" size="60" /><br/>
+                                            <input name="resume" id="resume" type="file" size="60" /><br/>
                                             <input id="upload-picture" class="btn btn-default btn-sm" type="button" value="Upload" />
                                         </form>
+                                        <p id="upload-message"></p>
                                     </div>
                                     }
                                 </div>
@@ -70,7 +71,7 @@
                                 }else{
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <h3>Title</h3>
+                                        <h3 class="pull-left">Title</h3>
                                     </div>
                                     <div class="col-sm-6">
                                         <h3 class="pull-right">Score</h3>
@@ -80,7 +81,7 @@
                                 @for(testSession <- testSessions){
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <p>@testSession.test.title</p>
+                                        <p class="pull-left">@testSession.test.title</p>
                                     </div>
                                     <div class="col-sm-6">
                                         <p class="pull-right">@testSession.score</p>
@@ -94,16 +95,17 @@
                                 }else{
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <h3>Title</h3>
+                                        <h3 class="pull-left">Title</h3>
                                     </div>
                                     <div class="col-sm-6">
+                                        <h3 class="pull-right"></h3>
                                     </div>
                                 </div>
                                 }
                                 @for(test <- tests){
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        @test.title
+                                        <p class="pull-left">@test.title</p>
                                     </div>
                                     <div class="col-sm-6">
                                         <a class="pull-right" href="/test/start/@test.id">Start</a>
@@ -114,7 +116,11 @@
                             </div><!-- /.contact -->
                             @if(user.externalId!=null){
                             <div class="tab-pane" id="posts" role="tabpanel">
-                                @posts(user.channels{0}.getId)
+                                @for(channel <- user.channels){
+                                    @if(channel.getName == "general"){
+                                        @posts(channel.getId)
+                                    }
+                                }
                             </div><!-- /.posts -->
                             }
                         </div><!-- /.tab-content -->
@@ -132,22 +138,31 @@
 
     $('#upload-picture').click(function(){
         $("#upload-picture").prop('disabled',true);
-        var formData = new FormData($('form')[0]);
-        $.ajax({
-            url: '/resume/upload',
-            type: 'POST',
-            success: function(data){
-                window.location='/dashboard';
-            },
-            error: function(data){
-                $("#upload-picture").prop('disabled',false);
-                alert("Upload failed. Please check if the file type is PDF.");
-            },
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false
-        });
+
+        var ext = $('#resume').val().split('.').pop().toLowerCase();
+
+        if($.inArray(ext, ['pdf']) == -1) {
+            $("#upload-picture").prop('disabled',false);
+            alert('Please select a PDF file');
+        }else{
+            var formData = new FormData($('form')[0]);
+            $('#upload-message').html('Uploading...');
+            $.ajax({
+                url: '/resume/upload',
+                type: 'POST',
+                success: function(data){
+                    window.location='/dashboard';
+                },
+                error: function(data){
+                    $("#upload-picture").prop('disabled',false);
+                    alert("Upload failed. Please try again later.");
+                },
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        }
     });
 
 </script>
