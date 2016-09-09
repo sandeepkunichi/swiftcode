@@ -85,12 +85,12 @@ public class LoginController extends Controller {
                     .get();
             JsonNode accessTokenResponse = responsePromise1.thenApply(WSResponse::asJson).toCompletableFuture().get();
 
-            if(accessTokenResponse.get("success").asBoolean()){
+            if(accessTokenResponse.get("ok").asBoolean()){
                 loggedInUser.externalId = accessTokenResponse.get("user_id").asText();
                 sessionService.putValue("access_token", accessTokenResponse.get("access_token").asText());
                 WSRequest userDataRequest = wsClient.url("https://slack.com/api/channels.list");
                 CompletionStage<WSResponse> responsePromise2 = userDataRequest
-                        .setQueryParameter("token",accessTokenResponse.get("access_token").asText())
+                        .setQueryParameter("token", accessTokenResponse.get("access_token").asText())
                         .get();
                 JsonNode userDataResponse = responsePromise2.thenApply(WSResponse::asJson).toCompletableFuture().get();
                 JsonNode channels = userDataResponse.get("channels");
