@@ -1,6 +1,6 @@
 name := """swiftcode"""
 
-version := "1.2.0-SNAPSHOT"
+version := "1.2.1-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava, PlayEbean)
 

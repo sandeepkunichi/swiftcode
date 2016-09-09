@@ -76,23 +76,33 @@ public class LoginController extends Controller {
         String clientId = configuration.getString("slack.api.client_id");
         String clientSecret = configuration.getString("slack.api.client_secret");
         if(error == null){
-            WSRequest request1 = wsClient.url("https://slack.com/api/oauth.access?client_id="+clientId+"&client_secret="+clientSecret+"&code="+code);
-            CompletionStage<WSResponse> responsePromise1 = request1.get();
-            JsonNode response1 = responsePromise1.thenApply(WSResponse::asJson).toCompletableFuture().get();
-            loggedInUser.externalId=response1.get("user_id").asText();
-            sessionService.putValue("access_token", response1.get("access_token").asText());
-            WSRequest request2 = wsClient.url("https://slack.com/api/channels.list?token="+response1.get("access_token").asText());
-            CompletionStage<WSResponse> responsePromise2 = request2.get();
-            JsonNode response2 = responsePromise2.thenApply(WSResponse::asJson).toCompletableFuture().get();
-            JsonNode channels = response2.get("channels");
-            loggedInUser.channels = new ArrayList<>();
-            if (channels.isArray()) {
-                for (final JsonNode objNode : channels) {
-                    if(objNode.get("is_member").asBoolean())
-                        loggedInUser.channels.add(new Channel(objNode.get("name").asText(), objNode.get("purpose").get("value").asText(), objNode.get("id").asText()));
+            WSRequest accessTokenRequest = wsClient.url("https://slack.com/api/oauth.access");
+            CompletionStage<WSResponse> responsePromise1 = accessTokenRequest
+                    .setQueryParameter("client_id", clientId)
+                    .setQueryParameter("client_secret", clientSecret)
+                    .setQueryParameter("code", code)
+                    .setQueryParameter("redirect_uri", configuration.getString("slack.api.redirect_url"))
+                    .get();
+            JsonNode accessTokenResponse = responsePromise1.thenApply(WSResponse::asJson).toCompletableFuture().get();
+
+            if(accessTokenResponse.get("success").asBoolean()){
+                loggedInUser.externalId = accessTokenResponse.get("user_id").asText();
+                sessionService.putValue("access_token", accessTokenResponse.get("access_token").asText());
+                WSRequest userDataRequest = wsClient.url("https://slack.com/api/channels.list");
+                CompletionStage<WSResponse> responsePromise2 = userDataRequest
+                        .setQueryParameter("token",accessTokenResponse.get("access_token").asText())
+                        .get();
+                JsonNode userDataResponse = responsePromise2.thenApply(WSResponse::asJson).toCompletableFuture().get();
+                JsonNode channels = userDataResponse.get("channels");
+                loggedInUser.channels = new ArrayList<>();
+                if (channels.isArray()) {
+                    for (final JsonNode objNode : channels) {
+                        if(objNode.get("is_member").asBoolean())
+                            loggedInUser.channels.add(new Channel(objNode.get("name").asText(), objNode.get("purpose").get("value").asText(), objNode.get("id").asText()));
+                    }
                 }
+                sessionService.saveUserInSession(loggedInUser);
             }
-            sessionService.saveUserInSession(loggedInUser);
         }
         return redirect("/dashboard");
     }
