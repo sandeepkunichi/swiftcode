@@ -32,7 +32,7 @@ public class HomeController extends Controller {
             testSession.test = Test.find.byId(testSession.test.id);
             testSession.testTaker = AppUser.find.byId(testSession.testTaker.id);
             return testSession;
-        }).collect(Collectors.toList());
+        }).sorted((t1, t2) -> Long.compare(t2.score, t1.score)).collect(Collectors.toList());
         return ok(views.html.admin.index.render(tests, sessionService.getSessionUser(), users, testSessions));
     }
 

@@ -87,6 +87,13 @@ public class LoginController extends Controller {
 
             if(accessTokenResponse.get("ok").asBoolean()){
                 loggedInUser.externalId = accessTokenResponse.get("user_id").asText();
+
+                String teamId = accessTokenResponse.get("user_id").asText();
+
+                if(!teamId.equals(configuration.getString("slack.teamId"))){
+                    return redirect("/dashboard");
+                }
+
                 sessionService.putValue("access_token", accessTokenResponse.get("access_token").asText());
                 WSRequest userDataRequest = wsClient.url("https://slack.com/api/channels.list");
                 CompletionStage<WSResponse> responsePromise2 = userDataRequest

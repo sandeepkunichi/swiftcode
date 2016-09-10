@@ -5,14 +5,17 @@
             <form method="POST" ng-submit="createTest()" >
                 <div class="row">
                     <div class="col-sm-12">
+                        <br />
                         Title: <input class="form-control test-input" type="text" ng-model="test.title" required/><br/><br/>
                         <input type="button" class="btn btn-default btn-sm" ng-click="addNewQuestion()" value="ADD QUESTION"><br/><br/>
                         <fieldset data-ng-repeat="testQuestion in test.testQuestions track by $index">
+                            <p>Q-{{ $index + 1 }}</p>
                             <textarea class="form-control test-input" ng-model="testQuestion.question" required></textarea><br/><br/>
                             <input type="button" class="btn btn-default btn-sm" ng-click="removeQuestion($index)" value="REMOVE QUESTION">
                             <input type="button" class="btn btn-default btn-sm" ng-click="addNewAnswer(testQuestion)" value="ADD ANSWER"><br/><br/>
                             <div class="col-sm-12">
                                 <fieldset data-ng-repeat="testAnswer in testQuestion.testAnswers track by $index">
+                                    A-{{ $index + 1 }}
                                     <div class="row">
                                         <div class="col-sm-8">
                                             <textarea class="form-control test-input" ng-model="testAnswer.answer" required></textarea><br/><br/>
