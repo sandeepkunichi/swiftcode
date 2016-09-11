@@ -30,8 +30,10 @@ public interface MessageService {
     }
 
     default List<Message> getMessages(String token, String channelId, WSClient wsClient, ObjectMapper objectMapper) throws ExecutionException, InterruptedException, IOException {
-        String url = "https://slack.com/api/channels.history?token="+token+"&channel="+channelId;
-        final WSRequest request1 = wsClient.url(url);
+        final WSRequest request1 = wsClient
+                .url("https://slack.com/api/channels.history")
+                .setQueryParameter("token", token)
+                .setQueryParameter("channel", channelId);
         final CompletionStage<WSResponse> responsePromise1 = request1.get();
         final JsonNode json = responsePromise1.thenApply(WSResponse::asJson).toCompletableFuture().get().get("messages");
         return objectMapper.readValue(json.toString(), TypeFactory.defaultInstance().constructCollectionType(List.class, Message.class));

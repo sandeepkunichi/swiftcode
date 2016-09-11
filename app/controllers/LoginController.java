@@ -116,7 +116,7 @@ public class LoginController extends Controller {
         }else{
             return redirect("/dashboard?alert="+String.valueOf(DashboardAlertType.SLACK_FAILURE));
         }
-        return redirect("/dashboard?alter="+String.valueOf(DashboardAlertType.SLACK_SUCCESS));
+        return redirect("/dashboard?alert="+String.valueOf(DashboardAlertType.SLACK_SUCCESS));
     }
 
 }

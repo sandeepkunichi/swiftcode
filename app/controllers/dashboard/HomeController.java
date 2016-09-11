@@ -47,7 +47,7 @@ public class HomeController extends Controller implements MessageService {
                 appUserService.getTestSessionsOfUser(loggedInUser.id),
                 testService.getAvailableTestsForUser(loggedInUser.id),
                 loggedInUser,
-                (request().getQueryString("alert") != null) ? new DashboardAlert(
+                (request().getQueryString("alert") != null && !request().getQueryString("alert").isEmpty()) ? new DashboardAlert(
                         configuration.getString("alerts." + request().getQueryString("alert") + ".message"),
                         configuration.getString("alerts." + request().getQueryString("alert") + ".class")
                 ) : null

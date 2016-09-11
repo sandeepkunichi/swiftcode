@@ -41,7 +41,7 @@
                             <br /><br />
                             <div class="row">
                                 <div class="col-md-12">
-                                    @if(dashboardAlert != null){
+                                    @if(dashboardAlert != null && dashboardAlert.getMessage != null){
                                     <div class="alert @dashboardAlert.getAlertClass">
                                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                         @dashboardAlert.getMessage
