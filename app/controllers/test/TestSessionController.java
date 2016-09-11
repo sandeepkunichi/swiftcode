@@ -1,5 +1,6 @@
 package controllers.test;
 
+import data.DashboardAlertType;
 import models.AppUser;
 import models.test.Test;
 import models.test.TestAnswer;
@@ -31,10 +32,10 @@ public class TestSessionController extends Controller {
 
     public Result startTest(Long testId) throws IOException {
         if(Test.find.byId(testId) == null)
-            return redirect("/dashboard");
+            return redirect("/dashboard?alert="+String.valueOf(DashboardAlertType.TEST_NOT_FOUND));
         AppUser loggedInUser = sessionService.getSessionUser();
         if(appUserService.hasTakenTest(loggedInUser.id, testId))
-            return redirect("/dashboard");
+            return redirect("/dashboard?alert="+String.valueOf(DashboardAlertType.TEST_ALREADY_TAKEN));
         TestSession testSession = new TestSession();
         testSession.startTime = new Date();
         testSession.test = Test.find.byId(testId);
@@ -60,7 +61,7 @@ public class TestSessionController extends Controller {
                 )
         );
         TestSession.db().update(testSession);
-        return redirect("/dashboard");
+        return redirect("/dashboard?alert="+String.valueOf(DashboardAlertType.TEST_SUBMISSION_SUCCESS));
     }
 
 }

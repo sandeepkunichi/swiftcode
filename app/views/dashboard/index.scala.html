@@ -1,4 +1,4 @@
-@(testSessions: List[models.test.TestSession], tests: List[models.test.Test], user: models.AppUser)
+@(testSessions: List[models.test.TestSession], tests: List[models.test.Test], user: models.AppUser, dashboardAlert: data.DashboardAlert)
 @shared.header()
 <div class="patient-dashboard">
     <div class="container-fluid">
@@ -24,24 +24,38 @@
                     <div class="body">
                         <div class="tab-content">
                             <div class="row">
-                                <div class="col-md-10">
+                                <div class="col-md-9">
                                     <p>@user.email</p>
-                                    @if(!user.resumeSubmitted){
-                                    <div id="resume-upload">
-                                        <p>We see that you haven't uploaded your resume yet. Please upload your resume in PDF format.</p>
-                                        <form enctype="multipart/form-data">
-                                            <input name="resume" id="resume" type="file" size="60" /><br/>
-                                            <input id="upload-picture" class="btn btn-default btn-sm" type="button" value="Upload" />
-                                        </form>
-                                        <p id="upload-message"></p>
-                                    </div>
-                                    }
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     @if(user.externalId==null){
                                         <span class="pull-right">
                                             <input type="image" class="slack-btn" src="/images/slack-icon-10.png" onclick="slackRedirect();"/>
                                         </span>
+                                    }
+                                </div>
+                            </div>
+                            <br /><br />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @if(dashboardAlert != null){
+                                    <div class="alert @dashboardAlert.getAlertClass">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        @dashboardAlert.getMessage
+                                    </div>
+                                    }
+                                    @if(!user.resumeSubmitted){
+                                    <div class="alert alert-warning">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <div id="resume-upload">
+                                            <p>We see that you haven't uploaded your resume yet. Please upload your resume in PDF format.</p>
+                                            <form enctype="multipart/form-data">
+                                                <input name="resume" id="resume" type="file" size="60" /><br/>
+                                                <input id="upload-picture" class="btn btn-default btn-sm" type="button" value="Upload" />
+                                            </form>
+                                            <p id="upload-message"></p>
+                                        </div>
+                                    </div>
                                     }
                                 </div>
                             </div>
@@ -74,7 +88,7 @@
                                         <h3 class="pull-left">Title</h3>
                                     </div>
                                     <div class="col-sm-6">
-                                        <h3 class="pull-right">Score</h3>
+                                        <h3 class="pull-right"></h3>
                                     </div>
                                 </div>
                                 }
@@ -84,7 +98,7 @@
                                         <p class="pull-left">@testSession.test.title</p>
                                     </div>
                                     <div class="col-sm-6">
-                                        <p class="pull-right">@testSession.score</p>
+                                        <p class="pull-right"></p>
                                     </div>
                                 </div>
                                 }
@@ -151,11 +165,10 @@
                 url: '/resume/upload',
                 type: 'POST',
                 success: function(data){
-                    window.location='/dashboard';
+                    window.location='/dashboard?alert=UPLOAD_SUCCESS';
                 },
                 error: function(data){
-                    $("#upload-picture").prop('disabled',false);
-                    alert("Upload failed. Please try again later.");
+                    window.location='/dashboard?alert=UPLOAD_FAILURE';
                 },
                 data: formData,
                 cache: false,

@@ -3,14 +3,12 @@ package controllers.dashboard;
 import akka.stream.javadsl.Source;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.services.drive.Drive;
+import data.DashboardAlert;
 import data.Document;
 import models.AppUser;
-import models.forum.Post;
 import models.test.Test;
 import models.test.TestSession;
 import play.Configuration;
-import play.data.Form;
-import play.data.FormFactory;
 import play.libs.EventSource;
 import play.libs.ws.WSClient;
 import play.mvc.Controller;
@@ -39,9 +37,6 @@ public class HomeController extends Controller implements MessageService {
     AppUserService appUserService;
 
     @Inject
-    FormFactory formFactory;
-
-    @Inject
     WSClient wsClient;
 
     @Inject
@@ -51,6 +46,13 @@ public class HomeController extends Controller implements MessageService {
     Configuration configuration;
 
     public Result index() throws IOException {
+        DashboardAlert dashboardAlert = null;
+        if(request().getQueryString("alert") != null){
+            dashboardAlert = new DashboardAlert(
+                    configuration.getString("alerts." + request().getQueryString("alert") + ".message"),
+                    configuration.getString("alerts." + request().getQueryString("alert") + ".class")
+            );
+        }
         AppUser loggedInUser = sessionService.getSessionUser();
         List<TestSession> testSessions = appUserService.getTestSessionsOfUser(loggedInUser.id);
         List<Test> tests = Test.find
@@ -58,22 +60,9 @@ public class HomeController extends Controller implements MessageService {
                 .stream()
                 .filter(test -> !appUserService.hasTakenTest(loggedInUser.id, test.id))
                 .collect(Collectors.toList());
-        return ok(views.html.dashboard.index.render(testSessions, tests, loggedInUser));
+        return ok(views.html.dashboard.index.render(testSessions, tests, loggedInUser, dashboardAlert));
     }
 
-    public Result createPost() throws IOException {
-        AppUser loggedInUser = sessionService.getSessionUser();
-        Form<Post> postForm = formFactory.form(Post.class).bindFromRequest();
-        if(postForm.hasErrors()){
-            return ok(postForm.errorsAsJson());
-        }else{
-            Post post = new Post();
-            post.postCreator = loggedInUser;
-            post.text = postForm.data().get("text");
-            Post.db().insert(post);
-        }
-        return ok();
-    }
 
     public Result getMessages(String channelId) throws ExecutionException, InterruptedException, IOException {
         String token = sessionService.getValue("access_token");

@@ -22,9 +22,6 @@ POST    /signup                     controllers.SignupController.signup()
 
 GET    /test/liveClock/:id          controllers.test.TimerController.streamClock(id: Long)
 
-GET    /posts                       controllers.dashboard.PostController.streamPosts
-POST   /post                        controllers.dashboard.HomeController.createPost()
-
 GET    /external_auth               controllers.LoginController.externalLogin()
 GET    /messages/:channelId         controllers.dashboard.HomeController.getMessages(channelId: String)
 

@@ -2,6 +2,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import data.Channel;
+import data.DashboardAlertType;
 import forms.LoginForm;
 import models.AppUser;
 import play.Configuration;
@@ -91,7 +92,7 @@ public class LoginController extends Controller {
                 String teamId = accessTokenResponse.get("user_id").asText();
 
                 if(!teamId.equals(configuration.getString("slack.teamId"))){
-                    return redirect("/dashboard");
+                    return redirect("/dashboard?alert="+String.valueOf(DashboardAlertType.INVALID_TEAM));
                 }
 
                 sessionService.putValue("access_token", accessTokenResponse.get("access_token").asText());
@@ -109,7 +110,11 @@ public class LoginController extends Controller {
                     }
                 }
                 sessionService.saveUserInSession(loggedInUser);
+            }else{
+                return redirect("/dashboard?alert="+String.valueOf(DashboardAlertType.INVALID_TEAM));
             }
+        }else{
+            return redirect("/dashboard?alert="+String.valueOf(DashboardAlertType.INVALID_TEAM));
         }
         return redirect("/dashboard");
     }

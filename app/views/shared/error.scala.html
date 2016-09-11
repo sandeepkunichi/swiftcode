@@ -1,0 +1,22 @@
+@(message: String)
+<html lang="en">
+<head>
+    @shared.header()
+</head>
+<body class="error-body">
+<div id="wrap">
+    <div id="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 center">
+                    <h1> Oops! </h1>
+                    <h3>@message</h3><br />
+                    <center> <img src="/images/error.jpg" width="450" class="img img-responsive img-circle" /> </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@shared.footer()
+</body>
+</html>
