@@ -13,6 +13,10 @@ import java.util.stream.Collectors;
  */
 public class AppUserService {
 
+    public List<AppUser> findAllAppUsers(){
+        return AppUser.find.all();
+    }
+
     public AppUser getAppUserByEmail(String email){
         return AppUser.find.where().eq("email", email).findUnique();
     }

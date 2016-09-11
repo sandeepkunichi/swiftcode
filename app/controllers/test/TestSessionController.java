@@ -3,7 +3,6 @@ package controllers.test;
 import data.DashboardAlertType;
 import models.AppUser;
 import models.test.Test;
-import models.test.TestAnswer;
 import models.test.TestSession;
 import play.data.Form;
 import play.data.FormFactory;
@@ -11,10 +10,10 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import services.AppUserService;
 import services.SessionService;
+import services.TestSessionService;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Date;
 
 /**
  * Created by Sandeep.K on 8/14/2016.
@@ -30,37 +29,30 @@ public class TestSessionController extends Controller {
     @Inject
     AppUserService appUserService;
 
+    @Inject
+    TestSessionService testSessionService;
+
     public Result startTest(Long testId) throws IOException {
+        AppUser loggedInUser = sessionService.getSessionUser();
+
         if(Test.find.byId(testId) == null)
             return redirect("/dashboard?alert="+String.valueOf(DashboardAlertType.TEST_NOT_FOUND));
-        AppUser loggedInUser = sessionService.getSessionUser();
+
         if(appUserService.hasTakenTest(loggedInUser.id, testId))
             return redirect("/dashboard?alert="+String.valueOf(DashboardAlertType.TEST_ALREADY_TAKEN));
-        TestSession testSession = new TestSession();
-        testSession.startTime = new Date();
-        testSession.test = Test.find.byId(testId);
-        testSession.testTaker = loggedInUser;
-        testSession.submitted = false;
-        TestSession.db().insert(testSession);
-        return ok(views.html.test.test_session.render(testSession));
+
+        TestSession testSession = testSessionService.createTestSession(testId, loggedInUser);
+
+        return ok(views.html.test.test_session.render(testSessionService.randomizeTestSession(testSession)));
     }
 
     public Result submitTest(){
         Form<TestSession> testSessionForm = formFactory.form(TestSession.class).bindFromRequest();
+
         TestSession testSession = testSessionForm.get();
-        testSession.score = 0L;
-        testSession.endTime = new Date();
-        testSession.submitted = true;
-        testSession.test.testQuestions.forEach(
-                testQuestion -> testQuestion.testAnswers.forEach(
-                        testAnswer -> {
-                            if(testAnswer.selected != null && TestAnswer.find.byId(testAnswer.id).isCorrect && testAnswer.selected){
-                                testSession.score++;
-                            }
-                        }
-                )
-        );
-        TestSession.db().update(testSession);
+
+        TestSession.db().update(testSessionService.evaluateTestSession(testSession));
+
         return redirect("/dashboard?alert="+String.valueOf(DashboardAlertType.TEST_SUBMISSION_SUCCESS));
     }
 

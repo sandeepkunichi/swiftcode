@@ -33,6 +33,9 @@ public class TestSession extends Model {
 
     public Boolean submitted;
 
+    @Transient
+    public Integer timeTaken;
+
     public static Model.Finder<Long, TestSession> find = new Model.Finder<Long, TestSession>(TestSession.class);
 
 }

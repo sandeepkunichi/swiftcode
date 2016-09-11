@@ -54,15 +54,21 @@
                                     <p>No tests created yet</p>
                                 }else{
                                     <div class="row">
-                                        <div class="col-sm-12">
-                                            <h3>Title</h3>
+                                        <div class="col-sm-6">
+                                            <h3 class="pull-left">Title</h3>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <h3 class="pull-right">No. of takers</h3>
                                         </div>
                                     </div>
                                 }
                                 @for(test <- tests){
                                     <div class="row">
-                                        <div class="col-sm-12">
-                                            <p>@test.title</p>
+                                        <div class="col-sm-6">
+                                            <p class="pull-left">@test.title</p>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p class="pull-right">@test.testTakerCount</p>
                                         </div>
                                     </div>
                                 }
@@ -102,13 +108,15 @@
                                     <div class="col-sm-2">
                                         <h3>End</h3>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-1">
                                         <h3>Score</h3>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-4">
                                         <h3>Email</h3>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-1">
+                                        <h3>Time</h3>
+                                        <p>(Minutes)</p>
                                     </div>
                                 </div>
                                 }
@@ -123,13 +131,14 @@
                                     <div class="col-sm-2">
                                         <p>@testSession.endTime</p>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-1">
                                         <p>@testSession.score</p>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-4">
                                         <p>@testSession.testTaker.email</p>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-1">
+                                        <p>@testSession.timeTaken</p>
                                     </div>
                                 </div>
                                 }

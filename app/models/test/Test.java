@@ -23,6 +23,9 @@ public class Test extends Model {
     @OneToMany(cascade = CascadeType.ALL)
     public List<TestQuestion> testQuestions;
 
+    @Transient
+    public Long testTakerCount;
+
     public static Finder<Long, Test> find = new Finder<Long, Test>(Test.class);
 
 }

@@ -6,24 +6,17 @@ import com.google.api.services.drive.Drive;
 import data.DashboardAlert;
 import data.Document;
 import models.AppUser;
-import models.test.Test;
-import models.test.TestSession;
 import play.Configuration;
 import play.libs.EventSource;
 import play.libs.ws.WSClient;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
-import services.AppUserService;
-import services.DriveService;
-import services.MessageService;
-import services.SessionService;
+import services.*;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
 
 /**
  * Created by Sandeep.K on 8/14/2016.
@@ -45,22 +38,20 @@ public class HomeController extends Controller implements MessageService {
     @Inject
     Configuration configuration;
 
+    @Inject
+    TestService testService;
+
     public Result index() throws IOException {
-        DashboardAlert dashboardAlert = null;
-        if(request().getQueryString("alert") != null){
-            dashboardAlert = new DashboardAlert(
-                    configuration.getString("alerts." + request().getQueryString("alert") + ".message"),
-                    configuration.getString("alerts." + request().getQueryString("alert") + ".class")
-            );
-        }
         AppUser loggedInUser = sessionService.getSessionUser();
-        List<TestSession> testSessions = appUserService.getTestSessionsOfUser(loggedInUser.id);
-        List<Test> tests = Test.find
-                .all()
-                .stream()
-                .filter(test -> !appUserService.hasTakenTest(loggedInUser.id, test.id))
-                .collect(Collectors.toList());
-        return ok(views.html.dashboard.index.render(testSessions, tests, loggedInUser, dashboardAlert));
+        return ok(views.html.dashboard.index.render(
+                appUserService.getTestSessionsOfUser(loggedInUser.id),
+                testService.getAvailableTestsForUser(loggedInUser.id),
+                loggedInUser,
+                (request().getQueryString("alert") != null) ? new DashboardAlert(
+                        configuration.getString("alerts." + request().getQueryString("alert") + ".message"),
+                        configuration.getString("alerts." + request().getQueryString("alert") + ".class")
+                ) : null
+        ));
     }
 
 

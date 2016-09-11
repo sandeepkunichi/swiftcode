@@ -111,12 +111,12 @@ public class LoginController extends Controller {
                 }
                 sessionService.saveUserInSession(loggedInUser);
             }else{
-                return redirect("/dashboard?alert="+String.valueOf(DashboardAlertType.INVALID_TEAM));
+                return redirect("/dashboard?alert="+String.valueOf(DashboardAlertType.SLACK_FAILURE));
             }
         }else{
-            return redirect("/dashboard?alert="+String.valueOf(DashboardAlertType.INVALID_TEAM));
+            return redirect("/dashboard?alert="+String.valueOf(DashboardAlertType.SLACK_FAILURE));
         }
-        return redirect("/dashboard");
+        return redirect("/dashboard?alter="+String.valueOf(DashboardAlertType.SLACK_SUCCESS));
     }
 
 }

@@ -10,7 +10,10 @@
             </div><!-- /. dashboard-first-half -->
             <div class="col-md-10 header-second-half">
                 <header>
-                    <button class="btn btn-default btn-sm pull-right logoutbtn" onclick="window.location = '/logout'">Logout</button>
+                    <span class="pull-right">
+                        <a href="mailto:swiftcode@@betsol.com" target="_top" class="btn btn-default btn-sm logoutbtn">I need help</a>
+                        <button class="btn btn-default btn-sm logoutbtn" onclick="window.location = '/logout'">Logout</button>
+                    </span>
                 </header>
             </div><!-- /. dashboard-second-half -->
         </div>
@@ -88,7 +91,7 @@
                                         <h3 class="pull-left">Title</h3>
                                     </div>
                                     <div class="col-sm-6">
-                                        <h3 class="pull-right"></h3>
+                                        <h3 class="pull-right">Date</h3>
                                     </div>
                                 </div>
                                 }
@@ -98,7 +101,7 @@
                                         <p class="pull-left">@testSession.test.title</p>
                                     </div>
                                     <div class="col-sm-6">
-                                        <p class="pull-right"></p>
+                                        <p class="pull-right">@testSession.startTime</p>
                                     </div>
                                 </div>
                                 }
@@ -131,9 +134,9 @@
                             @if(user.externalId!=null){
                             <div class="tab-pane" id="posts" role="tabpanel">
                                 @for(channel <- user.channels){
-                                    @if(channel.getName == "general"){
-                                        @posts(channel.getId)
-                                    }
+                                @if(channel.getName == "general"){
+                                @posts(channel.getId)
+                                }
                                 }
                             </div><!-- /.posts -->
                             }
@@ -177,5 +180,4 @@
             });
         }
     });
-
 </script>
