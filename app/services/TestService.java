@@ -25,7 +25,11 @@ public class TestService {
     }
 
     public List<Test> getAvailableTestsForUser(Long userId){
-        return Test.find.all().stream().filter(test -> !appUserService.hasTakenTest(userId, test.id)).collect(Collectors.toList());
+        return Test.find.all()
+                .stream()
+                .filter(test -> !appUserService.hasTakenTest(userId, test.id))
+                .filter(test -> test.testStatus == Test.TestStatus.ACTIVE)
+                .collect(Collectors.toList());
     }
 
 }
