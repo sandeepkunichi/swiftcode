@@ -101,7 +101,7 @@
                                         <p class="pull-left">@testSession.test.title</p>
                                     </div>
                                     <div class="col-sm-6">
-                                        <p class="pull-right">@testSession.startTime</p>
+                                        <p class="pull-right">@testSession.startTime.format("dd MMM YY")</p>
                                     </div>
                                 </div>
                                 }
@@ -125,7 +125,7 @@
                                         <p class="pull-left">@test.title</p>
                                     </div>
                                     <div class="col-sm-6">
-                                        <a class="pull-right" href="/test/start/@test.id">Start</a>
+                                        <input class="pull-right btn btn-default btn-sm logoutbtn" type="button" value="Start" onclick="startTest('@test.id');"/>
                                     </div>
                                 </div>
                                 <br/>
@@ -150,7 +150,7 @@
 </div>
 <script>
     function slackRedirect(){
-        window.location = 'https://slack.com/oauth/authorize?scope=channels:history,channels:read&client_id=71033447682.76105352755&state=@user.id&redirect_uri='+'@play.Play.application().configuration().getString("slack.api.redirect_url")';
+        window.location = '/slack';
     }
 
     $('#upload-picture').click(function(){
@@ -180,4 +180,12 @@
             });
         }
     });
+
+    function startTest(testId){
+        bootbox.confirm("This action will start the test right away. Are you sure?", function(result) {
+            if(result){
+                window.location = '/test/start/' + testId;
+            }
+        });
+    }
 </script>

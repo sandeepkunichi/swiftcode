@@ -20,6 +20,7 @@ import services.SessionService;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
 
@@ -89,10 +90,18 @@ public class LoginController extends Controller {
             if(accessTokenResponse.get("ok").asBoolean()){
                 loggedInUser.externalId = accessTokenResponse.get("user_id").asText();
 
-                String teamId = accessTokenResponse.get("user_id").asText();
+                WSRequest teamInfoRequest = wsClient.url("https://slack.com/api/team.info");
+                CompletionStage<WSResponse> teamInfoResponsePromise = teamInfoRequest
+                        .setQueryParameter("token", accessTokenResponse.get("access_token").asText())
+                        .get();
+                JsonNode teamInfoResponse = teamInfoResponsePromise.thenApply(WSResponse::asJson).toCompletableFuture().get();
 
-                if(!teamId.equals(configuration.getString("slack.teamId"))){
-                    return redirect("/dashboard?alert="+String.valueOf(DashboardAlertType.INVALID_TEAM));
+                if(teamInfoResponse.get("ok").asBoolean()){
+                    if(!Objects.equals(teamInfoResponse.get("team").get("domain").asText(), configuration.getString("slack.teamId"))){
+                        return redirect("/dashboard?alert="+String.valueOf(DashboardAlertType.INVALID_TEAM));
+                    }
+                }else{
+                    return redirect("/dashboard?alert="+String.valueOf(DashboardAlertType.SLACK_FAILURE));
                 }
 
                 sessionService.putValue("access_token", accessTokenResponse.get("access_token").asText());

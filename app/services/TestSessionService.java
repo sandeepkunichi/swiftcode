@@ -51,12 +51,19 @@ public class TestSessionService {
     }
 
     public List<TestSession> findAllTestSessions(){
-        return TestSession.find.all().stream().map(testSession -> {
-            testSession.test = Test.find.byId(testSession.test.id);
-            testSession.testTaker = AppUser.find.byId(testSession.testTaker.id);
-            testSession.timeTaken = Minutes.minutesBetween(new DateTime(testSession.startTime), new DateTime(testSession.endTime)).getMinutes() % 60;
-            return testSession;
-        }).sorted((t1, t2) -> Long.compare(t2.score, t1.score)).collect(Collectors.toList());
+        return TestSession
+                .find
+                .all()
+                .stream()
+                .filter(testSession -> testSession.submitted)
+                .map(testSession -> {
+                    testSession.test = Test.find.byId(testSession.test.id);
+                    testSession.testTaker = AppUser.find.byId(testSession.testTaker.id);
+                    testSession.timeTaken = Minutes.minutesBetween(new DateTime(testSession.startTime), new DateTime(testSession.endTime)).getMinutes() % 60;
+                    return testSession;
+                })
+                .sorted((t1, t2) -> Long.compare(t2.score, t1.score))
+                .collect(Collectors.toList());
     }
 
     public Long findTestTakerCount(Long testId){

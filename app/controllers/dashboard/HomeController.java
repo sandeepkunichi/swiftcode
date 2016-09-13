@@ -54,6 +54,14 @@ public class HomeController extends Controller implements MessageService {
         ));
     }
 
+    public Result slackRedirect() throws IOException {
+        AppUser loggedInUser = sessionService.getSessionUser();
+        return redirect("https://slack.com/oauth/authorize?" +
+                "scope=" + configuration.getString("slack.api.scope") + "&" +
+                "client_id=" + configuration.getString("slack.api.client_id") + "&" +
+                "state=" + loggedInUser.id + "&" +
+                "redirect_uri=" + configuration.getString("slack.api.redirect_url"));
+    }
 
     public Result getMessages(String channelId) throws ExecutionException, InterruptedException, IOException {
         String token = sessionService.getValue("access_token");
