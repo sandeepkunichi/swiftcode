@@ -1,6 +1,7 @@
 package models.test;
 
 import com.avaje.ebean.Model;
+import com.avaje.ebean.annotation.EnumValue;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
@@ -26,6 +27,14 @@ public class Test extends Model {
     @Transient
     public Long testTakerCount;
 
+    public TestStatus testStatus;
+
     public static Finder<Long, Test> find = new Finder<Long, Test>(Test.class);
 
+    public enum TestStatus {
+        @EnumValue("ACTIVE")
+        ACTIVE,
+        @EnumValue("DRAFT")
+        DRAFT
+    }
 }

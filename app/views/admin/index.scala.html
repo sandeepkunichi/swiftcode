@@ -54,21 +54,31 @@
                                     <p>No tests created yet</p>
                                 }else{
                                     <div class="row">
-                                        <div class="col-sm-6">
-                                            <h3 class="pull-left">Title</h3>
+                                        <div class="col-sm-4">
+                                            <h3>Title</h3>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <h3 class="pull-right">No. of takers</h3>
+                                        <div class="col-sm-4">
+                                            <h3>No. of takers</h3>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <h3>Status</h3>
                                         </div>
                                     </div>
                                 }
                                 @for(test <- tests){
                                     <div class="row">
-                                        <div class="col-sm-6">
-                                            <p class="pull-left">@test.title</p>
+                                        <div class="col-sm-4">
+                                            <p>@test.title</p>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <p class="pull-right">@test.testTakerCount</p>
+                                        <div class="col-sm-4">
+                                            <p>@test.testTakerCount</p>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            @if(test.testStatus == models.test.Test.TestStatus.DRAFT){
+                                            <input id="activate-test" class="btn btn-default btn-sm logoutbtn" type="button" value="Activate" onclick="activateTest('@test.id')"/>
+                                            }else{
+                                                <p>Active</p>
+                                            }
                                         </div>
                                     </div>
                                 }
@@ -151,3 +161,16 @@
         </div><!-- /.tab-content -->
     </div>
 </div>
+<script>
+    function activateTest(testId){
+        $("#activate-test").prop('disabled',true);
+        $.ajax({
+            url: '/test/activate/' + testId,
+            type: 'POST',
+            success: function(data){
+                $("#activate-test").prop('disabled',false);
+                window.location='/admin';
+            }
+        });
+    }
+</script>

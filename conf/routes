@@ -6,6 +6,7 @@
 
 GET     /admin                      controllers.admin.HomeController.index()
 POST    /test/create                controllers.admin.HomeController.createTest()
+POST    /test/activate/:testId      controllers.admin.HomeController.activateTest(testId: Long)
 
 GET     /test/start/:testId         controllers.test.TestSessionController.startTest(testId: Long)
 POST    /test/submit                controllers.test.TestSessionController.submitTest()

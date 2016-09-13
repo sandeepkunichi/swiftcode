@@ -45,8 +45,16 @@ public class HomeController extends Controller {
     public Result createTest(){
         Form<Test> testForm = formFactory.form(Test.class).bindFromRequest();
         Test test = testForm.get();
+        test.testStatus = Test.TestStatus.DRAFT;
         Test.db().insert(test);
         return redirect("/");
+    }
+
+    public Result activateTest(Long testId){
+        Test test = Test.find.byId(testId);
+        test.testStatus = Test.TestStatus.ACTIVE;
+        test.update();
+        return ok();
     }
 
 }
