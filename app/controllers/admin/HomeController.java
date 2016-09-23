@@ -57,4 +57,11 @@ public class HomeController extends Controller {
         return ok();
     }
 
+    public Result deactivateTest(Long testId){
+        Test test = Test.find.byId(testId);
+        test.testStatus = Test.TestStatus.DRAFT;
+        test.update();
+        return ok();
+    }
+
 }

@@ -38,7 +38,7 @@ public class SignupController extends Controller{
         if(userForm.hasErrors()){
             return ok(views.html.shared.signup.render(userForm.errorsAsJson()));
         }else{
-            if(!configuration.getList("allowedSignups").stream().anyMatch(x->x.equals(userForm.data().get("email")))){
+            if(!configuration.getList("allowedSignups").stream().anyMatch(x->x.toString().toLowerCase().equals(userForm.data().get("email").toLowerCase()))){
                 userForm.errors().put(
                         "message",
                         Collections.singletonList(new ValidationError("message", "This email is not recognized. Please use the email address where you received the signup link"))
