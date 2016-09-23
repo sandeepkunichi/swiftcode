@@ -9,7 +9,16 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
         <script type="text/javascript" src="/javascripts/test.min.js" charset="utf-8"></script>
-
+        <style>
+            .stuck {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            bottom: 10px;
+            width: 180px;
+            overflow-y: auto;
+            }
+        </style>
         <script type="text/javascript" charset="utf-8">
 
             if (!!window.EventSource) {
@@ -31,7 +40,7 @@
                 <div class="col-md-6 col-md-offset-3 white-panel">
                     <div class="row">
                         <div class="col-md-12">
-                            <h1 id="clock" class="pull-right"></h1>
+                            <h1 id="clock" class="pull-right stuck"></h1>
                         </div>
                     </div>
                     <div class="row">
@@ -48,14 +57,14 @@
                         @for((x,i) <- testSession.test.testQuestions.view.zipWithIndex){
                         <div class="panel panel-default">
                             <div class="panel-heading clearfix">
-                                <h3 class="panel-title pull-left">@(i+1))&nbsp;&nbsp;@x.question</h3>
+                                <h3 class="panel-title pull-left">@(i+1))&nbsp;&nbsp;@Html(x.question)</h3>
                             </div>
                             <div class="list-group">
                                 @for((y,j) <- x.testAnswers.view.zipWithIndex){
                                 <div class="list-group-item">
                                     <h4 class="list-group-item-text">
                                         <input type="radio" class="test.testQuestions[@i]" name="test.testQuestions[@i].testAnswers[@j].selected" value="1" onclick="choose(@i,@j)"/>
-                                        <input type="hidden" name="test.testQuestions[@i].testAnswers[@j].id" value="@testSession.test.testQuestions(i).testAnswers(j).id" />@y.answer
+                                        <input type="hidden" name="test.testQuestions[@i].testAnswers[@j].id" value="@testSession.test.testQuestions(i).testAnswers(j).id" />@Html(y.answer)
                                     </h4>
                                 </div>
                                 }
