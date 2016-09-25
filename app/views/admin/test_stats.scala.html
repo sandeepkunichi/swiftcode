@@ -15,10 +15,10 @@
                     <a aria-controls="home" data-target="#unsuccessful" data-toggle="tab" role="tab" style="cursor:default">Unsuccessful</a>
                 </li>
                 <li role="presentation">
-                    <a aria-controls="profile" data-target="#pending" data-toggle="tab" role="tab" style="cursor:default">Resumes Pending</a>
+                    <a aria-controls="profile" data-target="#pending" data-toggle="tab" role="tab" style="cursor:default">Pending Resumes</a>
                 </li>
                 <li role="presentation">
-                    <a aria-controls="home" data-target="#nontakers" data-toggle="tab" role="tab" style="cursor:default">Non-Takers</a>
+                    <a aria-controls="home" data-target="#nontakers" data-toggle="tab" role="tab" style="cursor:default">Skipped</a>
                 </li>
             </ul><!-- Tab panes -->
             <div class="tab-content">
@@ -86,7 +86,7 @@
 </div>
 <script type="text/javascript">
   var drawCharts = function() {
-    $("#barChart").empty();
+    $("#chart").empty();
     Morris.Donut({
       element: 'chart',
       data: [
@@ -94,7 +94,7 @@
         {label: 'Submitted', value: @testStats.getSubmittedSessionCount},
         {label: 'Unsuccessful', value: @testStats.getUnsuccessfulTestSubmitters.size},
         {label: 'Resume Pending', value: @testStats.getPendingResumes.size},
-        {label: 'Non-takers', value: @testStats.getNonTakers.size}
+        {label: 'Skipped', value: @testStats.getNonTakers.size}
       ]
     });
 
