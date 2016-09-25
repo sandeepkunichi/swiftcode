@@ -24,6 +24,10 @@
             if (!!window.EventSource) {
                 var stringSource = new EventSource("/test/liveClock/@testSession.id");
                 stringSource.addEventListener('message', function(e) {
+                    if(e.data <= 0){
+                        $("input:radio").attr('disabled',true);
+                        $("#testSubmit").click();
+                    }
                     $("#clock").html(secondsToHms(e.data));
                     $("#title").html("SwiftCode - " + secondsToHms(e.data));
                 });

@@ -7,10 +7,7 @@ import models.test.TestSession;
 import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -68,5 +65,23 @@ public class TestSessionService {
 
     public Long findTestTakerCount(Long testId){
         return findAllTestSessions().stream().filter(testSession -> Objects.equals(testSession.test.id, testId)).count();
+    }
+
+    public List<TestSession> getActiveTestSessions(Long testId){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        return TestSession.find.all().stream()
+                .filter(x -> {
+                    Date now = new Date();
+                    calendar.setTime(x.startTime);
+                    calendar.add(Calendar.MINUTE, 30);
+                    return !x.submitted && now.before(calendar.getTime()) && Objects.equals(x.test.id, testId);
+                }).collect(Collectors.toList());
+    }
+
+    public List<TestSession> getSubmittedTestSessions(Long testId){
+        return TestSession.find.all().stream()
+                .filter(x -> x.submitted && Objects.equals(x.test.id, testId))
+                .collect(Collectors.toList());
     }
 }

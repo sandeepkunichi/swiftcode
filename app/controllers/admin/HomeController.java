@@ -1,6 +1,7 @@
 package controllers.admin;
 
 import models.test.Test;
+import models.test.TestSession;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
@@ -61,6 +62,12 @@ public class HomeController extends Controller {
         Test test = Test.find.byId(testId);
         test.testStatus = Test.TestStatus.DRAFT;
         test.update();
+        return ok();
+    }
+
+    public Result deleteSession(Long sessionId){
+        TestSession testSession = TestSession.find.byId(sessionId);
+        testSession.delete();
         return ok();
     }
 

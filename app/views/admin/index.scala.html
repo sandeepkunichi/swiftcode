@@ -32,55 +32,62 @@
                     <div class="body">
                         <ul class="nav nav-tabs" role="tablist">
                             @if(user.role.toString == "ADMIN"){
-                                <li class="active" role="presentation">
-                                    <a aria-controls="home" data-target="#tests" data-toggle="tab" role="tab" style="cursor:default">All Tests</a>
-                                </li>
-                                <li role="presentation">
-                                    <a aria-controls="profile" data-target="#createtest" data-toggle="tab" role="tab" style="cursor:default">Create Test</a>
-                                </li>
-                                <li role="presentation">
-                                    <a aria-controls="home" data-target="#users" data-toggle="tab" role="tab" style="cursor:default">All Users</a>
-                                </li>
-                                <li role="presentation">
-                                    <a aria-controls="home" data-target="#results" data-toggle="tab" role="tab" style="cursor:default">Results</a>
-                                </li>
+                            <li class="active" role="presentation">
+                                <a aria-controls="home" data-target="#tests" data-toggle="tab" role="tab" style="cursor:default">All Tests</a>
+                            </li>
+                            <li role="presentation">
+                                <a aria-controls="profile" data-target="#createtest" data-toggle="tab" role="tab" style="cursor:default">Create Test</a>
+                            </li>
+                            <li role="presentation">
+                                <a aria-controls="home" data-target="#users" data-toggle="tab" role="tab" style="cursor:default">All Users</a>
+                            </li>
+                            <li role="presentation">
+                                <a aria-controls="home" data-target="#results" data-toggle="tab" role="tab" style="cursor:default">Results</a>
+                            </li>
                             }else{
-                                <script>window.location = "/logout"</script>
+                            <script>window.location = "/logout"</script>
                             }
                         </ul><!-- Tab panes -->
                         <div class="tab-content">
                             <div class="tab-pane active" id="tests" role="tabpanel">
                                 @if(tests.length == 0){
-                                    <p>No tests created yet</p>
+                                <p>No tests created yet</p>
                                 }else{
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <h3>Title</h3>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <h3>Session Count</h3>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <h3></h3>
-                                        </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <h3>Title</h3>
                                     </div>
+                                    <div class="col-sm-4">
+                                        <h3>Session Count</h3>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <h3></h3>
+                                    </div>
+                                </div>
                                 }
                                 @for(test <- tests){
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <p>@test.title</p>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <p>@test.testTakerCount</p>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            @if(test.testStatus == models.test.Test.TestStatus.DRAFT){
-                                            <input id="activate-test" class="btn btn-default btn-sm logoutbtn" type="button" value="Activate" onclick="activateTest('@test.id')"/>
-                                            }else{
-                                            <input id="deactivate-test" class="btn btn-default btn-sm logoutbtn" type="button" value="Deactivate" onclick="deactivateTest('@test.id')"/>
-                                            }
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <p>@test.title</p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <p>@test.testTakerCount</p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                @if(test.testStatus == models.test.Test.TestStatus.DRAFT){
+                                                <input id="activate-test" class="btn btn-default btn-sm logoutbtn" type="button" value="Activate" onclick="activateTest('@test.id')"/>
+                                                }else{
+                                                <input id="deactivate-test" class="btn btn-default btn-sm logoutbtn" type="button" value="Deactivate" onclick="deactivateTest('@test.id')"/>
+                                                }
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input class="btn btn-default btn-sm logoutbtn" type="button" value="Statistics" onclick="getTestStats('@test.id')"/>
+                                            </div>
                                         </div>
                                     </div>
+                                </div>
                                 }
                             </div>
                             <div class="tab-pane" id="createtest" role="tabpanel">
@@ -88,20 +95,20 @@
                             </div>
                             <div class="tab-pane" id="users" role="tabpanel">
                                 @if(users.length == 0){
-                                    <p>No users created yet</p>
+                                <p>No users created yet</p>
                                 }else{
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <h3>Email</h3>
-                                        </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h3>Email</h3>
                                     </div>
+                                </div>
                                 }
                                 @for(user <- users){
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <p>@user.email</p>
-                                        </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <p>@user.email</p>
                                     </div>
+                                </div>
                                 }
                             </div><!-- /.users -->
                             <div class="tab-pane" id="results" role="tabpanel">
@@ -154,7 +161,14 @@
                                 }
                             </div><!-- /.results -->
                         </div><!-- /.tab-content -->
-                        <br>
+                        <br />
+                        <div class="tab-content">
+                            <div class="row">
+                                <div class="col-sm-12" id="test-stats">
+                                </div>
+                            </div>
+                        </div>
+                        <br />
                     </div><!-- /.body -->
                 </div><!-- /.dashboard-second-half hometab -->
             </div><!-- /.dashboard-second-half vitalstab -->
@@ -182,6 +196,17 @@
             success: function(data){
                 $("#activate-test").prop('disabled',false);
                 window.location='/admin';
+            }
+        });
+    }
+
+    function getTestStats(testId){
+        $("#test-stats").html('<center><img alt="Loading" height="100" width="150" src="/images/loader.gif" /></center>');
+        $.ajax({
+            url: '/test/stats/' + testId,
+            type: 'GET',
+            success: function(data){
+                $("#test-stats").html(data);
             }
         });
     }

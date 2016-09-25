@@ -1,0 +1,124 @@
+@(testStats: data.TestStats)
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default bootcards-chart">
+            <div class="panel-heading">
+                <h3 class="panel-title">Test Statistics</h3>
+            </div>
+            <div class="bootcards-chart-canvas" id="chart"></div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="body">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active" role="presentation">
+                    <a aria-controls="home" data-target="#unsuccessful" data-toggle="tab" role="tab" style="cursor:default">Unsuccessful</a>
+                </li>
+                <li role="presentation">
+                    <a aria-controls="profile" data-target="#pending" data-toggle="tab" role="tab" style="cursor:default">Resumes Pending</a>
+                </li>
+                <li role="presentation">
+                    <a aria-controls="home" data-target="#nontakers" data-toggle="tab" role="tab" style="cursor:default">Non-Takers</a>
+                </li>
+            </ul><!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="unsuccessful" role="tabpanel">
+                    <div class="panel panel-default">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr class="active"><th>Email</th><th></th></tr>
+                                </thead>
+                                <tbody>
+                                @for(user <- testStats.getUnsuccessfulTestSubmitters){
+                                <tr ><td onclick="showUser('@user.id')" style="cursor:default">@user.email</td><td></td></tr>
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div><!-- /.unsuccessful -->
+                <div class="tab-pane" id="pending" role="tabpanel">
+                    <div class="panel panel-default">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr class="active"><th>Email</th><th></th></tr>
+                                </thead>
+                                <tbody>
+                                @for(user <- testStats.getPendingResumes){
+                                <tr><td style="cursor:default">@user.email</td><td></td></tr>
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div><!-- /.pending -->
+                <div class="tab-pane" id="nontakers" role="tabpanel">
+                    <div class="panel panel-default">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr class="active"><th>Email</th><th></th></tr>
+                                </thead>
+                                <tbody>
+                                @for(user <- testStats.getNonTakers){
+                                <tr><td style="cursor:default">@user.email</td><td></td></tr>
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div><!-- /.nontakers -->
+            </div><!-- /.tab-content -->
+        </div><!-- /.body -->
+    </div>
+</div>
+<div class="modal fade modal fade" id="user-modal">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content modal-placement">
+            <div class="modal-body">
+                <div id="user-stats"></div>
+                <button id="close-modal" class="btn btn-sm btn-warning" data-dismiss="modal"> OK </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+  var drawCharts = function() {
+    $("#barChart").empty();
+    Morris.Donut({
+      element: 'chart',
+      data: [
+        {label: 'Active', value: @testStats.getActiveSessionCount},
+        {label: 'Submitted', value: @testStats.getSubmittedSessionCount},
+        {label: 'Unsuccessful', value: @testStats.getUnsuccessfulTestSubmitters.size},
+        {label: 'Resume Pending', value: @testStats.getPendingResumes.size},
+        {label: 'Non-takers', value: @testStats.getNonTakers.size}
+      ]
+    });
+
+  }
+  $(document).ready( function() {
+    drawCharts();
+  });
+  $(window).on('resize', function() {
+    drawCharts();
+  });
+
+  function test(){
+    alert('test');
+  }
+
+  function showUser(userId){
+    $("#user-modal").modal('show');
+    $("#user-stats").html('<center><img alt="Loading" height="100" width="150" src="/images/loader.gif" /></center>');
+    $.ajax({
+        url: '/user/stats/' + userId,
+        type: 'GET',
+        success: function(data){
+            $("#user-stats").html(data);
+        }
+    });
+  }
+</script>

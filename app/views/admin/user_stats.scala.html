@@ -1,0 +1,62 @@
+@(userStats: data.UserStats)
+<div class="panel panel-default">
+    <div class="panel-heading clearfix">
+        <h3 class="panel-title pull-left">User Details</h3>
+    </div>
+    <div class="list-group">
+        <div class="list-group-item">
+            <h3 class="list-group-item-heading">Email</h3>
+            <p class="list-group-item-text">@userStats.getAppUser.email</p>
+        </div>
+        <div class="list-group-item">
+            <h3 class="list-group-item-heading">Resume</h3>
+            <p class="list-group-item-text">
+                <img src='/images/@userStats.getAppUser.resumeSubmitted.toString+.png' class="img-responsive" width="20" height="20" />
+            </p>
+        </div>
+        @if(session.size != 0){
+        <div class="list-group-item">
+            <div class="panel panel-default">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr class="active"><th>Test Name</th><th>Start</th><th></th></tr>
+                        </thead>
+                        <tbody>
+                        @for(session <- userStats.getSessions){
+                        <tr >
+                            <td style="cursor:default">@session.test.title</td>
+                            <td>@session.startTime</td>
+                            <td><a style="cursor:default" onclick="deleteSession('@session.id', '@session.testTaker.id', '@session.test.id')">Delete</a></td>
+                        </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+<script>
+    function deleteSession(sessionId, userId, testId){
+        bootbox.confirm("Are you sure?", function(result) {
+            if(result){
+                $.ajax({
+                    url: '/test/session/' + sessionId,
+                    type: 'DELETE',
+                    success: function(data){
+                        $("#user-modal").modal('hide');
+                        $.ajax({
+                            url: '/test/stats/' + testId,
+                            type: 'GET',
+                            success: function(data){
+                                $("#test-stats").html(data);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+</script>
