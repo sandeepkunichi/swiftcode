@@ -11,7 +11,7 @@
             <div class="col-md-10 header-second-half">
                 <header>
                     <span class="pull-right">
-                        <a href="mailto:swiftcode@@betsol.com" target="_top" class="btn btn-default btn-sm logoutbtn">I need help</a>
+                        <a href="mailto:swiftcode@@betsol.com" target="_top" class="btn btn-default btn-sm logoutbtn">Help</a>
                         <button class="btn btn-default btn-sm logoutbtn" onclick="window.location = '/logout'">Logout</button>
                     </span>
                 </header>
@@ -182,8 +182,15 @@
     });
 
     function startTest(testId){
-        bootbox.confirm("This action will start the test right away. Are you sure?", function(result) {
-            if(result){
+        var message = "This action will start the test right away. Are you sure?"
+        var supported = !!window.EventSource;
+        if(!supported){
+            message = "Your browser does not support our test. Please use Chrome/Firefox";
+        }
+        bootbox.confirm(message, function(result) {
+            if(!supported){
+                $(".btn-primary").prop('disabled', true);
+            }else if(result){
                 window.location = '/test/start/' + testId;
             }
         });

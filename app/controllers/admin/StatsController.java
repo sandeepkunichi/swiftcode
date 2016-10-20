@@ -15,10 +15,12 @@ public class StatsController extends Controller {
     @Inject
     StatsService statsService;
 
+    @AdminOnly
     public Result getTestStats(Long testId) throws IOException {
         return ok(views.html.admin.test_stats.render(statsService.getTestStats(testId)));
     }
 
+    @AdminOnly
     public Result getUserStats(Long userId) {
         return ok(views.html.admin.user_stats.render(statsService.getUserStats(userId)));
     }

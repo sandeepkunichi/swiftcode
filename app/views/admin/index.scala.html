@@ -54,35 +54,44 @@
                                 <p>No tests created yet</p>
                                 }else{
                                 <div class="row">
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
                                         <h3>Title</h3>
                                     </div>
-                                    <div class="col-sm-4">
-                                        <h3>Session Count</h3>
+                                    <div class="col-sm-1">
+                                        <h3>Count</h3>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-1">
+                                        <h3>Status</h3>
+                                    </div>
+                                    <div class="col-sm-7">
                                         <h3></h3>
                                     </div>
                                 </div>
                                 }
                                 @for(test <- tests){
                                 <div class="row">
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
                                         <p>@test.title</p>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-1">
                                         <p>@test.testTakerCount</p>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-1">
+                                        <p>@test.testStatus</p>
+                                    </div>
+                                    <div class="col-sm-7">
                                         <div class="row">
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-8 col-md-offset-1">
                                                 @if(test.testStatus == models.test.Test.TestStatus.DRAFT){
                                                 <input id="activate-test" class="btn btn-default btn-sm logoutbtn" type="button" value="Activate" onclick="activateTest('@test.id')"/>
+                                                <input id="edit-test" class="btn btn-default btn-sm logoutbtn" type="button" value="Edit" onclick="editTest('@test.id')"/>
+                                                <input id="clone-test" class="btn btn-default btn-sm logoutbtn" type="button" value="Clone" onclick="cloneTest('@test.id')"/>
+                                                <input id="delete-test" class="btn btn-default btn-sm logoutbtn" type="button" value="Delete" onclick="deleteTest('@test.id')"/>
                                                 }else{
                                                 <input id="deactivate-test" class="btn btn-default btn-sm logoutbtn" type="button" value="Deactivate" onclick="deactivateTest('@test.id')"/>
                                                 }
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-3">
                                                 <input class="btn btn-default btn-sm logoutbtn" type="button" value="Statistics" onclick="getTestStats('@test.id')"/>
                                             </div>
                                         </div>
@@ -195,6 +204,24 @@
             type: 'POST',
             success: function(data){
                 $("#activate-test").prop('disabled',false);
+                window.location='/admin';
+            }
+        });
+    }
+
+    function editTest(testId){
+        location.href = '/test/edit/' + testId;
+    }
+
+    function cloneTest(testId){
+        location.href = '/test/clone/' + testId;
+    }
+
+    function deleteTest(testId){
+        $.ajax({
+            url: '/test/delete/' + testId,
+            type: 'DELETE',
+            success: function(data){
                 window.location='/admin';
             }
         });

@@ -1,6 +1,8 @@
 package services;
 
 import models.test.Test;
+import models.test.TestAnswer;
+import models.test.TestQuestion;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -30,6 +32,24 @@ public class TestService {
                 .filter(test -> !appUserService.hasTakenTest(userId, test.id))
                 .filter(test -> test.testStatus == Test.TestStatus.ACTIVE)
                 .collect(Collectors.toList());
+    }
+
+    public Test cloneTest(Test test){
+        Test newTest = new Test();
+        newTest.testStatus = Test.TestStatus.DRAFT;
+        newTest.title = test.title + " (Clone)";
+        newTest.testTakerCount = 0L;
+        newTest.testQuestions = test.testQuestions
+                .stream()
+                .map(question ->
+                        new TestQuestion(question.question, question.testAnswers
+                                .stream()
+                                .map(answer ->
+                                        new TestAnswer(answer.answer, answer.isCorrect)
+                                ).collect(Collectors.toList()))
+                ).collect(Collectors.toList());
+        Test.db().insert(newTest);
+        return newTest;
     }
 
 }

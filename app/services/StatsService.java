@@ -3,6 +3,7 @@ package services;
 import data.TestStats;
 import data.UserStats;
 import models.AppUser;
+import models.test.Test;
 
 import javax.inject.Inject;
 
@@ -24,6 +25,7 @@ public class StatsService {
         testStats.setNonTakers(appUserService.getNonTakers(testId));
         testStats.setPendingResumes(appUserService.getPendingResumes(testId));
         testStats.setUnsuccessfulTestSubmitters(appUserService.getUnsuccessfulTakers(testId));
+        testStats.setTest(Test.find.byId(testId));
         return testStats;
     }
 

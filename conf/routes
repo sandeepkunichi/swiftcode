@@ -6,6 +6,10 @@
 
 GET     /admin                      controllers.admin.HomeController.index()
 POST    /test/create                controllers.admin.HomeController.createTest()
+GET     /test/edit/:testId          controllers.admin.HomeController.editTestView(testId: Long)
+GET     /test/clone/:testId         controllers.admin.HomeController.cloneTest(testId: Long)
+POST    /test/edit                  controllers.admin.HomeController.editTest()
+DELETE  /test/delete/:testId        controllers.admin.HomeController.deleteTest(testId: Long)
 POST    /test/activate/:testId      controllers.admin.HomeController.activateTest(testId: Long)
 POST    /test/deactivate/:testId    controllers.admin.HomeController.deactivateTest(testId: Long)
 GET     /test/stats/:testId         controllers.admin.StatsController.getTestStats(testId: Long)

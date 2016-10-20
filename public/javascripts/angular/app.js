@@ -37,4 +37,17 @@ app.controller('testController', function($scope, $http) {
         });
     }
 
+    $scope.updateTest = function(){
+        var request = $http({
+            method: "POST",
+            url: "/test/edit",
+            data: $scope.test
+        });
+        request.success(function(data) {
+            location.reload();
+        });
+        request.error(function(data) {
+            alert("Something went wrong while updating the test");
+        });
+    }
 });

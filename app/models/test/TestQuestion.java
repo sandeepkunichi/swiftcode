@@ -23,6 +23,11 @@ public class TestQuestion extends Model {
     @OneToMany(cascade = CascadeType.ALL)
     public List<TestAnswer> testAnswers;
 
+    public TestQuestion(String question, List<TestAnswer> testAnswers){
+        this.question = question;
+        this.testAnswers = testAnswers;
+    }
+
     public static Finder<Long, TestQuestion> find = new Finder<Long, TestQuestion>(TestQuestion.class);
 
 }

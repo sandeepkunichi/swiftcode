@@ -1,6 +1,7 @@
 package models.test;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class TestAnswer extends Model {
     public String answer;
 
     @ManyToOne
+    @JsonIgnore
     public TestQuestion testQuestion;
 
     @Constraints.Required
@@ -27,6 +29,11 @@ public class TestAnswer extends Model {
 
     @Transient
     public Boolean selected;
+
+    public TestAnswer(String answer, Boolean isCorrect){
+        this.answer = answer;
+        this.isCorrect = isCorrect;
+    }
 
     public static Finder<Long, TestAnswer> find = new Finder<Long, TestAnswer>(TestAnswer.class);
 

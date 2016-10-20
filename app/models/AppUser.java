@@ -46,6 +46,10 @@ public class AppUser extends Model{
 
     public static Model.Finder<Long, AppUser> find = new Model.Finder<Long, AppUser>(AppUser.class);
 
+    public Boolean isAdmin(){
+        return this.role.equals(Role.ADMIN);
+    }
+
     public enum Role {
         @EnumValue("ADMIN")
         ADMIN,

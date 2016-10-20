@@ -1,6 +1,7 @@
 package data;
 
 import models.AppUser;
+import models.test.Test;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
 public class TestStats {
     private Long activeSessionCount;
     private Long submittedSessionCount;
+    private Test test;
     private List<AppUser> unsuccessfulTestSubmitters;
     private List<AppUser> pendingResumes;
     private List<AppUser> nonTakers;
@@ -52,5 +54,13 @@ public class TestStats {
 
     public void setNonTakers(List<AppUser> nonTakers) {
         this.nonTakers = nonTakers;
+    }
+
+    public Test getTest() {
+        return test;
+    }
+
+    public void setTest(Test test) {
+        this.test = test;
     }
 }
