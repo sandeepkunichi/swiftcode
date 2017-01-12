@@ -56,10 +56,7 @@ public class LoginController extends Controller {
             return ok(views.html.shared.login.render(loginForm.errorsAsJson()));
         }
         sessionService.storeUserInSession(appUserService.getAppUserByEmail(loginForm.data().get("email")));
-        if(sessionService.getSessionUser().role == AppUser.Role.ADMIN)
-            return redirect("/admin");
-        else
-            return redirect("/dashboard");
+        return sessionService.getSessionUser().isAdmin() ? redirect("/admin") : redirect("/dashboard");
     }
 
     @NoAuthRequired
