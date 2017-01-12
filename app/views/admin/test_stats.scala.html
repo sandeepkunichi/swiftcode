@@ -47,7 +47,7 @@
                                 </thead>
                                 <tbody>
                                 @for(user <- testStats.getPendingResumes){
-                                <tr><td style="cursor:default">@user.email</td><td></td></tr>
+                                <tr><td onclick="showUser('@user.id')" style="cursor:default">@user.email</td><td></td></tr>
                                 }
                                 </tbody>
                             </table>
@@ -63,7 +63,7 @@
                                 </thead>
                                 <tbody>
                                 @for(user <- testStats.getNonTakers){
-                                <tr><td style="cursor:default">@user.email</td><td></td></tr>
+                                <tr><td onclick="showUser('@user.id')" style="cursor:default">@user.email</td><td></td></tr>
                                 }
                                 </tbody>
                             </table>
