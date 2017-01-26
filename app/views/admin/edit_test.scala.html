@@ -11,7 +11,8 @@
                         <br />
                         Title: <input class="form-control test-input" type="text" ng-model="test.title" required/><br/><br/>
                         Id: <input class="form-control test-input" readonly ng-model="test.id" required/><br/><br/>
-                        <input type="button" class="btn btn-default btn-sm" ng-click="addNewQuestion()" value="ADD QUESTION"><br/><br/>
+                        <input type="button" class="btn btn-default btn-sm" ng-click="addNewQuestion()" value="ADD QUESTION">
+                        <input type="button" class="btn btn-default btn-sm" ng-click="addNewProgrammingQuestion()" value="ADD PROGRAMMING QUESTION"><br/><br/>
                         <fieldset data-ng-repeat="testQuestion in test.testQuestions track by $index">
                             <p>Q-{{ $index + 1 }}</p>
                             <textarea class="form-control test-input" ng-model="testQuestion.question" required></textarea><br/><br/>
@@ -33,6 +34,11 @@
                                     </div>
                                 </fieldset>
                             </div>
+                        </fieldset>
+                        <fieldset data-ng-repeat="testProgram in test.testPrograms track by $index">
+                            <p>P-{{ $index + 1 }}</p>
+                            <textarea class="form-control test-input" ng-model="testProgram.programQuestion" required></textarea><br/><br/>
+                            <input type="button" class="btn btn-default btn-sm" ng-click="removeProgrammingQuestion($index)" value="REMOVE PROGRAMMING QUESTION"><br /><br />
                         </fieldset>
                     </div>
                 </div>

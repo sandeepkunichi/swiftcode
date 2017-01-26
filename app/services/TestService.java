@@ -2,6 +2,7 @@ package services;
 
 import models.test.Test;
 import models.test.TestAnswer;
+import models.test.TestProgram;
 import models.test.TestQuestion;
 
 import javax.inject.Inject;
@@ -48,6 +49,10 @@ public class TestService {
                                         new TestAnswer(answer.answer, answer.isCorrect)
                                 ).collect(Collectors.toList()))
                 ).collect(Collectors.toList());
+        newTest.testPrograms = test.testPrograms
+                .stream()
+                .map(programmingQuestion -> new TestProgram(programmingQuestion.programQuestion))
+                .collect(Collectors.toList());
         Test.db().insert(newTest);
         return newTest;
     }

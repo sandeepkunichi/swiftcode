@@ -446,6 +446,10 @@ TEST SESSION
     padding:0px;
 }
 
+.language-select {
+    width: 25%;
+
+}
 @media only screen and (max-device-width: 480px) {
     .main-tab-content {
     	padding: 0px !important;

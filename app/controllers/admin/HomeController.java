@@ -95,8 +95,7 @@ public class HomeController extends Controller {
 
     @AdminOnly
     public Result deleteSession(Long sessionId){
-        TestSession testSession = TestSession.find.byId(sessionId);
-        testSession.delete();
+        testSessionService.deleteSession(sessionId);
         return ok();
     }
 

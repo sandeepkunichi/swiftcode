@@ -1,6 +1,6 @@
 package controllers.test;
 
-import data.DashboardAlertType;
+import data.types.DashboardAlertType;
 import models.AppUser;
 import models.test.Test;
 import models.test.TestSession;

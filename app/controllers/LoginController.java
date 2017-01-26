@@ -2,7 +2,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import data.Channel;
-import data.DashboardAlertType;
+import data.types.DashboardAlertType;
 import forms.LoginForm;
 import models.AppUser;
 import play.Configuration;

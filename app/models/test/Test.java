@@ -24,6 +24,9 @@ public class Test extends Model {
     @OneToMany(cascade = CascadeType.ALL)
     public List<TestQuestion> testQuestions;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    public List<TestProgram> testPrograms;
+
     @Transient
     public Long testTakerCount;
 

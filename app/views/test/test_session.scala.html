@@ -54,40 +54,70 @@
                     </div>
                     <br />
                     <div id="test-div">
-                    <form id="test-data" method="POST" action="/test/submit">
-                        <input type="hidden" name="testTaker.id" value="@testSession.testTaker.id" />
-                        <input type="hidden" name="id" value="@testSession.id" />
-                        <input type="hidden" name="test.id" value="@testSession.test.id" />
-                        @for((x,i) <- testSession.test.testQuestions.view.zipWithIndex){
-                        <div class="panel panel-default">
-                            <div class="panel-heading clearfix">
-                                <h3 class="panel-title pull-left">@(i+1))&nbsp;&nbsp;@Html(x.question)</h3>
-                            </div>
-                            <div class="list-group">
-                                @for((y,j) <- x.testAnswers.view.zipWithIndex){
-                                <div class="list-group-item">
-                                    <h4 class="list-group-item-text">
-                                        <input type="radio" class="test.testQuestions[@i]" name="test.testQuestions[@i].testAnswers[@j].selected" value="1" onclick="choose(@i,@j)"/>
-                                        <input type="hidden" name="test.testQuestions[@i].testAnswers[@j].id" value="@testSession.test.testQuestions(i).testAnswers(j).id" />@Html(y.answer)
-                                    </h4>
+                        <form id="test-data" method="POST" action="/test/submit">
+                            <input type="hidden" name="testTaker.id" value="@testSession.testTaker.id" />
+                            <input type="hidden" name="id" value="@testSession.id" />
+                            <input type="hidden" name="test.id" value="@testSession.test.id" />
+                            @for((x,i) <- testSession.test.testQuestions.view.zipWithIndex){
+                            <div class="panel panel-default">
+                                <div class="panel-heading clearfix">
+                                    <h3 class="panel-title pull-left">@(i+1))&nbsp;&nbsp;@Html(x.question)</h3>
                                 </div>
-                                }
+                                <div class="list-group">
+                                    @for((y,j) <- x.testAnswers.view.zipWithIndex){
+                                    <div class="list-group-item">
+                                        <h4 class="list-group-item-text">
+                                            <input type="radio" class="test.testQuestions[@i]" name="test.testQuestions[@i].testAnswers[@j].selected" value="1" onclick="choose(@i,@j)"/>
+                                            <input type="hidden" name="test.testQuestions[@i].testAnswers[@j].id" value="@testSession.test.testQuestions(i).testAnswers(j).id" />@Html(y.answer)
+                                        </h4>
+                                    </div>
+                                    }
+                                </div>
                             </div>
-                        </div>
-                        }
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6 col-md-offset-3 center">
-                                <button type="submit" onclick="warn=false;" id="testSubmit" class="btn btn-primary margin-top-20"> SUBMIT </button>
+                            }
+                            <br />
+                            @for((x,i) <- testSession.test.testPrograms.view.zipWithIndex){
+                            <div class="panel panel-default">
+                                <div class="panel-heading clearfix">
+                                    <h3 class="panel-title pull-left">@(i+1))&nbsp;&nbsp;@Html(x.programQuestion)</h3>
+                                </div>
+                                <input type="hidden" name="programSubmissions[@i].testProgram.id" value="@x.id" />
+                                <!--<input type="hidden" name="programSubmissions[@i].programText" value="" />-->
+                                @code_session("programSubmissions[" + i + "]")
                             </div>
-                        </div>
-                        <br />
-                    </form>
+                            }
+                            <br />
+                            <div class="row">
+                                <div class="col-md-6 col-md-offset-3 center">
+                                    <button type="submit" onclick="warn=false;" id="testSubmit" class="btn btn-primary margin-top-20"> SUBMIT </button>
+                                </div>
+                            </div>
+                            <br />
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $("select").on('change', function () {
+        $(this).prev().remove();
+        changeMode(this.value, this.id);
+    });
+
+    var keyMap = {"JAVA":"text/x-java", "CPP":"text/x-c++src", "C":"text/x-csrc", "PYTHON":"python"};
+
+    function changeMode(mode, id){
+        var area = document.getElementById("codeArea-" + id);
+        var editor = CodeMirror.fromTextArea(area, {
+            lineNumbers: true,
+            theme: "dracula",
+            styleActiveLine: true,
+            matchBrackets: true,
+            mode: keyMap[mode]
+        });
+    }
+</script>
 </body>
 </html>

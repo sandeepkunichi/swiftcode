@@ -1,6 +1,8 @@
 package services;
 
+import com.avaje.ebean.Model;
 import models.AppUser;
+import models.test.ProgramSubmission;
 import models.test.Test;
 import models.test.TestAnswer;
 import models.test.TestSession;
@@ -83,5 +85,12 @@ public class TestSessionService {
         return TestSession.find.all().stream()
                 .filter(x -> x.submitted && Objects.equals(x.test.id, testId))
                 .collect(Collectors.toList());
+    }
+
+    public void deleteSession(Long sessionId){
+        List<ProgramSubmission> programSubmissions = ProgramSubmission.find.where().eq("test_session_id", sessionId).findList();
+        programSubmissions.forEach(Model::delete);
+        TestSession testSession = TestSession.find.byId(sessionId);
+        testSession.delete();
     }
 }

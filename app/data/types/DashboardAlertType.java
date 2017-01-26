@@ -1,4 +1,4 @@
-package data;
+package data.types;
 
 /**
  * Created by Sandeep.K on 9/11/2016.

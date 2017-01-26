@@ -2,6 +2,7 @@ var app = angular.module('swiftCodeApp', []);
 app.controller('testController', function($scope, $http) {
     $scope.test = {};
     $scope.test.testQuestions = [];
+    $scope.test.testPrograms = [];
 
     $scope.addNewQuestion = function() {
         var testQuestion = {
@@ -50,4 +51,15 @@ app.controller('testController', function($scope, $http) {
             alert("Something went wrong while updating the test");
         });
     }
+
+    $scope.addNewProgrammingQuestion = function(){
+        var testProgram = {
+           programQuestion : ""
+        };
+        $scope.test.testPrograms.push(testProgram);
+    }
+
+    $scope.removeProgrammingQuestion = function (index) {
+        $scope.test.testPrograms.splice(index, 1);
+    };
 });
