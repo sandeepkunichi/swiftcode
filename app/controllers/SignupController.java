@@ -38,18 +38,25 @@ public class SignupController extends Controller{
         if(userForm.hasErrors()){
             return ok(views.html.shared.signup.render(userForm.errorsAsJson()));
         }else{
-            if(!configuration.getList("allowedSignups").stream().anyMatch(x->x.toString().toLowerCase().equals(userForm.data().get("email").toLowerCase()))){
-                userForm.errors().put(
-                        "message",
-                        Collections.singletonList(new ValidationError("message", "This email is not recognized. Please use the email address where you received the signup link"))
-                );
-                return ok(views.html.shared.signup.render(userForm.errorsAsJson()));
+            if(configuration.getBoolean("closedSignup")){
+                closedLogin(userForm);
             }
             AppUser appUser = new AppUser(userForm.data().get("email"), userForm.data().get("password"));
             AppUser.db().save(appUser);
             sessionService.storeUserInSession(appUser);
         }
         return redirect("/dashboard");
+    }
+
+    public Result closedLogin(Form<SignupForm> userForm){
+        if(!configuration.getList("allowedSignups").stream().anyMatch(x->x.toString().toLowerCase().equals(userForm.data().get("email").toLowerCase()))){
+            userForm.errors().put(
+                    "message",
+                    Collections.singletonList(new ValidationError("message", "This email is not recognized. Please use the email address where you received the signup link"))
+            );
+            return ok(views.html.shared.signup.render(userForm.errorsAsJson()));
+        }
+        return null;
     }
 
 }
