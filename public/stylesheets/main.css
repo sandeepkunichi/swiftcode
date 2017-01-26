@@ -448,8 +448,18 @@ TEST SESSION
 
 .language-select {
     width: 25%;
+    margin: 10px;
+}
+
+.compile-error {
+    color: red;
+    margin: 10px;
+}
+
+.compile-button {
 
 }
+
 @media only screen and (max-device-width: 480px) {
     .main-tab-content {
     	padding: 0px !important;

@@ -118,6 +118,23 @@
             mode: keyMap[mode]
         });
     }
+
+    function compileProgram(id){
+        var r = /\d+/;
+        var index = id.match(r);
+        $.ajax({
+            url: '/program/execute',
+            type: 'POST',
+            data: {
+                "id": '@testSession.id' + index,
+                "programText": $("input[name='"+id+".testProgram.id']").next().find(".CodeMirror .CodeMirror-line").text(),
+                "languageType": $("select[id='"+id+"']").val()
+            },
+            success: function(data){
+                $("p[id='error-"+id+"']").html(data);
+            }
+        });
+    }
 </script>
 </body>
 </html>
