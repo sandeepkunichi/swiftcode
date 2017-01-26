@@ -39,6 +39,7 @@ public class ProgramController extends Controller {
     public CompletionStage<Result> execute() throws IOException, InterruptedException {
         Form<ProgramSubmission> programSubmissionForm = formFactory.form(ProgramSubmission.class).bindFromRequest();
         ProgramSubmission programSubmission = programSubmissionForm.get().preProcess(configuration);
+        // TODO Have increased the timeout to a big number, since it throws exception if we have a debug point
         return FutureConverters
                 .toJava(ask(
                         programExecutionActor,
@@ -49,7 +50,7 @@ public class ProgramController extends Controller {
                                         programSubmission
                                 )
                         ),
-                        10000))
+                        100000000))
                 .thenApply(response -> ok(((ProgramExecutionEvent) response).getOutput()));
     }
 }

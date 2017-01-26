@@ -100,6 +100,8 @@
         </div>
     </div>
 </div>
+
+<!-- TODO Make hint work-->
 <script>
     $("select").on('change', function () {
         $(this).prev().remove();
@@ -115,7 +117,8 @@
             theme: "dracula",
             styleActiveLine: true,
             matchBrackets: true,
-            mode: keyMap[mode]
+            mode: keyMap[mode],
+            extraKeys: {"Ctrl-Space": "autocomplete"}
         });
     }
 

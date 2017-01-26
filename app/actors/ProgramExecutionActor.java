@@ -40,6 +40,7 @@ public class ProgramExecutionActor extends UntypedActor {
 
             BufferedReader stdError = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
 
+            // TODO Errors are not proper on the UI. Line breaks especially
             executionEvent.setOutput(
                     stdError.readLine() == null ? "Compilation Successful" : stdError.lines().collect(Collectors.joining()).replace(executionEvent.getConfiguration().getBinaryRoot(), "")
             );
