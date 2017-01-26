@@ -122,12 +122,21 @@
     function compileProgram(id){
         var r = /\d+/;
         var index = id.match(r);
+        var codeText = "";
+
+        $("input[name='programSubmissions[0].testProgram.id']")
+        .next()
+        .find(".CodeMirror .CodeMirror-line")
+        .each(function(){
+            codeText = codeText + $(this).text() + "\n";
+        })
+
         $.ajax({
             url: '/program/execute',
             type: 'POST',
             data: {
                 "id": '@testSession.id' + index,
-                "programText": $("input[name='"+id+".testProgram.id']").next().find(".CodeMirror .CodeMirror-line").text(),
+                "programText": codeText,
                 "languageType": $("select[id='"+id+"']").val()
             },
             success: function(data){

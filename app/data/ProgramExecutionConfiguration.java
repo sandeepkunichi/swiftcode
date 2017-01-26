@@ -59,7 +59,7 @@ public class ProgramExecutionConfiguration {
             case JAVA:
                 return "javac";
             case CPP:
-                return "gcc";
+                return "g++";
             case PYTHON:
                 return "python";
             default:
