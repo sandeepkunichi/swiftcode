@@ -453,6 +453,13 @@ TEST SESSION
 
 .compile-error {
     color: red;
+}
+
+.compile-success {
+    color: green;
+}
+
+.compile-output {
     margin: 10px;
 }
 

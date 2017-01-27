@@ -1,0 +1,6 @@
+@(output: String, success: Boolean)
+@if(success){
+    <div class="compile-success">@Html(output)</div>
+}else{
+    <div class="compile-error">@Html(output)</div>
+}

@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 public class ProgramExecutionActor extends UntypedActor {
 
     public static Props props = Props.create(ProgramExecutionActor.class);
+    private final String LINE_BREAK = "<br />";
 
     @Override
     public void onReceive(Object message) throws Exception {
@@ -40,9 +41,12 @@ public class ProgramExecutionActor extends UntypedActor {
 
             BufferedReader stdError = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
 
-            // TODO Errors are not proper on the UI. Line breaks especially
-            executionEvent.setOutput(
-                    stdError.readLine() == null ? "Compilation Successful" : stdError.lines().collect(Collectors.joining()).replace(executionEvent.getConfiguration().getBinaryRoot(), "")
+            executionEvent.setOutput(stdError.readLine() == null ?
+                    views.html.test.code_error.render("Compilation Successful", true).body() :
+                    views.html.test.code_error.render(stdError.lines()
+                            .map(line -> line + LINE_BREAK)
+                            .collect(Collectors.joining())
+                            .replace(executionEvent.getConfiguration().getBinaryRoot(), ""), false).body()
             );
 
             sender().tell(executionEvent, self());

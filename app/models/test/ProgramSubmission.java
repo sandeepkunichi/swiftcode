@@ -36,13 +36,15 @@ public class ProgramSubmission extends Model {
     // TODO Ideally, we would put the default template in the editor for the user, so we don't require this
     public ProgramSubmission preProcess(Configuration configuration){
         if(this.languageType.equals(LanguageType.JAVA)){
-            /*this.programText = MessageFormat.format(
+            this.programText = MessageFormat.format(
                     configuration.getString("programPreProcessing." + this.languageType),
-                    this.id.toString(), this.programText
-            );*/
+                    this.id.toString(), this.programText.trim().replaceAll("\u200B|\u200Cc|\u200Dd|\uFEFFe", "")
+            );
+            /*
             // The replaceAll is because "our editor" was adding a zero-width character at the end and compilation was failing
             this.programText = "public class " + this.languageType + this.id.toString() + "{" + "\n\n\t"
                     + "static " + this.programText.trim().replaceAll("\u200B|\u200Cc|\u200Dd|\uFEFFe", "") + "\n}";
+            */
         }
         return this;
     }

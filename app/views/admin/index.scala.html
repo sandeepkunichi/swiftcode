@@ -229,7 +229,7 @@
     }
 
     function getTestStats(testId){
-        $("#test-stats").html('<center><img alt="Loading" height="100" width="150" src="/images/loader.gif" /></center>');
+        $("#test-stats").html('@shared.loader()');
         $.ajax({
             url: '/test/stats/' + testId,
             type: 'GET',

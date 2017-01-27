@@ -4,7 +4,7 @@
         <textarea name="@path\\.programText" id="codeArea-@path"></textarea>
         <select class="form-control language-select" id="@path" name="@path\\.languageType">
             <option value="JAVA">Java</option>
-            <!--<option value="CPP">C++</option>-->
+            <option value="CPP">C++</option>
             <option value="C">C</option>
             <option value="PYTHON">Python</option>
         </select>
@@ -16,7 +16,8 @@
             theme: "dracula",
             styleActiveLine: true,
             matchBrackets: true,
-            mode: "text/x-java"
+            mode: "text/x-java",
+            extraKeys: {"Ctrl-Space": "autocomplete"}
         });
     </script>
 </div>
@@ -27,6 +28,6 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <p class="compile-error" id="error-@path"></p>
+        <div class="compile-output" id="error-@path"></div>
     </div>
 </div>
