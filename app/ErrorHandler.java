@@ -1,3 +1,4 @@
+import akka.pattern.AskTimeoutException;
 import play.http.HttpErrorHandler;
 import play.mvc.Http.RequestHeader;
 import play.mvc.Result;
@@ -24,6 +25,9 @@ public class ErrorHandler implements HttpErrorHandler {
 
     public CompletionStage<Result> onServerError(RequestHeader request, Throwable exception) {
         exception.printStackTrace();
+        if(exception.getCause() instanceof AskTimeoutException){
+            return CompletableFuture.completedFuture(ok(views.html.test.code_error.render("Your program took too long to execute", false)));
+        }
         return CompletableFuture.completedFuture(ok(views.html.shared.error.render("Something went wrong")));
     }
 

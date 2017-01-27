@@ -2,6 +2,7 @@ package models.test;
 
 import com.avaje.ebean.Model;
 import data.types.LanguageType;
+import org.apache.commons.lang3.StringEscapeUtils;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
@@ -34,10 +35,10 @@ public class ProgramSubmission extends Model {
     // TODO Ideally, we would put the default template in the editor for the user, so we don't require this
     public ProgramSubmission preProcess(){
         if(this.languageType.equals(LanguageType.JAVA)){
-            this.programText = views.html.templates.java_template.render(
+            this.programText = StringEscapeUtils.unescapeHtml4(views.html.templates.java_template.render(
                     this.id,
                     this.programText.trim().replaceAll("\u200B|\u200Cc|\u200Dd|\uFEFFe", "")
-            ).body();
+            ).body());
         }
         return this;
     }
