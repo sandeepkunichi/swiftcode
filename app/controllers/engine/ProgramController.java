@@ -38,7 +38,7 @@ public class ProgramController extends Controller {
 
     public CompletionStage<Result> execute() throws IOException, InterruptedException {
         Form<ProgramSubmission> programSubmissionForm = formFactory.form(ProgramSubmission.class).bindFromRequest();
-        ProgramSubmission programSubmission = programSubmissionForm.get().preProcess(configuration);
+        ProgramSubmission programSubmission = programSubmissionForm.get().preProcess();
         return FutureConverters
                 .toJava(ask(
                         programExecutionActor,

@@ -2,11 +2,9 @@ package models.test;
 
 import com.avaje.ebean.Model;
 import data.types.LanguageType;
-import play.Configuration;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
-import java.text.MessageFormat;
 
 /**
  * Created by Sandeep.K on 25-01-2017.
@@ -34,17 +32,12 @@ public class ProgramSubmission extends Model {
     public static Finder<Long, ProgramSubmission> find = new Finder<>(ProgramSubmission.class);
 
     // TODO Ideally, we would put the default template in the editor for the user, so we don't require this
-    public ProgramSubmission preProcess(Configuration configuration){
+    public ProgramSubmission preProcess(){
         if(this.languageType.equals(LanguageType.JAVA)){
-            this.programText = MessageFormat.format(
-                    configuration.getString("programPreProcessing." + this.languageType),
-                    this.id.toString(), this.programText.trim().replaceAll("\u200B|\u200Cc|\u200Dd|\uFEFFe", "")
-            );
-            /*
-            // The replaceAll is because "our editor" was adding a zero-width character at the end and compilation was failing
-            this.programText = "public class " + this.languageType + this.id.toString() + "{" + "\n\n\t"
-                    + "static " + this.programText.trim().replaceAll("\u200B|\u200Cc|\u200Dd|\uFEFFe", "") + "\n}";
-            */
+            this.programText = views.html.templates.java_template.render(
+                    this.id,
+                    this.programText.trim().replaceAll("\u200B|\u200Cc|\u200Dd|\uFEFFe", "")
+            ).body();
         }
         return this;
     }
