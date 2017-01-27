@@ -27,12 +27,14 @@ public class Test extends Model {
     @OneToMany(cascade = CascadeType.ALL)
     public List<TestProgram> testPrograms;
 
+    public Long testDuration;
+
     @Transient
     public Long testTakerCount;
 
     public TestStatus testStatus;
 
-    public static Finder<Long, Test> find = new Finder<Long, Test>(Test.class);
+    public static Model.Finder<Long, Test> find = new Model.Finder<>(Test.class);
 
     public enum TestStatus {
         @EnumValue("ACTIVE")

@@ -28,13 +28,13 @@ public class ProgramExecutionConfiguration {
     public String getBinaryFileName() {
         switch (programSubmission.languageType){
             case C:
-                return binaryRoot + programSubmission.languageType + programSubmission.id + ".c";
+                return binaryRoot + programSubmission.languageType + programSubmission.programIndex + ".c";
             case JAVA:
-                return binaryRoot + programSubmission.languageType + programSubmission.id + ".java";
+                return binaryRoot + programSubmission.languageType + programSubmission.programIndex + ".java";
             case CPP:
-                return binaryRoot + programSubmission.languageType + programSubmission.id + ".cpp";
+                return binaryRoot + programSubmission.languageType + programSubmission.programIndex + ".cpp";
             case PYTHON:
-                return binaryRoot + programSubmission.languageType + programSubmission.id + ".py";
+                return binaryRoot + programSubmission.languageType + programSubmission.programIndex + ".py";
             default:
                 return null;
         }

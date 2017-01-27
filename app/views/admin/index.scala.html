@@ -126,46 +126,38 @@
                                 <p>No test sessions taken</p>
                                 }else{
                                 <div class="row">
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-4">
                                         <h3>Test Title</h3>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <h3>Start</h3>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <h3>End</h3>
                                     </div>
                                     <div class="col-sm-1">
                                         <h3>Score</h3>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
                                         <h3>Email</h3>
                                     </div>
-                                    <div class="col-sm-1">
-                                        <h3>Time</h3>
-                                        <p>(Minutes)</p>
+                                    <div class="col-sm-2">
+                                        <h3>Time (Minutes)</h3>
+                                    </div>
+                                    <div class="col-sm-2">
                                     </div>
                                 </div>
                                 }
                                 @for(testSession <- testSessions){
                                 <div class="row">
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-4">
                                         <p>@testSession.test.title</p>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <p>@testSession.startTime</p>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <p>@testSession.endTime</p>
                                     </div>
                                     <div class="col-sm-1">
                                         <p>@testSession.score</p>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
                                         <p>@testSession.testTaker.email</p>
                                     </div>
-                                    <div class="col-sm-1">
+                                    <div class="col-sm-2">
                                         <p>@testSession.timeTaken</p>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <input id="view-test-session" class="btn btn-default btn-sm logoutbtn" type="button" value="View" onclick="viewTestSession('@testSession.id')"/>
                                     </div>
                                 </div>
                                 }
@@ -183,6 +175,16 @@
                 </div><!-- /.dashboard-second-half hometab -->
             </div><!-- /.dashboard-second-half vitalstab -->
         </div><!-- /.tab-content -->
+    </div>
+</div>
+<div class="modal fade modal fade" id="user-modal">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content modal-placement">
+            <div class="modal-body">
+                <div id="user-stats"></div>
+                <button id="close-modal" class="btn btn-sm btn-warning" data-dismiss="modal"> OK </button>
+            </div>
+        </div>
     </div>
 </div>
 <script>
@@ -235,6 +237,18 @@
             type: 'GET',
             success: function(data){
                 $("#test-stats").html(data);
+            }
+        });
+    }
+
+    function viewTestSession(sessionId){
+        $("#user-modal").modal('show');
+        $("#user-stats").html('@shared.loader()');
+        $.ajax({
+            url: '/test/session/stats/' + sessionId,
+            type: 'GET',
+            success: function(data){
+                $("#user-stats").html(data);
             }
         });
     }

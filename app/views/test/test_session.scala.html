@@ -100,7 +100,6 @@
         </div>
     </div>
 </div>
-
 <script>
     $("select").on('change', function () {
         $(this).prev().remove();
@@ -138,7 +137,7 @@
             url: '/program/execute',
             type: 'POST',
             data: {
-                "id": '@testSession.id' + index,
+                "programIndex": '_@testSession.id' + '_' + index,
                 "programText": codeText,
                 "languageType": $("select[id='"+id+"']").val()
             },

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import models.test.Test;
-import models.test.TestSession;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;

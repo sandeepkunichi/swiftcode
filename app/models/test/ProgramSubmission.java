@@ -30,13 +30,24 @@ public class ProgramSubmission extends Model {
     @Constraints.Required
     public LanguageType languageType;
 
+    @Transient
+    public String programIndex;
+
+    public String getProgramTextView(){
+        return "<code>" + this.programText.replaceAll(" ", "&nbsp;").replaceAll("(\r\n|\n)", "<br />").trim() + "</code>";
+    }
+
+    public String getProgramQuestion(){
+        return this.testProgram.programQuestion;
+    }
+
     public static Finder<Long, ProgramSubmission> find = new Finder<>(ProgramSubmission.class);
 
     // TODO Ideally, we would put the default template in the editor for the user, so we don't require this
     public ProgramSubmission preProcess(){
         if(this.languageType.equals(LanguageType.JAVA)){
             this.programText = StringEscapeUtils.unescapeHtml4(views.html.templates.java_template.render(
-                    this.id,
+                    this.programIndex,
                     this.programText.trim().replaceAll("\u200B|\u200Cc|\u200Dd|\uFEFFe", "")
             ).body());
         }

@@ -25,4 +25,9 @@ public class StatsController extends Controller {
         return ok(views.html.admin.user_stats.render(statsService.getUserStats(userId)));
     }
 
+    @AdminOnly
+    public Result getTestSessionStats(Long testSessionId) {
+        return ok(views.html.admin.view_test_session.render(statsService.getTestSession(testSessionId)));
+    }
+
 }

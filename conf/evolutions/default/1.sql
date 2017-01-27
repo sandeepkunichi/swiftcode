@@ -26,6 +26,7 @@ create table program_submission (
 create table test (
   id                        bigint auto_increment not null,
   title                     varchar(255),
+  test_duration             bigint,
   test_status               varchar(6),
   constraint ck_test_test_status check (test_status in ('ACTIVE','DRAFT')),
   constraint pk_test primary key (id))

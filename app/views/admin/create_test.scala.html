@@ -6,7 +6,14 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <br />
-                        Title: <input class="form-control test-input" type="text" ng-model="test.title" required/><br/><br/>
+                        <div class="row">
+                            <div class="col-md-9">
+                                Title: <input class="form-control test-input" type="text" ng-model="test.title" required/><br/><br/>
+                            </div>
+                            <div class="col-md-3">
+                                Duration (in minutes): <input class="form-control test-input" type="number" ng-model="test.testDuration" required/><br/><br/>
+                            </div>
+                        </div>
                         <input type="button" class="btn btn-default btn-sm" ng-click="addNewQuestion()" value="ADD QUESTION">
                         <input type="button" class="btn btn-default btn-sm" ng-click="addNewProgrammingQuestion()" value="ADD PROGRAMMING QUESTION"><br/><br/><br/><br/>
                         <fieldset data-ng-repeat="testQuestion in test.testQuestions track by $index">

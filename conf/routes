@@ -14,6 +14,7 @@ POST    /test/activate/:testId      controllers.admin.HomeController.activateTes
 POST    /test/deactivate/:testId    controllers.admin.HomeController.deactivateTest(testId: Long)
 GET     /test/stats/:testId         controllers.admin.StatsController.getTestStats(testId: Long)
 GET     /user/stats/:userId         controllers.admin.StatsController.getUserStats(userId: Long)
+GET     /test/session/stats/:id     controllers.admin.StatsController.getTestSessionStats(id: Long)
 DELETE  /test/session/:sessionId    controllers.admin.HomeController.deleteSession(sessionId: Long)
 
 GET     /test/start/:testId         controllers.test.TestSessionController.startTest(testId: Long)
