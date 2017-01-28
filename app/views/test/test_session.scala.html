@@ -126,7 +126,7 @@
         var index = id.match(r);
         var codeText = "";
 
-        $("input[name='programSubmissions[0].testProgram.id']")
+        $("input[name='"+id+".testProgram.id']")
         .next()
         .find(".CodeMirror .CodeMirror-line")
         .each(function(){

@@ -1,10 +1,14 @@
 package controllers.engine;
 
-import actors.ProgramExecutionActor;
+import actors.DispatcherActor;
+import actors.ProgramCreationActor;
+import actors.ProgramCompilationActor;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import data.ProgramExecutionConfiguration;
-import events.ProgramExecutionEvent;
+import events.DispatchEvent;
+import events.ProgramCreationEvent;
+import events.ProgramCompilationEvent;
 import models.test.ProgramSubmission;
 import play.Configuration;
 import play.data.Form;
@@ -16,6 +20,7 @@ import scala.compat.java8.FutureConverters;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.ExecutionException;
 
 import static akka.pattern.Patterns.ask;
 /**
@@ -29,27 +34,42 @@ public class ProgramController extends Controller {
     @Inject
     Configuration configuration;
 
-    final ActorRef programExecutionActor;
+    final ActorRef programCompilationActor;
+    final ActorRef programCreationActor;
+    final ActorRef dispatcherActor;
 
     @Inject
     public ProgramController(ActorSystem system) {
-        this.programExecutionActor = system.actorOf(ProgramExecutionActor.props);
+        this.programCreationActor = system.actorOf(ProgramCreationActor.props);
+        this.programCompilationActor = system.actorOf(ProgramCompilationActor.props);
+        this.dispatcherActor = system.actorOf(DispatcherActor.props);
     }
 
-    public CompletionStage<Result> execute() throws IOException, InterruptedException {
+    public CompletionStage<Result> execute() throws IOException, InterruptedException, ExecutionException {
         Form<ProgramSubmission> programSubmissionForm = formFactory.form(ProgramSubmission.class).bindFromRequest();
+
         ProgramSubmission programSubmission = programSubmissionForm.get().preProcess();
+
+        ProgramExecutionConfiguration programExecutionConfiguration = new ProgramExecutionConfiguration(
+                configuration.getString("binaryRoot"),
+                programSubmission
+        );
+
+        ProgramCreationEvent programCreationEvent = new ProgramCreationEvent(
+                programSubmission,
+                programExecutionConfiguration
+        );
+
+        ProgramCompilationEvent programCompilationEvent = new ProgramCompilationEvent(
+                programSubmission,
+                programExecutionConfiguration
+        );
+
+        DispatchEvent dispatchEvent = new DispatchEvent(programCreationEvent, programCompilationEvent, programCreationActor, programCompilationActor);
+
         return FutureConverters
-                .toJava(ask(
-                        programExecutionActor,
-                        new ProgramExecutionEvent(
-                                programSubmission,
-                                new ProgramExecutionConfiguration(
-                                        configuration.getString("binaryRoot"),
-                                        programSubmission
-                                )
-                        ),
-                        10000))
-                .thenApply(response -> ok(((ProgramExecutionEvent) response).getOutput()));
+                .toJava(ask(dispatcherActor, dispatchEvent, 10000))
+                .thenApply(response -> ok(((DispatchEvent) response).getOutput()));
+
     }
 }

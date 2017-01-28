@@ -4,15 +4,15 @@ import data.ProgramExecutionConfiguration;
 import models.test.ProgramSubmission;
 
 /**
- * Created by Sandeep.K on 26-01-2017.
+ * Created by Sandeep.K on 28-01-2017.
  */
-public class ProgramExecutionEvent {
+public class ProgramCreationEvent {
 
     private ProgramSubmission programSubmission;
     private ProgramExecutionConfiguration configuration;
-    public String output;
+    private Boolean creationResult;
 
-    public ProgramExecutionEvent(ProgramSubmission programSubmission, ProgramExecutionConfiguration configuration) {
+    public ProgramCreationEvent(ProgramSubmission programSubmission, ProgramExecutionConfiguration configuration) {
         this.programSubmission = programSubmission;
         this.configuration = configuration;
     }
@@ -25,19 +25,19 @@ public class ProgramExecutionEvent {
         this.programSubmission = programSubmission;
     }
 
-    public String getOutput() {
-        return output;
-    }
-
-    public void setOutput(String output) {
-        this.output = output;
-    }
-
     public ProgramExecutionConfiguration getConfiguration() {
         return configuration;
     }
 
     public void setConfiguration(ProgramExecutionConfiguration configuration) {
         this.configuration = configuration;
+    }
+
+    public Boolean getCreationResult() {
+        return creationResult;
+    }
+
+    public void setCreationResult(Boolean creationResult) {
+        this.creationResult = creationResult;
     }
 }
