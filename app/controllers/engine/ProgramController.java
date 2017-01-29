@@ -80,8 +80,8 @@ public class ProgramController extends Controller {
 
     private Result getExecutionResult(Object object){
         try {
-            return ((CompletableFuture<Result>) object).get();
-        } catch (InterruptedException | ExecutionException e) {
+            return (Result) ((CompletableFuture) object).get();
+        } catch (InterruptedException | ExecutionException e){
             return ok(programExecutionResponse.getCompilationTimeout());
         }
     }
