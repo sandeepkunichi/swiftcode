@@ -15,6 +15,7 @@ import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
+import responses.ProgramExecutionResponse;
 import scala.compat.java8.FutureConverters;
 
 import javax.inject.Inject;
@@ -35,6 +36,9 @@ public class ProgramController extends Controller {
 
     @Inject
     Configuration configuration;
+
+    @Inject
+    ProgramExecutionResponse programExecutionResponse;
 
     final ActorRef programCompilationActor;
     final ActorRef programCreationActor;
@@ -69,8 +73,7 @@ public class ProgramController extends Controller {
 
         DispatchEvent dispatchEvent = new DispatchEvent(programCreationEvent, programCompilationEvent, programCreationActor, programCompilationActor);
 
-        return FutureConverters
-                .toJava(ask(dispatcherActor, dispatchEvent, 10000))
+        return FutureConverters.toJava(ask(dispatcherActor, dispatchEvent, 10000))
                 .thenApply(this::getExecutionResult);
 
     }
@@ -79,7 +82,7 @@ public class ProgramController extends Controller {
         try {
             return ((CompletableFuture<Result>) object).get();
         } catch (InterruptedException | ExecutionException e) {
-            return ok("Error executing program!");
+            return ok(programExecutionResponse.getCompilationTimeout());
         }
     }
 }

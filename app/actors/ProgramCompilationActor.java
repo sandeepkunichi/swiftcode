@@ -3,10 +3,10 @@ package actors;
 import akka.actor.Props;
 import akka.actor.UntypedActor;
 import events.ProgramCompilationEvent;
+import responses.ProgramExecutionResponse;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.stream.Collectors;
 
 /**
  * Created by Sandeep.K on 26-01-2017.
@@ -14,7 +14,8 @@ import java.util.stream.Collectors;
 public class ProgramCompilationActor extends UntypedActor {
 
     public static Props props = Props.create(ProgramCompilationActor.class);
-    private final String LINE_BREAK = "<br />";
+
+    public ProgramExecutionResponse programExecutionResponse = new ProgramExecutionResponse();
 
     @Override
     public void onReceive(Object message) throws Exception {
@@ -34,14 +35,9 @@ public class ProgramCompilationActor extends UntypedActor {
             BufferedReader stdError = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
 
             if(stdError.readLine() == null){
-                programCompilationEvent.setOutput(views.html.test.code_error.render("Compilation Successful", true).body());
+                programCompilationEvent.setOutput(programExecutionResponse.getCompilationSuccessful());
             } else {
-                programCompilationEvent.setOutput(views.html.test.code_error.render(
-                        stdError.lines()
-                                .map(line -> line + LINE_BREAK)
-                                .collect(Collectors.joining())
-                                .replace(programCompilationEvent.getConfiguration().getBinaryRoot(), ""), false).body()
-                );
+                programCompilationEvent.setOutput(programExecutionResponse.getCompilationError(stdError, programCompilationEvent));
             }
             sender().tell(programCompilationEvent, self());
         }

@@ -6,23 +6,13 @@ import models.test.ProgramSubmission;
 /**
  * Created by Sandeep.K on 26-01-2017.
  */
-public class ProgramCompilationEvent {
+public class ProgramCompilationEvent extends ProgramEvent {
 
-    private ProgramSubmission programSubmission;
-    private ProgramExecutionConfiguration configuration;
     public String output;
 
     public ProgramCompilationEvent(ProgramSubmission programSubmission, ProgramExecutionConfiguration configuration) {
-        this.programSubmission = programSubmission;
-        this.configuration = configuration;
-    }
-
-    public ProgramSubmission getProgramSubmission() {
-        return programSubmission;
-    }
-
-    public void setProgramSubmission(ProgramSubmission programSubmission) {
-        this.programSubmission = programSubmission;
+        this.setProgramSubmission(programSubmission);
+        this.setConfiguration(configuration);
     }
 
     public String getOutput() {
@@ -33,11 +23,4 @@ public class ProgramCompilationEvent {
         this.output = output;
     }
 
-    public ProgramExecutionConfiguration getConfiguration() {
-        return configuration;
-    }
-
-    public void setConfiguration(ProgramExecutionConfiguration configuration) {
-        this.configuration = configuration;
-    }
 }
