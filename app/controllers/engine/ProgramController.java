@@ -19,10 +19,12 @@ import scala.compat.java8.FutureConverters;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
 
 import static akka.pattern.Patterns.ask;
+
 /**
  * Created by Sandeep.K on 26-01-2017.
  */
@@ -69,7 +71,15 @@ public class ProgramController extends Controller {
 
         return FutureConverters
                 .toJava(ask(dispatcherActor, dispatchEvent, 10000))
-                .thenApply(response -> ok(((DispatchEvent) response).getOutput()));
+                .thenApply(this::getExecutionResult);
 
+    }
+
+    private Result getExecutionResult(Object object){
+        try {
+            return ((CompletableFuture<Result>) object).get();
+        } catch (InterruptedException | ExecutionException e) {
+            return ok("Error executing program!");
+        }
     }
 }
