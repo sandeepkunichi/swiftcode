@@ -249,6 +249,21 @@
             type: 'GET',
             success: function(data){
                 $("#user-stats").html(data);
+                var keyMap = {"JAVA":"text/x-java", "CPP":"text/x-c++src", "C":"text/x-csrc", "PYTHON":"python"};
+                $('.code').each(function() {
+                    var $this = $(this);
+                    $code = $this.text();
+                    var id = $this.attr("id");
+                    var languageKey = $("input[id='language-"+id+"']").val();
+                    var language = keyMap[languageKey];
+                    $this.empty();
+                    var myCodeMirror = CodeMirror(this, {
+                        value: $code,
+                        mode: language,
+                        theme: "dracula",
+                        readOnly: true
+                    });
+                });
             }
         });
     }
