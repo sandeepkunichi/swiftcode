@@ -11,6 +11,7 @@ public class ProgramExecutionConfiguration {
     private String binaryFileName;
     private ProgramSubmission programSubmission;
     private String compilerCommand;
+    private String[] commandOptions;
 
     public ProgramExecutionConfiguration(String binaryRoot, ProgramSubmission programSubmission) {
         this.binaryRoot = binaryRoot;
@@ -69,5 +70,24 @@ public class ProgramExecutionConfiguration {
 
     public void setCompilerCommand(String compilerCommand) {
         this.compilerCommand = compilerCommand;
+    }
+
+    public String[] getCommandOptions() {
+        switch (programSubmission.languageType) {
+            case C:
+                return new String[]{"-o", binaryRoot + programSubmission.languageType + programSubmission.programIndex};
+            case JAVA:
+                return new String[]{};
+            case CPP:
+                return new String[]{"-o", binaryRoot + programSubmission.languageType + programSubmission.programIndex};
+            case PYTHON:
+                return new String[]{};
+            default:
+                return new String[]{};
+        }
+    }
+
+    public void setCommandOptions(String[] commandOptions) {
+        this.commandOptions = commandOptions;
     }
 }
