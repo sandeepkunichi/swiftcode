@@ -1,14 +1,15 @@
 package controllers.engine;
 
+import actions.ValidationAction;
 import actors.DispatcherActor;
-import actors.ProgramCreationActor;
 import actors.ProgramCompilationActor;
+import actors.ProgramCreationActor;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import data.ProgramExecutionConfiguration;
 import events.DispatchEvent;
-import events.ProgramCreationEvent;
 import events.ProgramCompilationEvent;
+import events.ProgramCreationEvent;
 import models.test.ProgramSubmission;
 import play.Configuration;
 import play.data.Form;
@@ -51,6 +52,7 @@ public class ProgramController extends Controller {
         this.dispatcherActor = system.actorOf(DispatcherActor.props);
     }
 
+    @ValidationAction.ValidationActivity(validationActionType = ProgramSubmission.class)
     public CompletionStage<Result> execute() throws IOException, InterruptedException, ExecutionException {
         Form<ProgramSubmission> programSubmissionForm = formFactory.form(ProgramSubmission.class).bindFromRequest();
 

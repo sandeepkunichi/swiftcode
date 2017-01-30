@@ -1,5 +1,6 @@
 package controllers.admin;
 
+import actions.ValidationAction;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -47,6 +48,7 @@ public class HomeController extends Controller {
     }
 
     @AdminOnly
+    @ValidationAction.ValidationActivity(validationActionType = Test.class)
     public Result createTest(){
         Form<Test> testForm = formFactory.form(Test.class).bindFromRequest();
         Test test = testForm.get();
@@ -70,6 +72,7 @@ public class HomeController extends Controller {
     }
 
     @AdminOnly
+    @ValidationAction.ValidationActivity(validationActionType = Test.class)
     public Result editTest(){
         Form<Test> testForm = formFactory.form(Test.class).bindFromRequest();
         testForm.get().update();

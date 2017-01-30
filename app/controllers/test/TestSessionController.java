@@ -1,5 +1,6 @@
 package controllers.test;
 
+import actions.ValidationAction;
 import data.types.DashboardAlertType;
 import models.AppUser;
 import models.test.Test;
@@ -46,6 +47,7 @@ public class TestSessionController extends Controller {
         return ok(views.html.test.test_session.render(testSessionService.randomizeTestSession(testSession)));
     }
 
+    @ValidationAction.ValidationActivity(validationActionType = TestSession.class)
     public Result submitTest(){
         Form<TestSession> testSessionForm = formFactory.form(TestSession.class).bindFromRequest();
 
