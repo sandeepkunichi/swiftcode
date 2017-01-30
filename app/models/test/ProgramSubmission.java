@@ -34,7 +34,7 @@ public class ProgramSubmission extends Model {
     public String programIndex;
 
     public String getProgramTextView(){
-        return "<code>" + this.programText.replaceAll(" ", "&nbsp;").replaceAll("(\r\n|\n)", "<br />").trim() + "</code>";
+        return this.programText;
     }
 
     public String getProgramQuestion(){
