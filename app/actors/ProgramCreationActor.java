@@ -5,6 +5,8 @@ import akka.actor.UntypedActor;
 import events.ProgramCreationEvent;
 
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * Created by Sandeep.K on 28-01-2017.
@@ -16,6 +18,7 @@ public class ProgramCreationActor extends UntypedActor {
         if(message instanceof ProgramCreationEvent){
             ProgramCreationEvent event = (ProgramCreationEvent) message;
             try{
+                Files.createDirectories(Paths.get(event.getConfiguration().getSubmissionDirectory()));
                 PrintWriter writer = new PrintWriter(event.getConfiguration().getBinaryFileName(), "UTF-8");
                 writer.print(event.getProgramSubmission().programText);
                 writer.close();

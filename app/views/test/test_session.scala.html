@@ -139,7 +139,8 @@
             data: {
                 "programIndex": '_@testSession.id' + '_' + index,
                 "programText": codeText,
-                "languageType": $("select[id='"+id+"']").val()
+                "languageType": $("select[id='"+id+"']").val(),
+                "testSession.id": '@testSession.id'
             },
             success: function(data){
                 $("div[id='error-"+id+"']").html(data);
