@@ -40,7 +40,9 @@ public class TestSessionService {
         testSession.test.testQuestions.forEach(
                 testQuestion -> testQuestion.testAnswers.forEach(
                         testAnswer -> {
-                            if(testAnswer.selected != null && TestAnswer.find.byId(testAnswer.id).isCorrect && testAnswer.selected){
+                            TestAnswer testAnswerFromDB = TestAnswer.find.byId(testAnswer.id);
+                            Boolean isCorrect = (testAnswerFromDB != null) ? testAnswerFromDB.isCorrect : false;
+                            if(testAnswer.selected != null && isCorrect && testAnswer.selected){
                                 testSession.score++;
                             }
                         }
@@ -50,10 +52,7 @@ public class TestSessionService {
     }
 
     public List<TestSession> findAllTestSessions(){
-        return TestSession
-                .find
-                .all()
-                .stream()
+        return TestSession.find.all().stream()
                 .filter(testSession -> testSession.submitted)
                 .map(testSession -> {
                     testSession.test = Test.find.byId(testSession.test.id);
@@ -91,6 +90,8 @@ public class TestSessionService {
         List<ProgramSubmission> programSubmissions = ProgramSubmission.find.where().eq("test_session_id", sessionId).findList();
         programSubmissions.forEach(Model::delete);
         TestSession testSession = TestSession.find.byId(sessionId);
-        testSession.delete();
+        if (testSession != null) {
+            testSession.delete();
+        }
     }
 }

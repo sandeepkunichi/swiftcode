@@ -1,59 +1,84 @@
 @(testJson: String)
 @shared.header()
 <body data-ng-app="swiftCodeApp">
-<div id="wrap">
-    <div id="main">
-        <div class="container" ng-controller="testController">
-            <div ng-init="test = @testJson"></div>
-            <form method="POST" ng-submit="updateTest()" >
-                <div class="row">
-                    <div class="col-sm-12">
-                        <br />
-                        Title: <input class="form-control test-input" type="text" ng-model="test.title" required/><br/><br/>
-                        Id: <input class="form-control test-input" readonly ng-model="test.id" required/><br/><br/>
-                        <input type="button" class="btn btn-default btn-sm" ng-click="addNewQuestion()" value="ADD QUESTION">
-                        <input type="button" class="btn btn-default btn-sm" ng-click="addNewProgrammingQuestion()" value="ADD PROGRAMMING QUESTION"><br/><br/>
-                        <fieldset data-ng-repeat="testQuestion in test.testQuestions track by $index">
-                            <p>Q-{{ $index + 1 }}</p>
-                            <textarea class="form-control test-input" ng-model="testQuestion.question" required></textarea><br/><br/>
-                            <input type="button" class="btn btn-default btn-sm" ng-click="removeQuestion($index)" value="REMOVE QUESTION">
-                            <input type="button" class="btn btn-default btn-sm" ng-click="addNewAnswer(testQuestion)" value="ADD ANSWER"><br/><br/>
-                            <div class="col-sm-12">
-                                <fieldset data-ng-repeat="testAnswer in testQuestion.testAnswers track by $index">
-                                    A-{{ $index + 1 }}
-                                    <div class="row">
-                                        <div class="col-sm-8">
-                                            <textarea class="form-control test-input" ng-model="testAnswer.answer" required></textarea><br/><br/>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <input type="checkbox" ng-model="testAnswer.isCorrect"/> Correct
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <input type="button" class="btn btn-default btn-sm" ng-click="removeAnswer(testQuestion, $index)" value="REMOVE ANSWER">
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </div>
-                        </fieldset>
-                        <fieldset data-ng-repeat="testProgram in test.testPrograms track by $index">
-                            <p>P-{{ $index + 1 }}</p>
-                            <textarea class="form-control test-input" ng-model="testProgram.programQuestion" required></textarea><br/><br/>
-                            <input type="button" class="btn btn-default btn-sm" ng-click="removeProgrammingQuestion($index)" value="REMOVE PROGRAMMING QUESTION"><br /><br />
-                        </fieldset>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-4 col-md-offset-2">
-                        <button type="submit" class="btn btn-default btn-sm"> UPDATE </button>
-                    </div>
-                    <div class="col-md-4 col-md-offset-2">
-                        <button type="button" onclick="location.href = '/admin'" class="btn btn-default btn-sm"> CANCEL </button>
-                    </div>
-                </div>
-                <br />
-            </form>
+<div class="patient-dashboard">
+    <div class="container-fluid">
+        <div class="row dashboard">
+            <div class="col-md-2 header-first-half">
+                <header class="center">
+                    <img class="margin-top-5" src="/images/logo.png" width="150">
+                </header>
+            </div><!-- /. dashboard-first-half -->
+            <div class="col-md-10 header-second-half">
+                <header>
+                    <button class="btn btn-default btn-sm pull-right logoutbtn" onclick="window.location = '/logout'">Logout</button>
+                </header>
+            </div><!-- /. dashboard-second-half -->
         </div>
+        <div class="row dashboardbody">
+            <br/><br/>
+            <div class="col-md-2 dashboard-first-half">
+            </div><!-- /. dashboard-first-half -->
+            <div class="col-md-10 tab-content main-tab-content">
+                <div class="dashboard-second-half tab-pane active" role="tabpanel" id="hometab">
+                    <br />
+                    <div class="body">
+                        <div class="tab-content" ng-controller="testController">
+                            <div ng-init="test = @testJson"></div>
+                            <form method="POST" ng-submit="updateTest()" >
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <br />
+                                        Title: <input class="form-control test-input" type="text" ng-model="test.title" required/><br/><br/>
+                                        Id: <input class="form-control test-input" readonly ng-model="test.id" required/><br/><br/>
+                                        <input type="button" class="btn btn-default btn-sm" ng-click="addNewQuestion()" value="ADD QUESTION">
+                                        <input type="button" class="btn btn-default btn-sm" ng-click="addNewProgrammingQuestion()" value="ADD PROGRAMMING QUESTION"><br/><br/>
+                                        <fieldset data-ng-repeat="testQuestion in test.testQuestions track by $index">
+                                            <p>Q-{{ $index + 1 }}</p>
+                                            <textarea class="form-control test-input" ng-model="testQuestion.question" required></textarea><br/><br/>
+                                            <input type="button" class="btn btn-default btn-sm" ng-click="removeQuestion($index)" value="REMOVE QUESTION">
+                                            <input type="button" class="btn btn-default btn-sm" ng-click="addNewAnswer(testQuestion)" value="ADD ANSWER"><br/><br/>
+                                            <div class="col-sm-12">
+                                                <fieldset data-ng-repeat="testAnswer in testQuestion.testAnswers track by $index">
+                                                    A-{{ $index + 1 }}
+                                                    <div class="row">
+                                                        <div class="col-sm-8">
+                                                            <textarea class="form-control test-input" ng-model="testAnswer.answer" required></textarea><br/><br/>
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <input type="checkbox" ng-model="testAnswer.isCorrect"/> Correct
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <input type="button" class="btn btn-default btn-sm" ng-click="removeAnswer(testQuestion, $index)" value="REMOVE ANSWER">
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset data-ng-repeat="testProgram in test.testPrograms track by $index">
+                                            <p>P-{{ $index + 1 }}</p>
+                                            <textarea class="form-control test-input" ng-model="testProgram.programQuestion" required></textarea><br/><br/>
+                                            <input type="button" class="btn btn-default btn-sm" ng-click="removeProgrammingQuestion($index)" value="REMOVE PROGRAMMING QUESTION"><br /><br />
+                                        </fieldset>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-4 col-md-offset-2">
+                                        <button type="submit" class="btn btn-default btn-sm"> UPDATE </button>
+                                    </div>
+                                    <div class="col-md-4 col-md-offset-2">
+                                        <button type="button" onclick="location.href = '/admin'" class="btn btn-default btn-sm"> CANCEL </button>
+                                    </div>
+                                </div>
+                                <br />
+                            </form>
+                        </div>
+                    </div><!-- /.body -->
+                    <br />
+                </div><!-- /.dashboard-second-half hometab -->
+            </div><!-- /.dashboard-second-half vitalstab -->
+        </div><!-- /.tab-content -->
     </div>
 </div>
 </body>
