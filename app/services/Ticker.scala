@@ -6,6 +6,7 @@ import akka.stream.scaladsl.Source
 import models.test.{Test, TestSession}
 
 import scala.concurrent.duration._
+import scala.language.postfixOps
 
 trait Ticker {
 

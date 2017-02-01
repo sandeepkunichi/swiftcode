@@ -1,5 +1,6 @@
 package controllers;
 
+import actions.ValidationAction;
 import forms.SignupForm;
 import models.AppUser;
 import play.Configuration;
@@ -33,18 +34,15 @@ public class SignupController extends Controller{
     }
 
     @NoAuthRequired
+    @ValidationAction.ValidationActivity(validationActionType = SignupForm.class)
     public Result signup(){
         Form<SignupForm> userForm = formFactory.form(SignupForm.class).bindFromRequest();
-        if(userForm.hasErrors()){
-            return ok(views.html.shared.signup.render(userForm.errorsAsJson()));
-        }else{
-            if(configuration.getBoolean("closedSignup")){
-                closedLogin(userForm);
-            }
-            AppUser appUser = new AppUser(userForm.data().get("email"), userForm.data().get("password"));
-            AppUser.db().save(appUser);
-            sessionService.storeUserInSession(appUser);
+        if(configuration.getBoolean("closedSignup")){
+            closedLogin(userForm);
         }
+        AppUser appUser = new AppUser(userForm.data().get("email"), userForm.data().get("password"));
+        AppUser.db().save(appUser);
+        sessionService.storeUserInSession(appUser);
         return redirect("/dashboard");
     }
 

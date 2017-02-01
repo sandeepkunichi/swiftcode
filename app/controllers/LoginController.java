@@ -1,5 +1,6 @@
 package controllers;
 
+import actions.ValidationAction;
 import com.fasterxml.jackson.databind.JsonNode;
 import data.Channel;
 import data.types.DashboardAlertType;
@@ -41,11 +42,9 @@ public class LoginController extends Controller {
     }
 
     @NoAuthRequired
+    @ValidationAction.ValidationActivity(validationActionType = LoginForm.class)
     public Result authenticate() throws IOException {
         Form<LoginForm> loginForm = formFactory.form(LoginForm.class).bindFromRequest();
-        if(loginForm.hasErrors()){
-            return ok(views.html.shared.login.render(loginForm.errorsAsJson()));
-        }
         sessionService.storeUserInSession(appUserService.getAppUserByEmail(loginForm.data().get("email")));
         return sessionService.getSessionUser().isAdmin() ? redirect("/admin") : redirect("/dashboard");
     }

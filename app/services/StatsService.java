@@ -41,8 +41,10 @@ public class StatsService {
 
     public TestSession getTestSession(Long testSessionId){
         TestSession testSession = TestSession.find.byId(testSessionId);
-        testSession.testTaker = AppUser.find.byId(testSession.testTaker.id);
-        testSession.programSubmissions = testSession.programSubmissions.stream().map(programSubmission -> ProgramSubmission.find.byId(programSubmission.id)).collect(Collectors.toList());
+        if (testSession != null) {
+            testSession.testTaker = AppUser.find.byId(testSession.testTaker.id);
+            testSession.programSubmissions = testSession.programSubmissions.stream().map(programSubmission -> ProgramSubmission.find.byId(programSubmission.id)).collect(Collectors.toList());
+        }
         return testSession;
     }
 }

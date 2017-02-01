@@ -1,5 +1,6 @@
 package controllers.admin;
 
+import actions.ValidationAction;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -47,6 +48,7 @@ public class HomeController extends Controller {
     }
 
     @AdminOnly
+    @ValidationAction.ValidationActivity(validationActionType = Test.class)
     public Result createTest(){
         Form<Test> testForm = formFactory.form(Test.class).bindFromRequest();
         Test test = testForm.get();
@@ -70,8 +72,14 @@ public class HomeController extends Controller {
     }
 
     @AdminOnly
+    @ValidationAction.ValidationActivity(validationActionType = Test.class)
     public Result editTest(){
         Form<Test> testForm = formFactory.form(Test.class).bindFromRequest();
+        testForm.get().testQuestions.forEach(testQuestion -> testQuestion.testAnswers.forEach(testAnswer -> {
+            if(testAnswer.isCorrect == null){
+                testAnswer.isCorrect = false;
+            }
+        }));
         testForm.get().update();
         return redirect("/");
     }
@@ -79,16 +87,20 @@ public class HomeController extends Controller {
     @AdminOnly
     public Result activateTest(Long testId){
         Test test = Test.find.byId(testId);
-        test.testStatus = Test.TestStatus.ACTIVE;
-        test.update();
+        if (test != null) {
+            test.testStatus = Test.TestStatus.ACTIVE;
+            test.update();
+        }
         return ok();
     }
 
     @AdminOnly
     public Result deactivateTest(Long testId){
         Test test = Test.find.byId(testId);
-        test.testStatus = Test.TestStatus.DRAFT;
-        test.update();
+        if (test != null) {
+            test.testStatus = Test.TestStatus.DRAFT;
+            test.update();
+        }
         return ok();
     }
 
@@ -101,7 +113,9 @@ public class HomeController extends Controller {
     @AdminOnly
     public Result deleteTest(Long testId){
         Test test = Test.find.byId(testId);
-        test.delete();
+        if (test != null) {
+            test.delete();
+        }
         return ok();
     }
 

@@ -32,12 +32,16 @@
     </div>
     <div class="list-group">
         @for(programSubmission <- testSession.programSubmissions){
+        <input type="hidden" id="language-@programSubmission.id" value="@programSubmission.languageType">
         <div class="list-group-item">
             <h3 class="list-group-item-heading">Question</h3>
             @Html(programSubmission.getProgramQuestion())
         </div>
         <div class="list-group-item">
-            @Html(programSubmission.getProgramTextView())
+            <img alt="Loading" height="50" width="50" src="/images/@programSubmission.languageType.toString+.png" />
+        </div>
+        <div class="list-group-item">
+            <div class="code" id="@programSubmission.id">@programSubmission.getProgramTextView()</div>
         </div>
         }
     </div>

@@ -1,6 +1,8 @@
 package data;
 
+import models.AppUser;
 import models.test.ProgramSubmission;
+import models.test.TestSession;
 
 /**
  * Created by Sandeep.K on 26-01-2017.
@@ -11,10 +13,20 @@ public class ProgramExecutionConfiguration {
     private String binaryFileName;
     private ProgramSubmission programSubmission;
     private String compilerCommand;
+    private String[] commandOptions;
+    private AppUser submitter;
+    private String submissionDirectory;
 
     public ProgramExecutionConfiguration(String binaryRoot, ProgramSubmission programSubmission) {
         this.binaryRoot = binaryRoot;
         this.programSubmission = programSubmission;
+        TestSession testSession = TestSession.find.byId(programSubmission.testSession.id);
+        if (testSession != null) {
+            this.submitter = AppUser.find.byId(testSession.testTaker.id);
+            if (submitter != null) {
+                this.submissionDirectory = binaryRoot + String.valueOf(submitter.id + "_" + submitter.email) + "/";
+            }
+        }
     }
 
     public String getBinaryRoot() {
@@ -28,13 +40,13 @@ public class ProgramExecutionConfiguration {
     public String getBinaryFileName() {
         switch (programSubmission.languageType){
             case C:
-                return binaryRoot + programSubmission.languageType + programSubmission.programIndex + ".c";
+                return submissionDirectory + programSubmission.languageType + programSubmission.programIndex + ".c";
             case JAVA:
-                return binaryRoot + programSubmission.languageType + programSubmission.programIndex + ".java";
+                return submissionDirectory + programSubmission.languageType + programSubmission.programIndex + ".java";
             case CPP:
-                return binaryRoot + programSubmission.languageType + programSubmission.programIndex + ".cpp";
+                return submissionDirectory + programSubmission.languageType + programSubmission.programIndex + ".cpp";
             case PYTHON:
-                return binaryRoot + programSubmission.languageType + programSubmission.programIndex + ".py";
+                return submissionDirectory + programSubmission.languageType + programSubmission.programIndex + ".py";
             default:
                 return null;
         }
@@ -69,5 +81,40 @@ public class ProgramExecutionConfiguration {
 
     public void setCompilerCommand(String compilerCommand) {
         this.compilerCommand = compilerCommand;
+    }
+
+    public String[] getCommandOptions() {
+        switch (programSubmission.languageType) {
+            case C:
+                return new String[]{"-o", submissionDirectory + programSubmission.languageType + programSubmission.programIndex};
+            case JAVA:
+                return new String[]{};
+            case CPP:
+                return new String[]{"-o", submissionDirectory + programSubmission.languageType + programSubmission.programIndex};
+            case PYTHON:
+                return new String[]{};
+            default:
+                return new String[]{};
+        }
+    }
+
+    public void setCommandOptions(String[] commandOptions) {
+        this.commandOptions = commandOptions;
+    }
+
+    public AppUser getSubmitter() {
+        return submitter;
+    }
+
+    public void setSubmitter(AppUser submitter) {
+        this.submitter = submitter;
+    }
+
+    public String getSubmissionDirectory() {
+        return submissionDirectory;
+    }
+
+    public void setSubmissionDirectory(String submissionDirectory) {
+        this.submissionDirectory = submissionDirectory;
     }
 }

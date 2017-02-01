@@ -21,15 +21,15 @@ public class TestService {
     TestSessionService testSessionService;
 
     public List<Test> findAllTests(){
-        return Test.find.all().stream().map(test-> {
-            test.testTakerCount = testSessionService.findTestTakerCount(test.id);
-            return test;
-        }).collect(Collectors.toList());
+        return Test.find.all().stream()
+                .map(test-> {
+                    test.testTakerCount = testSessionService.findTestTakerCount(test.id);
+                    return test;
+                }).collect(Collectors.toList());
     }
 
     public List<Test> getAvailableTestsForUser(Long userId){
-        return Test.find.all()
-                .stream()
+        return Test.find.all().stream()
                 .filter(test -> !appUserService.hasTakenTest(userId, test.id))
                 .filter(test -> test.testStatus == Test.TestStatus.ACTIVE)
                 .collect(Collectors.toList());
@@ -40,8 +40,7 @@ public class TestService {
         newTest.testStatus = Test.TestStatus.DRAFT;
         newTest.title = test.title + " (Clone)";
         newTest.testTakerCount = 0L;
-        newTest.testQuestions = test.testQuestions
-                .stream()
+        newTest.testQuestions = test.testQuestions.stream()
                 .map(question ->
                         new TestQuestion(question.question, question.testAnswers
                                 .stream()
@@ -49,8 +48,7 @@ public class TestService {
                                         new TestAnswer(answer.answer, answer.isCorrect)
                                 ).collect(Collectors.toList()))
                 ).collect(Collectors.toList());
-        newTest.testPrograms = test.testPrograms
-                .stream()
+        newTest.testPrograms = test.testPrograms.stream()
                 .map(programmingQuestion -> new TestProgram(programmingQuestion.programQuestion))
                 .collect(Collectors.toList());
         Test.db().insert(newTest);
