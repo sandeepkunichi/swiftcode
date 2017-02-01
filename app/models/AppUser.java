@@ -56,5 +56,4 @@ public class AppUser extends Model{
         @EnumValue("USER")
         USER
     }
-
 }
