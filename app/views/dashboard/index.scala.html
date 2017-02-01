@@ -54,7 +54,7 @@
                                             <p>We see that you haven't uploaded your resume yet. Please upload your resume in PDF format.</p>
                                             <form enctype="multipart/form-data">
                                                 <input name="resume" id="resume" type="file" size="60" /><br/>
-                                                <input id="upload-picture" class="btn btn-default btn-sm" type="button" value="Upload" />
+                                                <input id="upload-picture" class="btn btn-primary btn-sm" type="button" value="Upload" />
                                             </form>
                                             <p id="upload-message"></p>
                                         </div>
@@ -111,21 +111,27 @@
                                 <p>No tests are available</p>
                                 }else{
                                 <div class="row">
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
                                         <h3 class="pull-left">Title</h3>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
+                                        <h3 class="pull-left">Duration</h3>
+                                    </div>
+                                    <div class="col-sm-4">
                                         <h3 class="pull-right"></h3>
                                     </div>
                                 </div>
                                 }
                                 @for(test <- tests){
                                 <div class="row">
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
                                         <p class="pull-left">@test.title</p>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <input class="pull-right btn btn-default btn-sm logoutbtn" type="button" value="Start" onclick="startTest('@test.id');"/>
+                                    <div class="col-sm-4">
+                                        <p class="pull-left">@test.testDuration</p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input class="pull-right btn btn-default btn-sm logoutbtn" type="button" value="Begin" onclick="startTest('@test.id');"/>
                                     </div>
                                 </div>
                                 <br/>
@@ -150,7 +156,7 @@
 </div>
 <script>
     function slackRedirect(){
-        window.location = '/slack';
+        window.open('/slack');
     }
 
     $('#upload-picture').click(function(){

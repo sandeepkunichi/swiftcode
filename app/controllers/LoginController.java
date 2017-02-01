@@ -30,20 +30,11 @@ import java.util.concurrent.ExecutionException;
  */
 public class LoginController extends Controller {
 
-    @Inject
-    FormFactory formFactory;
-
-    @Inject
-    SessionService sessionService;
-
-    @Inject
-    AppUserService appUserService;
-
-    @Inject
-    WSClient wsClient;
-
-    @Inject
-    Configuration configuration;
+    @Inject FormFactory formFactory;
+    @Inject SessionService sessionService;
+    @Inject AppUserService appUserService;
+    @Inject WSClient wsClient;
+    @Inject Configuration configuration;
 
     @NoAuthRequired
     public Result login() {
