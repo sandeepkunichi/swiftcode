@@ -8,15 +8,25 @@ import akka.actor.ActorRef;
 public class DispatchEvent {
     private ProgramCreationEvent programCreationEvent;
     private ProgramCompilationEvent programCompilationEvent;
+    private ProgramExecutionEvent programExecutionEvent;
     private String output;
     private ActorRef creationActorRef;
     private ActorRef compilationActorRef;
+    private ActorRef executionActorRef;
+    private ActionType actionType;
 
     public DispatchEvent(ProgramCreationEvent programCreationEvent, ProgramCompilationEvent programCompilationEvent, ActorRef creationActorRef, ActorRef compilationActorRef) {
         this.programCreationEvent = programCreationEvent;
         this.programCompilationEvent = programCompilationEvent;
         this.creationActorRef = creationActorRef;
         this.compilationActorRef = compilationActorRef;
+        this.actionType = ActionType.COMPILE;
+    }
+
+    public DispatchEvent(ProgramExecutionEvent programExecutionEvent, ActorRef executionActorRef) {
+        this.programExecutionEvent = programExecutionEvent;
+        this.executionActorRef = executionActorRef;
+        this.actionType = ActionType.EXECUTE;
     }
 
     public ProgramCreationEvent getProgramCreationEvent() {
@@ -57,5 +67,34 @@ public class DispatchEvent {
 
     public void setCompilationActorRef(ActorRef compilationActorRef) {
         this.compilationActorRef = compilationActorRef;
+    }
+
+    public ProgramExecutionEvent getProgramExecutionEvent() {
+        return programExecutionEvent;
+    }
+
+    public void setProgramExecutionEvent(ProgramExecutionEvent programExecutionEvent) {
+        this.programExecutionEvent = programExecutionEvent;
+    }
+
+    public ActorRef getExecutionActorRef() {
+        return executionActorRef;
+    }
+
+    public void setExecutionActorRef(ActorRef executionActorRef) {
+        this.executionActorRef = executionActorRef;
+    }
+
+    public ActionType getActionType() {
+        return actionType;
+    }
+
+    public void setActionType(ActionType actionType) {
+        this.actionType = actionType;
+    }
+
+    public enum ActionType {
+        COMPILE,
+        EXECUTE
     }
 }

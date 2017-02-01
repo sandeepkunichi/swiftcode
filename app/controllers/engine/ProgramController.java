@@ -4,12 +4,14 @@ import actions.ValidationAction;
 import actors.DispatcherActor;
 import actors.ProgramCompilationActor;
 import actors.ProgramCreationActor;
+import actors.ProgramExecutionActor;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import data.ProgramExecutionConfiguration;
 import events.DispatchEvent;
 import events.ProgramCompilationEvent;
 import events.ProgramCreationEvent;
+import events.ProgramExecutionEvent;
 import models.test.ProgramSubmission;
 import play.Configuration;
 import play.data.Form;
@@ -43,17 +45,19 @@ public class ProgramController extends Controller {
 
     final ActorRef programCompilationActor;
     final ActorRef programCreationActor;
+    final ActorRef programExecutionActor;
     final ActorRef dispatcherActor;
 
     @Inject
     public ProgramController(ActorSystem system) {
         this.programCreationActor = system.actorOf(ProgramCreationActor.props);
         this.programCompilationActor = system.actorOf(ProgramCompilationActor.props);
+        this.programExecutionActor = system.actorOf(ProgramExecutionActor.props);
         this.dispatcherActor = system.actorOf(DispatcherActor.props);
     }
 
     @ValidationAction.ValidationActivity(validationActionType = ProgramSubmission.class)
-    public CompletionStage<Result> execute() throws IOException, InterruptedException, ExecutionException {
+    public CompletionStage<Result> compile() throws IOException, InterruptedException, ExecutionException {
         Form<ProgramSubmission> programSubmissionForm = formFactory.form(ProgramSubmission.class).bindFromRequest();
 
         ProgramSubmission programSubmission = programSubmissionForm.get().preProcess();
@@ -76,6 +80,29 @@ public class ProgramController extends Controller {
         DispatchEvent dispatchEvent = new DispatchEvent(programCreationEvent, programCompilationEvent, programCreationActor, programCompilationActor);
 
         return FutureConverters.toJava(ask(dispatcherActor, dispatchEvent, 10000))
+                .thenApply(this::getExecutionResult);
+
+    }
+
+    @ValidationAction.ValidationActivity(validationActionType = ProgramSubmission.class)
+    public CompletionStage<Result> execute() throws IOException, InterruptedException, ExecutionException {
+        Form<ProgramSubmission> programSubmissionForm = formFactory.form(ProgramSubmission.class).bindFromRequest();
+
+        ProgramSubmission programSubmission = programSubmissionForm.get().preProcess();
+
+        ProgramExecutionConfiguration programExecutionConfiguration = new ProgramExecutionConfiguration(
+                configuration.getString("binaryRoot"),
+                programSubmission
+        );
+
+        ProgramExecutionEvent programExecutionEvent = new ProgramExecutionEvent(
+                programSubmission,
+                programExecutionConfiguration
+        );
+
+        DispatchEvent dispatchEvent = new DispatchEvent(programExecutionEvent, programExecutionActor);
+
+        return FutureConverters.toJava(ask(dispatcherActor, dispatchEvent, 60000))
                 .thenApply(this::getExecutionResult);
 
     }

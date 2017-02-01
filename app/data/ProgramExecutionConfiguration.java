@@ -13,9 +13,11 @@ public class ProgramExecutionConfiguration {
     private String binaryFileName;
     private ProgramSubmission programSubmission;
     private String compilerCommand;
+    private String executionCommand;
     private String[] commandOptions;
     private AppUser submitter;
     private String submissionDirectory;
+    private String executableFileName;
 
     public ProgramExecutionConfiguration(String binaryRoot, ProgramSubmission programSubmission) {
         this.binaryRoot = binaryRoot;
@@ -86,11 +88,11 @@ public class ProgramExecutionConfiguration {
     public String[] getCommandOptions() {
         switch (programSubmission.languageType) {
             case C:
-                return new String[]{"-o", submissionDirectory + programSubmission.languageType + programSubmission.programIndex};
+                return new String[]{"-o", getExecutableFileName()};
             case JAVA:
                 return new String[]{};
             case CPP:
-                return new String[]{"-o", submissionDirectory + programSubmission.languageType + programSubmission.programIndex};
+                return new String[]{"-o", getExecutableFileName()};
             case PYTHON:
                 return new String[]{};
             default:
@@ -116,5 +118,43 @@ public class ProgramExecutionConfiguration {
 
     public void setSubmissionDirectory(String submissionDirectory) {
         this.submissionDirectory = submissionDirectory;
+    }
+
+    public String getExecutionCommand() {
+        switch (programSubmission.languageType){
+            case C:
+                return "";
+            case JAVA:
+                return "java";
+            case CPP:
+                return "";
+            case PYTHON:
+                return "python";
+            default:
+                return "";
+        }
+    }
+
+    public void setExecutionCommand(String executionCommand) {
+        this.executionCommand = executionCommand;
+    }
+
+    public String getExecutableFileName() {
+        switch (programSubmission.languageType) {
+            case C:
+                return submissionDirectory + programSubmission.languageType + programSubmission.programIndex + ".exe";
+            case JAVA:
+                return submissionDirectory + programSubmission.languageType + programSubmission.programIndex + ".class";
+            case CPP:
+                return submissionDirectory + programSubmission.languageType + programSubmission.programIndex + ".exe";
+            case PYTHON:
+                return submissionDirectory + programSubmission.languageType + programSubmission.programIndex + ".py";
+            default:
+                return "";
+        }
+    }
+
+    public void setExecutableFileName(String executableFileName) {
+        this.executableFileName = executableFileName;
     }
 }

@@ -5,6 +5,7 @@ import akka.actor.UntypedActor;
 import events.DispatchEvent;
 import events.ProgramCompilationEvent;
 import events.ProgramCreationEvent;
+import events.ProgramExecutionEvent;
 import play.mvc.Result;
 import responses.ProgramExecutionResponse;
 import scala.compat.java8.FutureConverters;
@@ -28,14 +29,28 @@ public class DispatcherActor extends UntypedActor {
         if(message instanceof DispatchEvent){
 
             DispatchEvent event = (DispatchEvent) message;
+            CompletionStage<Result> executionResponse = null;
 
-            CompletionStage<Result> executionResponse = FutureConverters
-                    .toJava(ask(event.getCreationActorRef(), event.getProgramCreationEvent(), 5000))
-                    //Ask the CreationActor to finish file io and respond with the success status
-                    .thenApply(creationResponse -> ((ProgramCreationEvent) creationResponse).getCreationResult())
-                    //Ask the CompilationActor to run command on file and respond with the result
-                    .thenApply(creationResult -> creationResult ? getCompilationResult(event) : getErrorResult())
-                    .toCompletableFuture().get();
+
+            if(event.getActionType().equals(DispatchEvent.ActionType.COMPILE)){
+
+                executionResponse = FutureConverters
+                        .toJava(ask(event.getCreationActorRef(), event.getProgramCreationEvent(), 5000))
+                        //Ask the CreationActor to finish file io and respond with the success status
+                        .thenApply(creationResponse -> ((ProgramCreationEvent) creationResponse).getCreationResult())
+                        //Ask the CompilationActor to run command on file and respond with the result
+                        .thenApply(creationResult -> creationResult ? getCompilationResult(event) : getErrorResult())
+                        .toCompletableFuture().get();
+
+            }else if(event.getActionType().equals(DispatchEvent.ActionType.EXECUTE)){
+
+                executionResponse = FutureConverters
+                        .toJava(ask(event.getExecutionActorRef(), event.getProgramExecutionEvent(), 10000))
+                        //Ask the ExecutionActor to run the command on executable file
+                        .thenApply(executionResult -> ((ProgramExecutionEvent) executionResult).getOutput())
+                        .toCompletableFuture().get();
+
+            }
 
             sender().tell(executionResponse, self());
         }
