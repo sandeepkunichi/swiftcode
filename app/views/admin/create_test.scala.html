@@ -7,13 +7,40 @@
                     <div class="col-sm-12">
                         <br />
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-md-6">
                                 Title: <input class="form-control test-input" type="text" ng-model="test.title" required/><br/><br/>
                             </div>
-                            <div class="col-md-3">
-                                Duration (in minutes): <input class="form-control test-input" type="number" ng-model="test.testDuration" required/><br/><br/>
+                            <div class="col-md-4">
+                                Duration (in minutes): <input class="form-control" type="number" ng-model="test.testDuration" required/><br/><br/>
+                            </div>
+                            <div class="col-md-1">
+                                Execute <input type="checkbox" ng-model="test.codeSessionConfiguration.execute" ng-init="test.codeSessionConfiguration.execute = '0'"/><br/><br/>
+                            </div>
+                            <div class="col-md-1">
+                                Compile <input type="checkbox" ng-model="test.codeSessionConfiguration.compile" ng-init="test.codeSessionConfiguration.compile = '0'"/><br/><br/>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                Language(s) Supported:
+                                <div class="row" style="margin:10px;" data-ng-repeat="language in test.codeSessionConfiguration.languages">
+                                    <div class="col-md-6">{{ language.name }}</div>
+                                    <div class="col-md-6">
+                                        <input type="button" class="btn btn-default btn-sm" value="REMOVE" ng-click="removeLanguage(language)" /><br />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                Language(s) Not Supported:
+                                <div class="row" style="margin:10px;" data-ng-repeat="language in LanguageTypeList |filter: alreadySupported">
+                                    <div class="col-md-6">{{ language.name }}</div>
+                                    <div class="col-md-6">
+                                        <input type="button" class="btn btn-default btn-sm" value="ADD" ng-click="addLanguage(language)" /><br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br /><br />
                         <input type="button" class="btn btn-default btn-sm" ng-click="addNewQuestion()" value="ADD QUESTION">
                         <input type="button" class="btn btn-default btn-sm" ng-click="addNewProgrammingQuestion()" value="ADD PROGRAMMING QUESTION"><br/><br/><br/><br/>
                         <fieldset data-ng-repeat="testQuestion in test.testQuestions track by $index">

@@ -1,12 +1,11 @@
-@(path: String)
+@(path: String, configuration: models.test.CodeSessionConfiguration)
 <div class="row">
     <div class="col-md-12">
         <textarea name="@path\\.programText" id="codeArea-@path"></textarea>
         <select class="form-control language-select" id="@path" name="@path\\.languageType">
-            <option value="JAVA">Java</option>
-            <option value="CPP">C++</option>
-            <option value="C">C</option>
-            <option value="PYTHON">Python</option>
+            @for(language <- configuration.languages){
+                <option value="@language.languageType.toString()">@language.name</option>
+            }
         </select>
     </div>
     <script>
@@ -22,11 +21,18 @@
     </script>
 </div>
 <div class="row">
-    <div class="col-md-offset-8 col-md-2">
+    <div class="col-md-offset-10 col-md-2 pull-right">
+        @if(configuration.compile){
         <input type="button" value="COMPILE" class="btn btn-default btn-sm compile-button" onclick="compileProgram('@path')" />
+        }
     </div>
-    <div class="col-md-2">
+</div>
+<br />
+<div class="row">
+    <div class="col-md-offset-10 col-md-2 pull-right">
+        @if(configuration.execute){
         <input type="button" value="EXECUTE" class="btn btn-default btn-sm compile-button" onclick="executeProgram('@path')" />
+        }
     </div>
 </div>
 <div class="row">

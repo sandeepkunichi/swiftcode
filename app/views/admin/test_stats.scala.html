@@ -104,7 +104,7 @@
     $("#user-modal").modal('show');
     $("#user-stats").html('@shared.loader()');
     $.ajax({
-        url: '/user/stats/' + userId,
+        url: '/stats/user/' + userId,
         type: 'GET',
         success: function(data){
             $("#user-stats").html(data);

@@ -48,7 +48,7 @@
                     success: function(data){
                         $("#user-modal").modal('hide');
                         $.ajax({
-                            url: '/test/stats/' + testId,
+                            url: '/stats/test/' + testId,
                             type: 'GET',
                             success: function(data){
                                 $("#test-stats").html(data);

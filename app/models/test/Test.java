@@ -29,6 +29,10 @@ public class Test extends Model {
 
     public Long testDuration;
 
+    @Constraints.Required
+    @OneToOne
+    public CodeSessionConfiguration codeSessionConfiguration;
+
     @Transient
     public Long testTakerCount;
 

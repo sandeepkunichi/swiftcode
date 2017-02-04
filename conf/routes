@@ -5,18 +5,23 @@
 # An example controller showing a sample home page
 
 GET     /admin                      controllers.admin.HomeController.index()
-POST    /test/create                controllers.admin.HomeController.createTest()
-GET     /test/edit/:testId          controllers.admin.HomeController.editTestView(testId: Long)
-GET     /test/clone/:testId         controllers.admin.HomeController.cloneTest(testId: Long)
-POST    /test/edit                  controllers.admin.HomeController.editTest()
-DELETE  /test/delete/:testId        controllers.admin.HomeController.deleteTest(testId: Long)
-POST    /test/activate/:testId      controllers.admin.HomeController.activateTest(testId: Long)
-POST    /test/deactivate/:testId    controllers.admin.HomeController.deactivateTest(testId: Long)
-GET     /test/stats/:testId         controllers.admin.StatsController.getTestStats(testId: Long)
-GET     /user/stats/:userId         controllers.admin.StatsController.getUserStats(userId: Long)
-GET     /test/session/stats/:id     controllers.admin.StatsController.getTestSessionStats(id: Long)
-DELETE  /test/session/:sessionId    controllers.admin.HomeController.deleteSession(sessionId: Long)
 
+POST    /test/create                controllers.test.TestController.createTest()
+GET     /test/edit/:testId          controllers.test.TestController.editTestView(testId: Long)
+GET     /test/clone/:testId         controllers.test.TestController.cloneTest(testId: Long)
+POST    /test/edit                  controllers.test.TestController.editTest()
+DELETE  /test/delete/:testId        controllers.test.TestController.deleteTest(testId: Long)
+POST    /test/activate/:testId      controllers.test.TestController.activateTest(testId: Long)
+POST    /test/deactivate/:testId    controllers.test.TestController.deactivateTest(testId: Long)
+
+GET     /languages                  controllers.engine.LanguageController.getLanguages()
+GET     /language/:name/configure   controllers.engine.LanguageController.configureLanguage(name: String)
+
+GET     /stats/test/:testId         controllers.admin.StatsController.getTestStats(testId: Long)
+GET     /stats/user/:userId         controllers.admin.StatsController.getUserStats(userId: Long)
+GET     /stats/session/:id          controllers.admin.StatsController.getTestSessionStats(id: Long)
+
+DELETE  /test/session/:sessionId    controllers.admin.HomeController.deleteSession(sessionId: Long)
 GET     /test/start/:testId         controllers.test.TestSessionController.startTest(testId: Long)
 POST    /test/submit                controllers.test.TestSessionController.submitTest()
 

@@ -1,4 +1,4 @@
-@(tests: List[models.test.Test], user: models.AppUser, users: List[models.AppUser], testSessions: List[models.test.TestSession])
+@(tests: List[models.test.Test], user: models.AppUser, users: List[models.AppUser], testSessions: List[models.test.TestSession], languages: List[models.Language])
 @shared.header()
 <!-- TODO Indent file!!!-->
 <div class="patient-dashboard">
@@ -44,6 +44,9 @@
                             </li>
                             <li role="presentation">
                                 <a aria-controls="home" data-target="#results" data-toggle="tab" role="tab" style="cursor:default">Results</a>
+                            </li>
+                            <li role="presentation">
+                                <a aria-controls="home" data-target="#languages" data-toggle="tab" role="tab" style="cursor:default">Languages</a>
                             </li>
                             }else{
                             <script>window.location = "/logout"</script>
@@ -162,6 +165,7 @@
                                 </div>
                                 }
                             </div><!-- /.results -->
+                            <div class="tab-pane" id="languages" role="tabpanel">@language_console(languages)</div>
                         </div><!-- /.tab-content -->
                         <br />
                         <div class="tab-content">
@@ -233,7 +237,7 @@
     function getTestStats(testId){
         $("#test-stats").html('@shared.loader()');
         $.ajax({
-            url: '/test/stats/' + testId,
+            url: '/stats/test/' + testId,
             type: 'GET',
             success: function(data){
                 $("#test-stats").html(data);
@@ -245,7 +249,7 @@
         $("#user-modal").modal('show');
         $("#user-stats").html('@shared.loader()');
         $.ajax({
-            url: '/test/session/stats/' + sessionId,
+            url: '/stats/session/' + sessionId,
             type: 'GET',
             success: function(data){
                 $("#user-stats").html(data);

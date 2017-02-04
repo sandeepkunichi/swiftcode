@@ -1,8 +1,17 @@
 var app = angular.module('swiftCodeApp', []);
-app.controller('testController', function($scope, $http) {
+app.controller('testController', function($scope, $http, $filter) {
     $scope.test = {};
     $scope.test.testQuestions = [];
     $scope.test.testPrograms = [];
+    $scope.LanguageTypeList = [];
+
+    var request = $http({
+        method: "GET",
+        url: "/languages"
+    });
+    request.success(function(data) {
+        $scope.LanguageTypeList = data;
+    });
 
     $scope.addNewQuestion = function() {
         var testQuestion = {
@@ -62,4 +71,27 @@ app.controller('testController', function($scope, $http) {
     $scope.removeProgrammingQuestion = function (index) {
         $scope.test.testPrograms.splice(index, 1);
     };
+
+    $scope.removeLanguage = function(language) {
+        var index = $scope.test.codeSessionConfiguration.languages.indexOf(language);
+        $scope.test.codeSessionConfiguration.languages.splice(index, 1);
+    };
+
+    $scope.addLanguage = function(language) {
+        if(!$scope.test.codeSessionConfiguration.languages){
+            $scope.test.codeSessionConfiguration.languages = [];
+        }
+        $scope.test.codeSessionConfiguration.languages.push(language);
+    };
+
+    $scope.alreadySupported = function(language){
+        var filter = true;
+        angular.forEach($scope.test.codeSessionConfiguration.languages, function(item){
+            if(language.id == item.id){
+                filter = false;
+            }
+        });
+        return filter;
+    }
+
 });

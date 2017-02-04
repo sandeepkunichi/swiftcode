@@ -82,8 +82,7 @@
                                     <h3 class="panel-title pull-left">@(i+1))&nbsp;&nbsp;@Html(x.programQuestion)</h3>
                                 </div>
                                 <input type="hidden" name="programSubmissions[@i].testProgram.id" value="@x.id" />
-                                <!--<input type="hidden" name="programSubmissions[@i].programText" value="" />-->
-                                @code_session("programSubmissions[" + i + "]")
+                                @code_session("programSubmissions[" + i + "]", testSession.test.codeSessionConfiguration)
                             </div>
                             }
                             <br />

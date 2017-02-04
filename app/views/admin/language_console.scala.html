@@ -1,0 +1,46 @@
+@(languages: List[models.Language])
+<div class="row">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Languages Configured</h3>
+                @for(language <- languages){
+                <div class="row" style="margin:10px;">
+                    <div class="col-md-12">
+                        @language.name
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Languages Configurable</h3>
+                @for(language <- data.types.LanguageType.values()){
+                <div class="row" style="margin:10px;">
+                    <div class="col-md-8">
+                        @language.getDisplayName()
+                    </div>
+                    <div class="col-md-4">
+                        <input type="button" value="CONFIGURE" class="btn btn-default btn-sm" onclick="configureLanguage('@language.toString()')" />
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function configureLanguage(language){
+        $.ajax({
+            url: '/language/' + language + '/configure',
+            type: 'GET',
+            success: function(data){
+                alert(data);
+                window.location='/admin';
+            }
+        });
+    }
+</script>
