@@ -1,49 +1,55 @@
-This is your new Play application
 =================================
+SwiftCode
+=================================
+SwiftCode is an online platform for testing, developing and participating in technical discussions.
+=================================
+Pre-Requisites to run the application:
+=================================
+* Java 1.8 - Download [here](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+* MySQL database server - Download [here](https://dev.mysql.com/downloads/mysql/)
+* GCC and G++ packages - Download [here](http://win-builds.org/doku.php/download_and_installation_from_windows)
+* Python 2.7 - Download [here](https://www.python.org/downloads/release/python-2713/)
+=================================
+Running the application:
+=================================
+The application is packaged with activator command that is used to run with SBT targets
+To clean the target folder use:
 
-This file will be packaged with your application when using `activator dist`.
+```
+#!shell
 
-There are several demonstration files available in this template.
+activator clean
+```
 
-Controllers
-===========
+To compile to target, use:
 
-- HomeController.java:
+```
+#!shell
 
-  Shows how to handle simple HTTP requests.
+activator compile
+```
 
-- AsyncController.java:
+To update SBT dependencies, use:
 
-  Shows how to do asynchronous programming when handling a request.
+```
+#!shell
 
-- CountController.java:
+activator update
+```
 
-  Shows how to inject a component into a controller and use the component when
-  handling requests.
+To run the application in DEV mode, use:
 
-Components
-==========
+```
+#!shell
 
-- Module.java:
+activator -Dconfig.resource=DEV.conf run
+```
 
-  Shows how to use Guice to bind all the components needed by your application.
 
-- Counter.java:
+To run the application in PROD mode, use:
 
-  An example of a component that contains state, in this case a simple counter.
+```
+#!shell
 
-- ApplicationTimer.java:
-
-  An example of a component that starts when the application starts and stops
-  when the application stops.
-
-Filters
-=======
-
-- Filters.java:
-
-  Creates the list of HTTP filters used by your application.
-
-- ExampleFilter.java
-
-  A simple filter that adds a header to every response.
+swiftcode -Dconfig.resource=PROD.conf -Dhttp.port=80
+```
