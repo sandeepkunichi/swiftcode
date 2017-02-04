@@ -46,6 +46,7 @@ public class AppUserService {
     public List<AppUser> getNonTakers(Long testId){
         return AppUser.find.all().stream()
                 .filter(x -> !hasTakenTest(x.id, testId))
+                .filter(x -> !x.isAdmin())
                 .collect(Collectors.toList());
     }
 

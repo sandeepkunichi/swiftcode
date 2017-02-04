@@ -21,7 +21,7 @@ GET     /stats/test/:testId         controllers.admin.StatsController.getTestSta
 GET     /stats/user/:userId         controllers.admin.StatsController.getUserStats(userId: Long)
 GET     /stats/session/:id          controllers.admin.StatsController.getTestSessionStats(id: Long)
 
-DELETE  /test/session/:sessionId    controllers.admin.HomeController.deleteSession(sessionId: Long)
+DELETE  /test/session/:sessionId    controllers.test.TestSessionController.deleteSession(sessionId: Long)
 GET     /test/start/:testId         controllers.test.TestSessionController.startTest(testId: Long)
 POST    /test/submit                controllers.test.TestSessionController.submitTest()
 

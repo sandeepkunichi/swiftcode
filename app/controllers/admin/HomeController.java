@@ -39,10 +39,4 @@ public class HomeController extends Controller {
         ));
     }
 
-    @AdminOnly
-    public Result deleteSession(Long sessionId){
-        testSessionService.deleteSession(sessionId);
-        return ok();
-    }
-
 }

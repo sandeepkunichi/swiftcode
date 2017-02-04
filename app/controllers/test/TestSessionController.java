@@ -1,6 +1,7 @@
 package controllers.test;
 
 import actions.ValidationAction;
+import controllers.admin.AdminOnly;
 import data.types.DashboardAlertType;
 import models.AppUser;
 import models.test.Test;
@@ -56,6 +57,12 @@ public class TestSessionController extends Controller {
         TestSession.db().update(testSessionService.evaluateTestSession(testSession));
 
         return redirect("/dashboard?alert="+String.valueOf(DashboardAlertType.TEST_SUBMISSION_SUCCESS));
+    }
+
+    @AdminOnly
+    public Result deleteSession(Long sessionId){
+        testSessionService.deleteSession(sessionId);
+        return ok();
     }
 
 }
