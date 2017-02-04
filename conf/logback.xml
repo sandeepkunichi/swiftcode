@@ -38,4 +38,14 @@
     <appender-ref ref="ASYNCSTDOUT" />
   </root>
 
+  <appender name="loggly" class="ch.qos.logback.ext.loggly.LogglyAppender">
+    <endpointUrl>http://logs-01.loggly.com/inputs/2b2fe421-225f-4ed4-9baf-720bfc27642a/tag/logback</endpointUrl>
+    <pattern>%d{"ISO8601", UTC}  %p %t %c{0}.%M - %m%n</pattern>
+  </appender>
+  <appender name="loggly-async" class="ch.qos.logback.classic.AsyncAppender">
+    <appender-ref ref="loggly" />
+  </appender>
+  <root level="error">
+    <appender-ref ref="loggly-async" />
+  </root>
 </configuration>
