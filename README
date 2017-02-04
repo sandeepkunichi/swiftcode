@@ -15,41 +15,20 @@ Running the application:
 The application is packaged with activator command that is used to run with SBT targets
 To clean the target folder use:
 
-```
-#!shell
-
 activator clean
-```
 
 To compile to target, use:
 
-```
-#!shell
-
 activator compile
-```
 
 To update SBT dependencies, use:
 
-```
-#!shell
-
 activator update
-```
 
 To run the application in DEV mode, use:
 
-```
-#!shell
-
 activator -Dconfig.resource=DEV.conf run
-```
-
 
 To run the application in PROD mode, use:
 
-```
-#!shell
-
 swiftcode -Dconfig.resource=PROD.conf -Dhttp.port=80
-```
