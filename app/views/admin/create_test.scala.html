@@ -46,7 +46,7 @@
                         <fieldset data-ng-repeat="testQuestion in test.testQuestions track by $index">
                             <p>Q-{{ $index + 1 }}</p>
                             <textarea class="form-control test-input" ng-model="testQuestion.question" required></textarea><br/><br/>
-                            <input type="button" class="btn btn-default btn-sm" ng-click="removeQuestion($index)" value="REMOVE QUESTION">
+                            <input type="button" class="btn btn-danger btn-sm" ng-click="removeQuestion($index)" value="REMOVE QUESTION">
                             <input type="button" class="btn btn-default btn-sm" ng-click="addNewAnswer(testQuestion)" value="ADD ANSWER"><br/><br/>
                             <div class="col-sm-12">
                                 <fieldset data-ng-repeat="testAnswer in testQuestion.testAnswers track by $index">
@@ -59,7 +59,7 @@
                                             <input type="checkbox" ng-model="testAnswer.isCorrect" ng-init="testAnswer.isCorrect = '0'"/> Correct
                                         </div>
                                         <div class="col-sm-2">
-                                            <input type="button" class="btn btn-default btn-sm" ng-click="removeAnswer(testQuestion, $index)" value="REMOVE ANSWER">
+                                            <input type="button" class="btn btn-danger btn-sm" ng-click="removeAnswer(testQuestion, $index)" value="REMOVE ANSWER">
                                         </div>
                                      </div>
                                 </fieldset>
@@ -68,14 +68,17 @@
                         <fieldset data-ng-repeat="testProgram in test.testPrograms track by $index">
                             <p>P-{{ $index + 1 }}</p>
                             <textarea class="form-control test-input" ng-model="testProgram.programQuestion" required></textarea><br/><br/>
-                            <input type="button" class="btn btn-default btn-sm" ng-click="removeProgrammingQuestion($index)" value="REMOVE PROGRAMMING QUESTION">
+                            <input type="button" class="btn btn-danger btn-sm" ng-click="removeProgrammingQuestion($index)" value="REMOVE PROGRAMMING QUESTION">
                         </fieldset>
+                        <br/>
+                        <input type="button" class="btn btn-default btn-sm" ng-click="addNewQuestion()" value="ADD QUESTION">
+                        <input type="button" class="btn btn-default btn-sm" ng-click="addNewProgrammingQuestion()" value="ADD PROGRAMMING QUESTION"><br/>
                     </div>
                 </div>
                 <br />
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3 center">
-                        <button type="submit" class="btn btn-default btn-sm"> CREATE </button>
+                        <button type="submit" class="btn btn-primary btn-sm"> CREATE </button>
                     </div>
                 </div>
                 <br />

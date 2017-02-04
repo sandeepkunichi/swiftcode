@@ -46,10 +46,13 @@ public class ProgramSubmission extends Model {
     // TODO Ideally, we would put the default template in the editor for the user, so we don't require this
     public ProgramSubmission preProcess(){
         if(this.languageType.equals(LanguageType.JAVA)){
-            this.programText = StringEscapeUtils.unescapeHtml4(views.html.templates.java_template.render(
+            // TODO Eewww....Remove this template render
+            /*this.programText = StringEscapeUtils.unescapeHtml4(views.html.templates.java_template.render(
                     this.programIndex,
                     this.programText.trim().replaceAll("\u200B|\u200Cc|\u200Dd|\uFEFFe", "")
-            ).body());
+            ).body());*/
+            // Replace all is to replace some characters which might be present when it comes from the browser
+            this.programText = this.programText.trim().replaceAll("\u200B|\u200Cc|\u200Dd|\uFEFFe", "");
         }
         return this;
     }
