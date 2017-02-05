@@ -1,17 +1,14 @@
-package controllers.engine;
+package engine.controllers;
 
 import actions.ValidationAction;
-import actors.DispatcherActor;
-import actors.ProgramCompilationActor;
-import actors.ProgramCreationActor;
-import actors.ProgramExecutionActor;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
-import data.ProgramExecutionConfiguration;
-import events.DispatchEvent;
-import events.ProgramCompilationEvent;
-import events.ProgramCreationEvent;
-import events.ProgramExecutionEvent;
+import engine.actors.DispatcherActor;
+import engine.config.*;
+import engine.events.DispatchEvent;
+import engine.events.ProgramCompilationEvent;
+import engine.events.ProgramCreationEvent;
+import engine.events.ProgramExecutionEvent;
 import models.test.ProgramSubmission;
 import play.Configuration;
 import play.data.Form;
@@ -43,16 +40,10 @@ public class ProgramController extends Controller {
     @Inject
     ProgramExecutionResponse programExecutionResponse;
 
-    final ActorRef programCompilationActor;
-    final ActorRef programCreationActor;
-    final ActorRef programExecutionActor;
     final ActorRef dispatcherActor;
 
     @Inject
     public ProgramController(ActorSystem system) {
-        this.programCreationActor = system.actorOf(ProgramCreationActor.props);
-        this.programCompilationActor = system.actorOf(ProgramCompilationActor.props);
-        this.programExecutionActor = system.actorOf(ProgramExecutionActor.props);
         this.dispatcherActor = system.actorOf(DispatcherActor.props);
     }
 
@@ -62,10 +53,9 @@ public class ProgramController extends Controller {
 
         ProgramSubmission programSubmission = programSubmissionForm.get().preProcess();
 
-        ProgramExecutionConfiguration programExecutionConfiguration = new ProgramExecutionConfiguration(
-                configuration.getString("binaryRoot"),
-                programSubmission
-        );
+        ProgramExecutionConfiguration programExecutionConfiguration = getProgramConfiguration(programSubmission);
+
+
 
         ProgramCreationEvent programCreationEvent = new ProgramCreationEvent(
                 programSubmission,
@@ -77,7 +67,7 @@ public class ProgramController extends Controller {
                 programExecutionConfiguration
         );
 
-        DispatchEvent dispatchEvent = new DispatchEvent(programCreationEvent, programCompilationEvent, programCreationActor, programCompilationActor);
+        DispatchEvent dispatchEvent = new DispatchEvent(programCreationEvent, programCompilationEvent);
 
         return FutureConverters.toJava(ask(dispatcherActor, dispatchEvent, 10000))
                 .thenApply(this::getExecutionResult);
@@ -90,17 +80,14 @@ public class ProgramController extends Controller {
 
         ProgramSubmission programSubmission = programSubmissionForm.get().preProcess();
 
-        ProgramExecutionConfiguration programExecutionConfiguration = new ProgramExecutionConfiguration(
-                configuration.getString("binaryRoot"),
-                programSubmission
-        );
+        ProgramExecutionConfiguration programExecutionConfiguration = getProgramConfiguration(programSubmission);
 
         ProgramExecutionEvent programExecutionEvent = new ProgramExecutionEvent(
                 programSubmission,
                 programExecutionConfiguration
         );
 
-        DispatchEvent dispatchEvent = new DispatchEvent(programExecutionEvent, programExecutionActor);
+        DispatchEvent dispatchEvent = new DispatchEvent(programExecutionEvent);
 
         return FutureConverters.toJava(ask(dispatcherActor, dispatchEvent, 60000))
                 .thenApply(this::getExecutionResult);
@@ -112,6 +99,21 @@ public class ProgramController extends Controller {
             return (Result) ((CompletableFuture) object).get();
         } catch (InterruptedException | ExecutionException e){
             return ok(programExecutionResponse.getCompilationTimeout());
+        }
+    }
+
+    private ProgramExecutionConfiguration getProgramConfiguration(ProgramSubmission programSubmission){
+        switch (programSubmission.languageType){
+            case JAVA:
+                return new JavaExecutionConfiguration(configuration.getString("binaryRoot"), programSubmission);
+            case PYTHON:
+                return new PythonExecutionConfiguration(configuration.getString("binaryRoot"), programSubmission);
+            case C:
+                return new CProgramConfiguration(configuration.getString("binaryRoot"), programSubmission);
+            case CPP:
+                return new CPPProgramConfiguration(configuration.getString("binaryRoot"), programSubmission);
+            default:
+                return null;
         }
     }
 }

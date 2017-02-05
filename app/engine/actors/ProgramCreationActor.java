@@ -1,8 +1,7 @@
-package actors;
+package engine.actors;
 
-import akka.actor.Props;
 import akka.actor.UntypedActor;
-import events.ProgramCreationEvent;
+import engine.events.ProgramCreationEvent;
 
 import java.io.PrintWriter;
 import java.nio.file.Files;
@@ -12,7 +11,7 @@ import java.nio.file.Paths;
  * Created by Sandeep.K on 28-01-2017.
  */
 public class ProgramCreationActor extends UntypedActor {
-    public static Props props = Props.create(ProgramCreationActor.class);
+
     @Override
     public void onReceive(Object message) {
         if(message instanceof ProgramCreationEvent){

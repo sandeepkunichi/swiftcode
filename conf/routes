@@ -14,8 +14,8 @@ DELETE  /test/delete/:testId        controllers.test.TestController.deleteTest(t
 POST    /test/activate/:testId      controllers.test.TestController.activateTest(testId: Long)
 POST    /test/deactivate/:testId    controllers.test.TestController.deactivateTest(testId: Long)
 
-GET     /languages                  controllers.engine.LanguageController.getLanguages()
-GET     /language/:name/configure   controllers.engine.LanguageController.configureLanguage(name: String)
+GET     /languages                  engine.controllers.LanguageController.getLanguages()
+GET     /language/:name/configure   engine.controllers.LanguageController.configureLanguage(name: String)
 
 GET     /stats/test/:testId         controllers.admin.StatsController.getTestStats(testId: Long)
 GET     /stats/user/:userId         controllers.admin.StatsController.getUserStats(userId: Long)
@@ -44,8 +44,8 @@ POST   /resume/upload               controllers.dashboard.HomeController.uploadR
 
 GET    /slack                       controllers.dashboard.HomeController.slackRedirect
 
-POST   /program/compile             controllers.engine.ProgramController.compile
-POST   /program/execute             controllers.engine.ProgramController.execute
+POST   /program/compile             engine.controllers.ProgramController.compile
+POST   /program/execute             engine.controllers.ProgramController.execute
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

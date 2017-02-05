@@ -1,8 +1,7 @@
-package actors;
+package engine.actors;
 
-import akka.actor.Props;
 import akka.actor.UntypedActor;
-import events.ProgramCompilationEvent;
+import engine.events.ProgramCompilationEvent;
 import responses.ProgramExecutionResponse;
 
 import java.io.BufferedReader;
@@ -15,17 +14,15 @@ import java.util.stream.Collectors;
  */
 public class ProgramCompilationActor extends UntypedActor {
 
-    public static Props props = Props.create(ProgramCompilationActor.class);
-
     public ProgramExecutionResponse programExecutionResponse = new ProgramExecutionResponse();
+
+    Runtime rt = Runtime.getRuntime();
 
     @Override
     public void onReceive(Object message) throws Exception {
         if(message instanceof ProgramCompilationEvent){
 
             ProgramCompilationEvent programCompilationEvent = (ProgramCompilationEvent) message;
-
-            Runtime rt = Runtime.getRuntime();
 
             String[] commands = {
                     programCompilationEvent.getConfiguration().getCompilerCommand(),

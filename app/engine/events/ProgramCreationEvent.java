@@ -1,6 +1,6 @@
-package events;
+package engine.events;
 
-import data.ProgramExecutionConfiguration;
+import engine.config.ProgramExecutionConfiguration;
 import models.test.ProgramSubmission;
 
 /**
@@ -11,8 +11,7 @@ public class ProgramCreationEvent extends ProgramEvent {
     private Boolean creationResult;
 
     public ProgramCreationEvent(ProgramSubmission programSubmission, ProgramExecutionConfiguration configuration) {
-        this.setProgramSubmission(programSubmission);
-        this.setConfiguration(configuration);
+        super(programSubmission, configuration);
     }
 
     public Boolean getCreationResult() {

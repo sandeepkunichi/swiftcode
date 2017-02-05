@@ -1,8 +1,7 @@
-package actors;
+package engine.actors;
 
-import akka.actor.Props;
 import akka.actor.UntypedActor;
-import events.ProgramExecutionEvent;
+import engine.events.ProgramExecutionEvent;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -17,14 +16,12 @@ import static play.mvc.Results.ok;
  */
 public class ProgramExecutionActor extends UntypedActor {
 
-    public static Props props = Props.create(ProgramExecutionActor.class);
+    Runtime rt = Runtime.getRuntime();
 
     @Override
     public void onReceive(Object message) throws Exception {
         if(message instanceof ProgramExecutionEvent){
             ProgramExecutionEvent programExecutionEvent = (ProgramExecutionEvent) message;
-
-            Runtime rt = Runtime.getRuntime();
 
             String[] commands = {
                     programExecutionEvent.getConfiguration().getExecutionCommand(),

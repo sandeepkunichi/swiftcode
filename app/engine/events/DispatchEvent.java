@@ -1,6 +1,4 @@
-package events;
-
-import akka.actor.ActorRef;
+package engine.events;
 
 /**
  * Created by Sandeep.K on 28-01-2017.
@@ -10,22 +8,16 @@ public class DispatchEvent {
     private ProgramCompilationEvent programCompilationEvent;
     private ProgramExecutionEvent programExecutionEvent;
     private String output;
-    private ActorRef creationActorRef;
-    private ActorRef compilationActorRef;
-    private ActorRef executionActorRef;
     private ActionType actionType;
 
-    public DispatchEvent(ProgramCreationEvent programCreationEvent, ProgramCompilationEvent programCompilationEvent, ActorRef creationActorRef, ActorRef compilationActorRef) {
+    public DispatchEvent(ProgramCreationEvent programCreationEvent, ProgramCompilationEvent programCompilationEvent) {
         this.programCreationEvent = programCreationEvent;
         this.programCompilationEvent = programCompilationEvent;
-        this.creationActorRef = creationActorRef;
-        this.compilationActorRef = compilationActorRef;
         this.actionType = ActionType.COMPILE;
     }
 
-    public DispatchEvent(ProgramExecutionEvent programExecutionEvent, ActorRef executionActorRef) {
+    public DispatchEvent(ProgramExecutionEvent programExecutionEvent) {
         this.programExecutionEvent = programExecutionEvent;
-        this.executionActorRef = executionActorRef;
         this.actionType = ActionType.EXECUTE;
     }
 
@@ -53,36 +45,12 @@ public class DispatchEvent {
         this.output = output;
     }
 
-    public ActorRef getCreationActorRef() {
-        return creationActorRef;
-    }
-
-    public void setCreationActorRef(ActorRef creationActorRef) {
-        this.creationActorRef = creationActorRef;
-    }
-
-    public ActorRef getCompilationActorRef() {
-        return compilationActorRef;
-    }
-
-    public void setCompilationActorRef(ActorRef compilationActorRef) {
-        this.compilationActorRef = compilationActorRef;
-    }
-
     public ProgramExecutionEvent getProgramExecutionEvent() {
         return programExecutionEvent;
     }
 
     public void setProgramExecutionEvent(ProgramExecutionEvent programExecutionEvent) {
         this.programExecutionEvent = programExecutionEvent;
-    }
-
-    public ActorRef getExecutionActorRef() {
-        return executionActorRef;
-    }
-
-    public void setExecutionActorRef(ActorRef executionActorRef) {
-        this.executionActorRef = executionActorRef;
     }
 
     public ActionType getActionType() {

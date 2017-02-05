@@ -1,6 +1,6 @@
 package responses;
 
-import events.ProgramCompilationEvent;
+import engine.events.ProgramCompilationEvent;
 
 import javax.inject.Singleton;
 import java.io.BufferedReader;

@@ -1,6 +1,6 @@
-package events;
+package engine.events;
 
-import data.ProgramExecutionConfiguration;
+import engine.config.ProgramExecutionConfiguration;
 import models.test.ProgramSubmission;
 
 /**
@@ -9,6 +9,15 @@ import models.test.ProgramSubmission;
 public class ProgramEvent {
     private ProgramSubmission programSubmission;
     private ProgramExecutionConfiguration configuration;
+
+    public ProgramEvent(ProgramSubmission programSubmission, ProgramExecutionConfiguration configuration) {
+        this.setProgramSubmission(programSubmission);
+        this.setConfiguration(configuration);
+    }
+
+    public ProgramEvent(){
+
+    }
 
     public ProgramSubmission getProgramSubmission() {
         return programSubmission;

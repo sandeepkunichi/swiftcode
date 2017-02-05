@@ -1,6 +1,6 @@
-package events;
+package engine.events;
 
-import data.ProgramExecutionConfiguration;
+import engine.config.ProgramExecutionConfiguration;
 import models.test.ProgramSubmission;
 import play.mvc.Result;
 
@@ -15,8 +15,7 @@ public class ProgramExecutionEvent extends ProgramEvent {
     private File executable;
 
     public ProgramExecutionEvent(ProgramSubmission programSubmission, ProgramExecutionConfiguration configuration) {
-        this.setProgramSubmission(programSubmission);
-        this.setConfiguration(configuration);
+        super(programSubmission, configuration);
     }
 
     public ProgramExecutionEvent(File executable) {
