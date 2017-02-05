@@ -55,8 +55,6 @@ public class ProgramController extends Controller {
 
         ProgramExecutionConfiguration programExecutionConfiguration = getProgramConfiguration(programSubmission);
 
-
-
         ProgramCreationEvent programCreationEvent = new ProgramCreationEvent(
                 programSubmission,
                 programExecutionConfiguration

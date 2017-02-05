@@ -28,6 +28,6 @@ public class TestQuestion extends Model {
         this.testAnswers = testAnswers;
     }
 
-    public static Finder<Long, TestQuestion> find = new Finder<Long, TestQuestion>(TestQuestion.class);
+    public static Finder<Long, TestQuestion> find = new Finder<>(TestQuestion.class);
 
 }

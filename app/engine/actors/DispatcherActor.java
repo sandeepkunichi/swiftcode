@@ -38,7 +38,6 @@ public class DispatcherActor extends UntypedActor {
             DispatchEvent event = (DispatchEvent) message;
             CompletionStage<Result> executionResponse = null;
 
-
             if(event.getActionType().equals(DispatchEvent.ActionType.COMPILE)){
 
                 executionResponse = FutureConverters

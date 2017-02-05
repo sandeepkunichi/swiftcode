@@ -35,6 +35,6 @@ public class TestAnswer extends Model {
         this.isCorrect = isCorrect;
     }
 
-    public static Finder<Long, TestAnswer> find = new Finder<Long, TestAnswer>(TestAnswer.class);
+    public static Finder<Long, TestAnswer> find = new Finder<>(TestAnswer.class);
 
 }

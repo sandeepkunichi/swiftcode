@@ -44,7 +44,7 @@ public class AppUser extends Model{
     @JsonProperty("channels")
     public List<Channel> channels;
 
-    public static Model.Finder<Long, AppUser> find = new Model.Finder<Long, AppUser>(AppUser.class);
+    public static Model.Finder<Long, AppUser> find = new Model.Finder<>(AppUser.class);
 
     public Boolean isAdmin(){
         return this.role.equals(Role.ADMIN);
