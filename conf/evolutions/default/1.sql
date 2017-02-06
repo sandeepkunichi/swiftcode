@@ -57,7 +57,7 @@ create table test (
 
 create table test_answer (
   id                            bigint auto_increment not null,
-  answer                        varchar(255),
+  answer                        TEXT,
   test_question_id              bigint,
   is_correct                    char(1) DEFAULT '0',
   constraint pk_test_answer primary key (id)
@@ -66,14 +66,14 @@ create table test_answer (
 create table test_program (
   id                            bigint auto_increment not null,
   test_id                       bigint not null,
-  program_question              varchar(255),
+  program_question              TEXT,
   constraint pk_test_program primary key (id)
 );
 
 create table test_question (
   id                            bigint auto_increment not null,
   test_id                       bigint not null,
-  question                      varchar(255),
+  question                      TEXT,
   constraint pk_test_question primary key (id)
 );
 

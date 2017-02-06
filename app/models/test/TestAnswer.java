@@ -17,6 +17,7 @@ public class TestAnswer extends Model {
     public Long id;
 
     @Constraints.Required
+    @Column(columnDefinition = "TEXT")
     public String answer;
 
     @ManyToOne

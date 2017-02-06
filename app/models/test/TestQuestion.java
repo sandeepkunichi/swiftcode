@@ -17,6 +17,7 @@ public class TestQuestion extends Model {
     public Long id;
 
     @Constraints.Required
+    @Column(columnDefinition = "TEXT")
     public String question;
 
     @Constraints.Required
@@ -30,4 +31,7 @@ public class TestQuestion extends Model {
 
     public static Finder<Long, TestQuestion> find = new Finder<>(TestQuestion.class);
 
+    public String getQuestionView(){
+        return utils.HtmlUtils.txtToHtml(question);
+    }
 }

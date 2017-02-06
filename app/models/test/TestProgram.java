@@ -3,10 +3,7 @@ package models.test;
 import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by Sandeep.K on 25-01-2017.
@@ -19,6 +16,7 @@ public class TestProgram extends Model {
     public Long id;
 
     @Constraints.Required
+    @Column(columnDefinition = "TEXT")
     public String programQuestion;
 
     public TestProgram(String programQuestion){
@@ -27,4 +25,7 @@ public class TestProgram extends Model {
 
     public static Finder<Long, TestProgram> find = new Finder<>(TestProgram.class);
 
+    public String getProgramQuestionView(){
+        return utils.HtmlUtils.txtToHtml(programQuestion);
+    }
 }

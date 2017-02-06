@@ -61,7 +61,7 @@
                             @for((x,i) <- testSession.test.testQuestions.view.zipWithIndex){
                             <div class="panel panel-default">
                                 <div class="panel-heading clearfix">
-                                    <h3 class="panel-title pull-left">@(i+1))&nbsp;&nbsp;@Html(x.question)</h3>
+                                    <h3 class="panel-title pull-left">@(i+1))&nbsp;&nbsp;@Html(x.getQuestionView())</h3>
                                 </div>
                                 <div class="list-group">
                                     @for((y,j) <- x.testAnswers.view.zipWithIndex){
@@ -79,7 +79,7 @@
                             @for((x,i) <- testSession.test.testPrograms.view.zipWithIndex){
                             <div class="panel panel-default">
                                 <div class="panel-heading clearfix">
-                                    <h3 class="panel-title pull-left">@(i+1))&nbsp;&nbsp;@Html(x.programQuestion)</h3>
+                                    <h3 class="panel-title pull-left">@Html(x.getProgramQuestionView())</h3>
                                 </div>
                                 <input type="hidden" name="programSubmissions[@i].testProgram.id" value="@x.id" />
                                 @code_session("programSubmissions[" + i + "]", testSession.test.codeSessionConfiguration)
