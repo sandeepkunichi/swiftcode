@@ -9,10 +9,12 @@ import models.test.ProgramSubmission;
 public class ProgramEvent {
     private ProgramSubmission programSubmission;
     private ProgramExecutionConfiguration configuration;
+    private Runtime runtime;
 
-    public ProgramEvent(ProgramSubmission programSubmission, ProgramExecutionConfiguration configuration) {
+    public ProgramEvent(ProgramSubmission programSubmission, ProgramExecutionConfiguration configuration, Runtime runtime) {
         this.setProgramSubmission(programSubmission);
         this.setConfiguration(configuration);
+        this.runtime = runtime;
     }
 
     public ProgramEvent(){
@@ -33,5 +35,13 @@ public class ProgramEvent {
 
     public void setConfiguration(ProgramExecutionConfiguration configuration) {
         this.configuration = configuration;
+    }
+
+    public Runtime getRuntime() {
+        return runtime;
+    }
+
+    public void setRuntime(Runtime runtime) {
+        this.runtime = runtime;
     }
 }

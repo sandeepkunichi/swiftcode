@@ -10,8 +10,8 @@ public class ProgramCompilationEvent extends ProgramEvent {
 
     public String output;
 
-    public ProgramCompilationEvent(ProgramSubmission programSubmission, ProgramExecutionConfiguration configuration) {
-        super(programSubmission, configuration);
+    public ProgramCompilationEvent(ProgramSubmission programSubmission, ProgramExecutionConfiguration configuration, Runtime runtime) {
+        super(programSubmission, configuration, runtime);
     }
 
     public String getOutput() {

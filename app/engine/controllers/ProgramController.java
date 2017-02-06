@@ -5,9 +5,7 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import engine.actors.DispatcherActor;
 import engine.config.*;
-import engine.events.DispatchEvent;
 import engine.events.ProgramCompilationEvent;
-import engine.events.ProgramCreationEvent;
 import engine.events.ProgramExecutionEvent;
 import models.test.ProgramSubmission;
 import play.Configuration;
@@ -41,10 +39,12 @@ public class ProgramController extends Controller {
     ProgramExecutionResponse programExecutionResponse;
 
     final ActorRef dispatcherActor;
+    final Runtime runtime;
 
     @Inject
     public ProgramController(ActorSystem system) {
         this.dispatcherActor = system.actorOf(DispatcherActor.props);
+        this.runtime = Runtime.getRuntime();
     }
 
     @ValidationAction.ValidationActivity(validationActionType = ProgramSubmission.class)
@@ -55,19 +55,13 @@ public class ProgramController extends Controller {
 
         ProgramExecutionConfiguration programExecutionConfiguration = getProgramConfiguration(programSubmission);
 
-        ProgramCreationEvent programCreationEvent = new ProgramCreationEvent(
-                programSubmission,
-                programExecutionConfiguration
-        );
-
         ProgramCompilationEvent programCompilationEvent = new ProgramCompilationEvent(
                 programSubmission,
-                programExecutionConfiguration
+                programExecutionConfiguration,
+                runtime
         );
 
-        DispatchEvent dispatchEvent = new DispatchEvent(programCreationEvent, programCompilationEvent);
-
-        return FutureConverters.toJava(ask(dispatcherActor, dispatchEvent, 10000))
+        return FutureConverters.toJava(ask(dispatcherActor, programCompilationEvent, 10000))
                 .thenApply(this::getExecutionResult);
 
     }
@@ -82,12 +76,11 @@ public class ProgramController extends Controller {
 
         ProgramExecutionEvent programExecutionEvent = new ProgramExecutionEvent(
                 programSubmission,
-                programExecutionConfiguration
+                programExecutionConfiguration,
+                runtime
         );
 
-        DispatchEvent dispatchEvent = new DispatchEvent(programExecutionEvent);
-
-        return FutureConverters.toJava(ask(dispatcherActor, dispatchEvent, 60000))
+        return FutureConverters.toJava(ask(dispatcherActor, programExecutionEvent, 60000))
                 .thenApply(this::getExecutionResult);
 
     }

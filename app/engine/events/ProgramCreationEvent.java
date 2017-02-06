@@ -10,8 +10,8 @@ public class ProgramCreationEvent extends ProgramEvent {
 
     private Boolean creationResult;
 
-    public ProgramCreationEvent(ProgramSubmission programSubmission, ProgramExecutionConfiguration configuration) {
-        super(programSubmission, configuration);
+    public ProgramCreationEvent(ProgramSubmission programSubmission, ProgramExecutionConfiguration configuration, Runtime runtime) {
+        super(programSubmission, configuration, runtime);
     }
 
     public Boolean getCreationResult() {

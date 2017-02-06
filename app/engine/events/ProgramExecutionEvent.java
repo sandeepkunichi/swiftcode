@@ -14,8 +14,8 @@ public class ProgramExecutionEvent extends ProgramEvent {
     private CompletionStage<Result> output;
     private File executable;
 
-    public ProgramExecutionEvent(ProgramSubmission programSubmission, ProgramExecutionConfiguration configuration) {
-        super(programSubmission, configuration);
+    public ProgramExecutionEvent(ProgramSubmission programSubmission, ProgramExecutionConfiguration configuration, Runtime runtime) {
+        super(programSubmission, configuration, runtime);
     }
 
     public ProgramExecutionEvent(File executable) {

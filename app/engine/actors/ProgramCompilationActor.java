@@ -16,8 +16,6 @@ public class ProgramCompilationActor extends UntypedActor {
 
     public ProgramExecutionResponse programExecutionResponse = new ProgramExecutionResponse();
 
-    Runtime rt = Runtime.getRuntime();
-
     @Override
     public void onReceive(Object message) throws Exception {
         if(message instanceof ProgramCompilationEvent){
@@ -30,7 +28,7 @@ public class ProgramCompilationActor extends UntypedActor {
                     programCompilationEvent.getConfiguration().getBinaryFileName()
             };
 
-            Process proc = rt.exec(Arrays.asList(commands).stream().collect(Collectors.joining(" ")));
+            Process proc = programCompilationEvent.getRuntime().exec(Arrays.asList(commands).stream().collect(Collectors.joining(" ")));
 
             BufferedReader stdError = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
 

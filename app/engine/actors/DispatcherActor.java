@@ -4,7 +4,6 @@ import akka.actor.ActorRef;
 import akka.actor.Props;
 import akka.actor.UntypedActor;
 import akka.routing.RoundRobinPool;
-import engine.events.DispatchEvent;
 import engine.events.ProgramCompilationEvent;
 import engine.events.ProgramCreationEvent;
 import engine.events.ProgramExecutionEvent;
@@ -32,38 +31,36 @@ public class DispatcherActor extends UntypedActor {
 
     @Override
     public void onReceive(Object message) throws Exception {
+        CompletionStage<Result> executionResponse = null;
 
-        if(message instanceof DispatchEvent){
+        if(message instanceof ProgramCompilationEvent){
+            ProgramCreationEvent programCreationEvent = new ProgramCreationEvent(
+                    ((ProgramCompilationEvent) message).getProgramSubmission(),
+                    ((ProgramCompilationEvent) message).getConfiguration(),
+                    ((ProgramCompilationEvent) message).getRuntime()
+            );
 
-            DispatchEvent event = (DispatchEvent) message;
-            CompletionStage<Result> executionResponse = null;
+            executionResponse = FutureConverters
+                    .toJava(ask(creationRouter, programCreationEvent, 5000))
+                    //Ask the CreationActor to finish file io and respond with the success status
+                    .thenApply(creationResponse -> ((ProgramCreationEvent) creationResponse).getCreationResult())
+                    //Ask the CompilationActor to run command on file and respond with the result
+                    .thenApply(creationResult -> creationResult ? getCompilationResult((ProgramCompilationEvent) message) : getErrorResult())
+                    .toCompletableFuture().get();
 
-            if(event.getActionType().equals(DispatchEvent.ActionType.COMPILE)){
-
-                executionResponse = FutureConverters
-                        .toJava(ask(creationRouter, event.getProgramCreationEvent(), 5000))
-                        //Ask the CreationActor to finish file io and respond with the success status
-                        .thenApply(creationResponse -> ((ProgramCreationEvent) creationResponse).getCreationResult())
-                        //Ask the CompilationActor to run command on file and respond with the result
-                        .thenApply(creationResult -> creationResult ? getCompilationResult(event) : getErrorResult())
-                        .toCompletableFuture().get();
-
-            }else if(event.getActionType().equals(DispatchEvent.ActionType.EXECUTE)){
-
-                executionResponse = FutureConverters
-                        .toJava(ask(executionRouter, event.getProgramExecutionEvent(), 10000))
-                        //Ask the ExecutionActor to run the command on executable file
-                        .thenApply(executionResult -> ((ProgramExecutionEvent) executionResult).getOutput())
-                        .toCompletableFuture().get();
-
-            }
-
-            sender().tell(executionResponse, self());
+        }else if(message instanceof ProgramExecutionEvent){
+            executionResponse = FutureConverters
+                    .toJava(ask(executionRouter, message, 10000))
+                    //Ask the ExecutionActor to run the command on executable file
+                    .thenApply(executionResult -> ((ProgramExecutionEvent) executionResult).getOutput())
+                    .toCompletableFuture().get();
         }
+
+        sender().tell(executionResponse, self());
     }
 
-    private CompletionStage<Result> getCompilationResult(DispatchEvent event){
-        return FutureConverters.toJava(ask(compilationRouter, event.getProgramCompilationEvent(), 10000))
+    private CompletionStage<Result> getCompilationResult(ProgramCompilationEvent event){
+        return FutureConverters.toJava(ask(compilationRouter, event, 10000))
                 .thenApply(x -> ok(((ProgramCompilationEvent)x).getOutput()));
     }
     private CompletionStage<Result> getErrorResult(){

@@ -16,8 +16,6 @@ import static play.mvc.Results.ok;
  */
 public class ProgramExecutionActor extends UntypedActor {
 
-    Runtime rt = Runtime.getRuntime();
-
     @Override
     public void onReceive(Object message) throws Exception {
         if(message instanceof ProgramExecutionEvent){
@@ -30,7 +28,7 @@ public class ProgramExecutionActor extends UntypedActor {
 
             BufferedReader stdOut = null;
             try{
-                Process proc = rt.exec(Arrays.asList(commands).stream().collect(Collectors.joining(" ")));
+                Process proc = programExecutionEvent.getRuntime().exec(Arrays.asList(commands).stream().collect(Collectors.joining(" ")));
 
                 stdOut = new BufferedReader(new InputStreamReader(proc.getInputStream()));
 
