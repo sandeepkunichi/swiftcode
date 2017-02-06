@@ -1,14 +1,11 @@
 package models.test;
 
 import com.avaje.ebean.Model;
-import data.types.LanguageType;
 import models.Language;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by Sandeep.K on 02-02-2017.

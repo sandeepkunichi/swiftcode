@@ -2,7 +2,6 @@ package models.test;
 
 import com.avaje.ebean.Model;
 import data.types.LanguageType;
-import org.apache.commons.lang3.StringEscapeUtils;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
@@ -38,7 +37,7 @@ public class ProgramSubmission extends Model {
     }
 
     public String getProgramQuestion(){
-        return this.testProgram.programQuestion;
+        return this.testProgram.getProgramQuestionView();
     }
 
     public static Finder<Long, ProgramSubmission> find = new Finder<>(ProgramSubmission.class);
