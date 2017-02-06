@@ -50,7 +50,8 @@ public class HomeController extends Controller implements MessageService {
                 (request().getQueryString("alert") != null && !request().getQueryString("alert").isEmpty()) ? new DashboardAlert(
                         configuration.getString("alerts." + request().getQueryString("alert") + ".message"),
                         configuration.getString("alerts." + request().getQueryString("alert") + ".class")
-                ) : null
+                ) : null,
+                configuration
         ));
     }
 

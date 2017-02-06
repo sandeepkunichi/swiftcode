@@ -1,15 +1,19 @@
-@(testSessions: List[models.test.TestSession], tests: List[models.test.Test], user: models.AppUser, dashboardAlert: data.DashboardAlert)
+@(testSessions: List[models.test.TestSession], tests: List[models.test.Test], user: models.AppUser, dashboardAlert: data.DashboardAlert, configuration: play.Configuration)
 @shared.header()
 <div class="patient-dashboard">
     <div class="container-fluid">
         <div class="row dashboard">
+            <!--
             <div class="col-md-2 header-first-half">
                 <header class="center">
                     <img class="margin-top-5" src="/images/logo.png" width="150">
                 </header>
             </div><!-- /. dashboard-first-half -->
-            <div class="col-md-10 header-second-half">
+            <div class="col-md-12 header-second-half">
                 <header>
+                    <span class="pull-left">
+                        <img class="margin-top-5" src="/images/logo.png" width="150">
+                    </span>
                     <span class="pull-right">
                         <a href="mailto:swiftcode@@betsol.com" target="_top" class="btn btn-default btn-sm logoutbtn">Help</a>
                         <button class="btn btn-default btn-sm logoutbtn" onclick="window.location = '/logout'">Logout</button>
@@ -19,9 +23,10 @@
         </div>
         <div class="row dashboardbody">
             <br /><br />
+            <!--
             <div class="col-md-2 dashboard-first-half">
             </div><!-- /. dashboard-first-half -->
-            <div class="col-md-10 tab-content main-tab-content">
+            <div class="col-md-12 tab-content main-tab-content">
                 <br/>
                 <div class="dashboard-second-half tab-pane active" role="tabpanel">
                     <div class="body">
@@ -30,6 +35,7 @@
                                 <div class="col-md-9">
                                     <p>@user.email</p>
                                 </div>
+                                @if(configuration.getBoolean("slack.enable")){
                                 <div class="col-md-3">
                                     @if(user.externalId==null){
                                         <span class="pull-right">
@@ -37,6 +43,7 @@
                                         </span>
                                     }
                                 </div>
+                                }
                             </div>
                             <br /><br />
                             <div class="row">
@@ -132,6 +139,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <input class="pull-right btn btn-default btn-sm logoutbtn" type="button" value="Begin" onclick="startTest('@test.id');"/>
+                                        <div id="@test.id-description" style="display:none;">@Html(test.getInstructionsView())</div>
                                     </div>
                                 </div>
                                 <br/>
@@ -188,7 +196,7 @@
     });
 
     function startTest(testId){
-        var message = "This action will start the test right away. Are you sure?"
+        var message = $("#" + testId + "-description").html();
         var supported = !!window.EventSource;
         if(!supported){
             message = "Your browser does not support our test. Please use Chrome/Firefox";

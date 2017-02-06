@@ -49,6 +49,7 @@ create table test (
   title                         varchar(255),
   test_duration                 bigint,
   code_session_configuration_id bigint,
+  instructions                  TEXT,
   test_status                   varchar(6),
   constraint ck_test_test_status check (test_status in ('ACTIVE','DRAFT')),
   constraint uq_test_code_session_configuration_id unique (code_session_configuration_id),

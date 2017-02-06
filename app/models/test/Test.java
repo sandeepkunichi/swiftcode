@@ -3,6 +3,7 @@ package models.test;
 import com.avaje.ebean.Model;
 import com.avaje.ebean.annotation.EnumValue;
 import play.data.validation.Constraints;
+import utils.HtmlUtils;
 
 import javax.persistence.*;
 import java.util.List;
@@ -33,12 +34,19 @@ public class Test extends Model {
     @OneToOne
     public CodeSessionConfiguration codeSessionConfiguration;
 
+    @Column(columnDefinition = "TEXT")
+    public String instructions;
+
     @Transient
     public Long testTakerCount;
 
     public TestStatus testStatus;
 
     public static Model.Finder<Long, Test> find = new Model.Finder<>(Test.class);
+
+    public String getInstructionsView(){
+        return HtmlUtils.txtToHtml(instructions);
+    }
 
     public enum TestStatus {
         @EnumValue("ACTIVE")
