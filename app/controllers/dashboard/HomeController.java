@@ -5,8 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.services.drive.Drive;
 import data.DashboardAlert;
 import data.Document;
+import data.types.DashboardAlertType;
 import models.AppUser;
+import models.CandidateInformation;
+import models.ProfilePicture;
 import play.Configuration;
+import play.Play;
+import play.data.Form;
+import play.data.FormFactory;
 import play.libs.EventSource;
 import play.libs.ws.WSClient;
 import play.mvc.Controller;
@@ -15,7 +21,10 @@ import play.mvc.Result;
 import services.*;
 
 import javax.inject.Inject;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.text.ParseException;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -41,8 +50,12 @@ public class HomeController extends Controller implements MessageService {
     @Inject
     TestService testService;
 
+    @Inject
+    FormFactory formFactory;
+
     public Result index() throws IOException {
         AppUser loggedInUser = sessionService.getSessionUser();
+        loggedInUser.candidateInformation = CandidateInformation.find.byId(loggedInUser.candidateInformation.id);
         return ok(views.html.dashboard.index.render(
                 appUserService.getTestSessionsOfUser(loggedInUser.id),
                 testService.getAvailableTestsForUser(loggedInUser.id),
@@ -82,6 +95,51 @@ public class HomeController extends Controller implements MessageService {
         loggedInUser.update();
         sessionService.saveUserInSession(loggedInUser);
         return ok();
+    }
+
+    public Result updateCIF(Long userId) throws ParseException {
+        Form<CandidateInformation> candidateInformationForm = formFactory.form(CandidateInformation.class).bindFromRequest();
+        CandidateInformation candidateInformation = new CandidateInformation(candidateInformationForm.data());
+        candidateInformation.update();
+        if(candidateInformation.isComplete()){
+            return redirect("/dashboard?alert="+String.valueOf(DashboardAlertType.INFORMATION_FORM_COMPLETE));
+        }else{
+            return redirect("/dashboard?alert="+String.valueOf(DashboardAlertType.INFORMATION_FORM_INCOMPLETE));
+        }
+    }
+
+    public Result profilePicture(Long userId) throws IOException {
+        AppUser appUser = AppUser.find.byId(userId);
+        byte data[] = Files.readAllBytes(Play.application().getFile("/public/images/user.png").toPath());
+        if(appUser != null && appUser.candidateInformation != null){
+            ProfilePicture profilePicture = ProfilePicture.find.where().eq("candidate_information_id", appUser.candidateInformation.id).findUnique();
+            if(profilePicture != null){
+                data = profilePicture.fileData;
+            }
+        }
+        return ok(data).as("image/jpeg");
+    }
+
+    public Result uploadProfilePic(Long userId) throws IOException {
+        AppUser appUser = AppUser.find.byId(userId);
+        if(appUser == null){
+            return redirect("/dashboard");
+        }
+        Http.MultipartFormData<File> body = request().body().asMultipartFormData();
+        Http.MultipartFormData.FilePart<File> picture = body.getFile("profilePicture");
+        if (picture != null && appUser.candidateInformation != null) {
+            ProfilePicture profilePicture = ProfilePicture.find.where().eq("candidate_information_id", appUser.candidateInformation.id).findUnique();
+            if(profilePicture == null){
+                ProfilePicture profilePictureNew = new ProfilePicture();
+                profilePictureNew.candidateInformation = appUser.candidateInformation;
+                profilePictureNew.fileData = Files.readAllBytes(picture.getFile().toPath());
+                ProfilePicture.db().insert(profilePictureNew);
+            }else{
+                profilePicture.fileData = Files.readAllBytes(picture.getFile().toPath());
+                ProfilePicture.db().update(profilePicture);
+            }
+        }
+        return redirect("/dashboard");
     }
 
 }

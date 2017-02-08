@@ -26,6 +26,9 @@ public class AppUser extends Model{
     @Constraints.Required
     public String password;
 
+    @OneToOne
+    public CandidateInformation candidateInformation;
+
     public Role role;
 
     public AppUser(String email, String password){

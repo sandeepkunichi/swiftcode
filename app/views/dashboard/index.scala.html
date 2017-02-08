@@ -3,19 +3,18 @@
 <div class="patient-dashboard">
     <div class="container-fluid">
         <div class="row dashboard">
-            <!--
             <div class="col-md-2 header-first-half">
                 <header class="center">
                     <img class="margin-top-5" src="/images/logo.png" width="150">
                 </header>
             </div><!-- /. dashboard-first-half -->
-            <div class="col-md-12 header-second-half">
+            <div class="col-md-10 header-second-half">
                 <header>
-                    <span class="pull-left">
-                        <img class="margin-top-5" src="/images/logo.png" width="150">
+                    <span class="pull-left" style="margin-left:15px">
+                        <h4><b>@configuration.getString("helpText")</b></h4>
                     </span>
                     <span class="pull-right">
-                        <a href="mailto:swiftcode@@betsol.com" target="_top" class="btn btn-default btn-sm logoutbtn">Help</a>
+                        <a href="mailto:campus@@betsol.com" target="_top" class="btn btn-default btn-sm logoutbtn">Help</a>
                         <button class="btn btn-default btn-sm logoutbtn" onclick="window.location = '/logout'">Logout</button>
                     </span>
                 </header>
@@ -23,29 +22,44 @@
         </div>
         <div class="row dashboardbody">
             <br /><br />
-            <!--
             <div class="col-md-2 dashboard-first-half">
+                <div class="body">
+                    <div class="user-panel center">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <img class="img-rounded" src="/user/@user.id/dp" width="170" height="170"><br>
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form action="/user/@user.id/dp" method="POST" id="profilePictureForm" enctype="multipart/form-data">
+                                    <input id="profilePicture" type="file" name="profilePicture" id="profilePicture" accept="image/*" style="display:none;" />
+                                    <input type="button" value="EDIT" class="btn btn-default btn-sm logoutbtn" onclick="document.getElementById('profilePicture').click();" />
+                                </form>
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>@user.email</p>
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            @if(configuration.getBoolean("slack.enable")){
+                            <div class="col-md-12">
+                                @if(user.externalId==null){
+                                    <input type="image" class="slack-btn" src="/images/slack-icon-10.png" onclick="slackRedirect();"/>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
             </div><!-- /. dashboard-first-half -->
-            <div class="col-md-12 tab-content main-tab-content">
+            <div class="col-md-10 tab-content main-tab-content">
                 <br/>
                 <div class="dashboard-second-half tab-pane active" role="tabpanel">
                     <div class="body">
-                        <div class="tab-content">
-                            <div class="row">
-                                <div class="col-md-9">
-                                    <p>@user.email</p>
-                                </div>
-                                @if(configuration.getBoolean("slack.enable")){
-                                <div class="col-md-3">
-                                    @if(user.externalId==null){
-                                        <span class="pull-right">
-                                            <input type="image" class="slack-btn" src="/images/slack-icon-10.png" onclick="slackRedirect();"/>
-                                        </span>
-                                    }
-                                </div>
-                                }
-                            </div>
-                            <br /><br />
+                        <!--<div class="tab-content">-->
                             <div class="row">
                                 <div class="col-md-12">
                                     @if(dashboardAlert != null && dashboardAlert.getMessage != null){
@@ -69,8 +83,12 @@
                                     }
                                 </div>
                             </div>
-                        </div>
+                        <!--</div>-->
                     </div>
+                </div>
+                <br/>
+                <div class="dashboard-second-half tab-pane active" role="tabpanel">
+                    @information_form(user.candidateInformation)
                 </div>
                 <br/>
                 <div class="dashboard-second-half tab-pane active" role="tabpanel" id="hometab">
@@ -163,6 +181,15 @@
     </div>
 </div>
 <script>
+    $("#profilePicture").on('change', function() {
+        var size = this.files[0].size/1024;
+        if(size > 512){
+            alert("File too big. Maximum is 512KB");
+        }else{
+            $('#profilePictureForm').submit();
+        }
+    });
+
     function slackRedirect(){
         window.location = '/slack';
     }
@@ -196,14 +223,20 @@
     });
 
     function startTest(testId){
+        var informationComplete = '@user.candidateInformation.isComplete()';
         var message = $("#" + testId + "-description").html();
         var supported = !!window.EventSource;
         if(!supported){
             message = "Your browser does not support our test. Please use Chrome/Firefox";
         }
+        if(informationComplete != 'true'){
+            message = "Please complete your profile information to continue.";
+        }
         bootbox.confirm(message, function(result) {
             if(!supported){
-                $(".btn-primary").prop('disabled', true);
+                //$(".btn-primary").prop('disabled', true);
+            }else if(informationComplete != 'true'){
+                //$(".btn-primary").prop('disabled', true);
             }else if(result){
                 window.location = '/test/start/' + testId;
             }

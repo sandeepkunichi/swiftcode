@@ -1,0 +1,124 @@
+@(candidateInformation: models.CandidateInformation)
+<div class="body">
+    <div class="tab-content">
+        <form action="/user/1/information" method="POST">
+            <input type="hidden" name="id" value="@candidateInformation.id">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>
+                        Candidate Information
+                        @if(candidateInformation.isComplete()){
+                            <span style="color:green;">(Complete)</span>
+                        }else{
+                            <span style="color:red;">(Incomplete)</span>
+                        }
+                    </h2>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">
+                    Candidate Name*
+                </div>
+                <div class="col-md-3"><input class="form-control" name="firstName" value="@candidateInformation.firstName" placeholder="First" type="text" /></div>
+                <div class="col-md-3"><input class="form-control" name="middleName" value="@candidateInformation.middleName" placeholder="Middle" type="text" /></div>
+                <div class="col-md-3"><input class="form-control" name="lastName" value="@candidateInformation.lastName" placeholder="Last" type="text" /></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">Date of Birth*</div>
+                <div class="col-md-3"><input class="form-control" id="dateOfBirth" name="dateOfBirth" value="@candidateInformation.getDateOfBirthString()" type="text" /></div>
+                <div class="col-md-3 text-right">Gender</div>
+                <div class="col-md-3">
+                    <select class="form-control" name="gender">
+                        @for(gender <- data.types.Gender.values()){
+                            <option @if(candidateInformation.gender == gender){selected="selected"} value="@gender.toString()">@gender.getDisplayName()</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">Contact Number*</div>
+                <div class="col-md-3"><input class="form-control" name="contactNumber" value="@candidateInformation.contactNumber" type="text" /></div>
+                <div class="col-md-3 text-right">Mobile Number*</div>
+                <div class="col-md-3"><input class="form-control" name="mobileNumber" value="@candidateInformation.mobileNumber" type="text" /></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">Address*</div>
+                <div class="col-md-9"><textarea class="form-control" name="address">@candidateInformation.address</textarea></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">B.Tech/B.E College*</div>
+                <div class="col-md-9"><input class="form-control" value="@candidateInformation.institution" name="institution" type="text" /></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">Xth Standard %</div>
+                <div class="col-md-1"><input class="form-control" name="highSchoolMarks" value="@candidateInformation.highSchoolMarks" type="number" /></div>
+                <div class="col-md-1">Year Of Passing</div>
+                <div class="col-md-2"><input class="form-control" name="highSchoolYear" value="@candidateInformation.highSchoolYear" type="number" /></div>
+                <div class="col-md-1">12th Standard %</div>
+                <div class="col-md-1"><input class="form-control" name="secondaryMarks" value="@candidateInformation.secondaryMarks" type="number" /></div>
+                <div class="col-md-1">Year Of Passing</div>
+                <div class="col-md-2"><input class="form-control" name="secondaryYear" value="@candidateInformation.secondaryYear" type="number" /></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">B.E Semester-Wise Breakup</div>
+                <div class="col-md-1">1st<br>Sem</div>
+                <div class="col-md-1">2nd<br>Sem</div>
+                <div class="col-md-1">3rd<br>Sem</div>
+                <div class="col-md-1">4th<br>Sem</div>
+                <div class="col-md-1">5th<br>Sem</div>
+                <div class="col-md-1">6th<br>Sem</div>
+                <div class="col-md-1">7th<br>Sem</div>
+                <div class="col-md-1">8th<br>Sem</div>
+                <div class="col-md-1"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">B.E Semester-Wise %</div>
+                <div class="col-md-1"><input class="form-control" name="sem1Marks" value="@candidateInformation.sem1Marks" type="number" /></div>
+                <div class="col-md-1"><input class="form-control" name="sem2Marks" value="@candidateInformation.sem2Marks" type="number" /></div>
+                <div class="col-md-1"><input class="form-control" name="sem3Marks" value="@candidateInformation.sem3Marks" type="number" /></div>
+                <div class="col-md-1"><input class="form-control" name="sem4Marks" value="@candidateInformation.sem4Marks" type="number" /></div>
+                <div class="col-md-1"><input class="form-control" name="sem5Marks" value="@candidateInformation.sem5Marks" type="number" /></div>
+                <div class="col-md-1"><input class="form-control" name="sem6Marks" value="@candidateInformation.sem6Marks" type="number" /></div>
+                <div class="col-md-1"><input class="form-control" name="sem7Marks" value="@candidateInformation.sem7Marks" type="number" /></div>
+                <div class="col-md-1"><input class="form-control" name="sem8Marks" value="@candidateInformation.sem8Marks" type="number" /></div>
+                <div class="col-md-1"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">B.E Aggregate Percentage</div>
+                <div class="col-md-1"><input class="form-control" name="underGraduateAggregate" value="@candidateInformation.underGraduateAggregate" type="number" /></div>
+                <div class="col-md-2 text-right">B.E Stream</div>
+                <div class="col-md-6">
+                    <select class="form-control" name="engineeringStream">
+                        @for(stream <- data.types.EngineeringStream.values()){
+                        <option @if(candidateInformation.engineeringStream == stream){selected="selected"} value="@stream.toString()">@stream.getDisplayName()</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">B.E University*</div>
+                <div class="col-md-9"><input class="form-control" name="underGraduateUniversity" value="@candidateInformation.underGraduateUniversity" type="text" /></div>
+            </div>
+            <br >
+            <div class="row">
+                <div class="col-md-10"></div>
+                <div class="col-md-2"><input class="form-control btn btn-primary btn-sm logoutbtn" value="SUBMIT" type="submit" /></div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    jQuery(function($){
+        $("#dateOfBirth").mask("99/99/9999",{placeholder:"dd/mm/yyyy"});
+    });
+</script>

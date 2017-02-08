@@ -35,6 +35,10 @@ GET     /                           controllers.SignupController.loadSignupPage(
 GET     /signup                     controllers.SignupController.loadSignupPage()
 POST    /signup                     controllers.SignupController.signup()
 
+POST    /user/:id/information       controllers.dashboard.HomeController.updateCIF(id: Long)
+GET     /user/:id/dp                controllers.dashboard.HomeController.profilePicture(id: Long)
+POST    /user/:id/dp                controllers.dashboard.HomeController.uploadProfilePic(id: Long)
+
 GET    /test/liveClock/:id          controllers.test.TimerController.streamClock(id: Long)
 
 GET    /external_auth               controllers.LoginController.externalLogin()

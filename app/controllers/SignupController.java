@@ -3,6 +3,7 @@ package controllers;
 import actions.ValidationAction;
 import forms.SignupForm;
 import models.AppUser;
+import models.CandidateInformation;
 import play.Configuration;
 import play.data.Form;
 import play.data.FormFactory;
@@ -38,9 +39,14 @@ public class SignupController extends Controller{
     public Result signup(){
         Form<SignupForm> userForm = formFactory.form(SignupForm.class).bindFromRequest();
         if(configuration.getBoolean("closedSignup")){
-            closedLogin(userForm);
+            Result result = closedLogin(userForm);
+            if(result != null){
+                return result;
+            }
         }
         AppUser appUser = new AppUser(userForm.data().get("email"), userForm.data().get("password"));
+        appUser.candidateInformation = new CandidateInformation();
+        CandidateInformation.db().save(appUser.candidateInformation);
         AppUser.db().save(appUser);
         sessionService.storeUserInSession(appUser);
         return redirect("/dashboard");
