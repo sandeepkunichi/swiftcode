@@ -29,6 +29,7 @@ public class ErrorHandler implements HttpErrorHandler {
 
     public CompletionStage<Result> onServerError(RequestHeader request, Throwable exception) {
         logger.error(Arrays.toString(exception.getStackTrace()));
+        exception.printStackTrace();
         return CompletableFuture.completedFuture(ok(views.html.shared.error.render("Something went wrong")));
     }
 

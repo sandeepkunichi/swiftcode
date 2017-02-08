@@ -203,7 +203,7 @@
             $("#upload-picture").prop('disabled',false);
             alert('Please select a PDF file');
         }else{
-            var formData = new FormData($('form')[0]);
+            var formData = new FormData($('form')[1]);
             $('#upload-message').html('Uploading...');
             $.ajax({
                 url: '/resume/upload',
