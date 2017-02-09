@@ -95,20 +95,4 @@
   $(window).on('resize', function() {
     drawCharts();
   });
-
-  function test(){
-    alert('test');
-  }
-
-  function showUser(userId){
-    $("#user-modal").modal('show');
-    $("#user-stats").html('@shared.loader()');
-    $.ajax({
-        url: '/stats/user/' + userId,
-        type: 'GET',
-        success: function(data){
-            $("#user-stats").html(data);
-        }
-    });
-  }
 </script>

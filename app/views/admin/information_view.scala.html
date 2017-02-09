@@ -1,0 +1,90 @@
+@(candidateInformation: models.CandidateInformation)
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-3"><b>Candidate Name:</b></div>
+            <div class="col-md-9 text-left">@candidateInformation.firstName @candidateInformation.middleName @candidateInformation.lastName</div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-3"><b>Date of Birth:</b></div>
+            <div class="col-md-3">@candidateInformation.getDateOfBirthString()</div>
+            <div class="col-md-3 text-right"><b>Gender:</b></div>
+            <div class="col-md-3">@if(candidateInformation.gender != null){ @candidateInformation.gender.toString() }</div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-3"><b>Contact Number:</b></div>
+            <div class="col-md-3">@candidateInformation.contactNumber</div>
+            <div class="col-md-3 text-right"><b>Mobile Number:</b></div>
+            <div class="col-md-3">@candidateInformation.mobileNumber</div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-3"><b>Address:</b></div>
+            <div class="col-md-9">@candidateInformation.address</div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-3"><b>B.Tech/B.E College:</b></div>
+            <div class="col-md-9">@candidateInformation.institution</div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-3"><b>Xth Standard %:</b></div>
+            <div class="col-md-1">@candidateInformation.highSchoolMarks</div>
+            <div class="col-md-1"><b>Year Of Passing:</b></div>
+            <div class="col-md-2">@candidateInformation.highSchoolYear</div>
+            <div class="col-md-1"><b>12th Standard %:</b></div>
+            <div class="col-md-1">@candidateInformation.secondaryMarks</div>
+            <div class="col-md-1"><b>Year Of Passing:</b></div>
+            <div class="col-md-2">@candidateInformation.secondaryYear</div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-3"><b>B.E Semester-Wise Breakup:</b></div>
+            <div class="col-md-1">1st<br>Sem</div>
+            <div class="col-md-1">2nd<br>Sem</div>
+            <div class="col-md-1">3rd<br>Sem</div>
+            <div class="col-md-1">4th<br>Sem</div>
+            <div class="col-md-1">5th<br>Sem</div>
+            <div class="col-md-1">6th<br>Sem</div>
+            <div class="col-md-1">7th<br>Sem</div>
+            <div class="col-md-1">8th<br>Sem</div>
+            <div class="col-md-1"> </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-3"><b>B.E Semester-Wise %:</b></div>
+            <div class="col-md-1">@candidateInformation.sem1Marks</div>
+            <div class="col-md-1">@candidateInformation.sem2Marks</div>
+            <div class="col-md-1">@candidateInformation.sem3Marks</div>
+            <div class="col-md-1">@candidateInformation.sem4Marks</div>
+            <div class="col-md-1">@candidateInformation.sem5Marks</div>
+            <div class="col-md-1">@candidateInformation.sem6Marks</div>
+            <div class="col-md-1">@candidateInformation.sem7Marks</div>
+            <div class="col-md-1">@candidateInformation.sem8Marks</div>
+            <div class="col-md-1"> </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-3"><b>B.E Aggregate Percentage:</b></div>
+            <div class="col-md-1">@candidateInformation.underGraduateAggregate</div>
+            <div class="col-md-2 text-right"><b>B.E Stream:</b></div>
+            <div class="col-md-6">@candidateInformation.engineeringStream</div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-3"><b>B.E University:</b></div>
+            <div class="col-md-9">@candidateInformation.underGraduateUniversity</div>
+        </div>
+        <br>
+    </div>
+</div>
+<script>
+    $("div").each(function(){
+        if($(this).text() == ''){
+            $(this).html("N/A");
+        }
+    });
+</script>

@@ -115,9 +115,10 @@
                                     <div class="col-sm-6">
                                         <h3>Email</h3>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-3">
                                         <h3>Role</h3>
                                     </div>
+                                    <div class="col-sm-3"> </div>
                                 </div>
                                 }
                                 @for(user <- users){
@@ -125,8 +126,11 @@
                                     <div class="col-sm-6">
                                         <p>@user.email</p>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-3">
                                         <p>@user.role</p>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input class="btn btn-default btn-sm logoutbtn" type="button" value="View" onclick="showUser('@user.id')"/>
                                     </div>
                                 </div>
                                 }
@@ -189,7 +193,7 @@
     </div>
 </div>
 <div class="modal fade modal fade" id="user-modal">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content modal-placement">
             <div class="modal-body">
                 <div id="user-stats"></div>
@@ -275,6 +279,18 @@
                         readOnly: true
                     });
                 });
+            }
+        });
+    }
+
+    function showUser(userId){
+        $("#user-modal").modal('show');
+        $("#user-stats").html('@shared.loader()');
+        $.ajax({
+            url: '/stats/user/' + userId,
+            type: 'GET',
+            success: function(data){
+                $("#user-stats").html(data);
             }
         });
     }
