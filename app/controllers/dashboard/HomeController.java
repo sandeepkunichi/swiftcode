@@ -10,7 +10,6 @@ import models.AppUser;
 import models.CandidateInformation;
 import models.ProfilePicture;
 import play.Configuration;
-import play.Play;
 import play.data.Form;
 import play.data.FormFactory;
 import play.libs.EventSource;
@@ -110,14 +109,13 @@ public class HomeController extends Controller implements MessageService {
 
     public Result profilePicture(Long userId) throws IOException {
         AppUser appUser = AppUser.find.byId(userId);
-        byte data[] = Files.readAllBytes(Play.application().getFile("/public/images/user.png").toPath());
         if(appUser != null && appUser.candidateInformation != null){
             ProfilePicture profilePicture = ProfilePicture.find.where().eq("candidate_information_id", appUser.candidateInformation.id).findUnique();
             if(profilePicture != null){
-                data = profilePicture.fileData;
+                return ok(profilePicture.fileData).as("image/jpeg");
             }
         }
-        return ok(data).as("image/jpeg");
+        return redirect("/images/user.png");
     }
 
     public Result uploadProfilePic(Long userId) throws IOException {

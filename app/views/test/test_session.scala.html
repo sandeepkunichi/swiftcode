@@ -1,4 +1,4 @@
-@(testSession: models.test.TestSession)
+@(testSession: models.test.TestSession, configuration: play.Configuration)
 <html lang="en">
 <head>
     @shared.header()
@@ -43,7 +43,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <span class="center">
-                        <h4><b>@play.api.Play.current.configuration.getString("helpText")</b></h4>
+                        <h4><b>@configuration.getString("helpText")</b></h4>
                     </span>
                 </div><!-- /. dashboard-first-half -->
             </div>

@@ -6,6 +6,7 @@ import data.types.DashboardAlertType;
 import models.AppUser;
 import models.test.Test;
 import models.test.TestSession;
+import play.Configuration;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
@@ -34,6 +35,9 @@ public class TestSessionController extends Controller {
     @Inject
     TestSessionService testSessionService;
 
+    @Inject
+    Configuration configuration;
+
     public Result startTest(Long testId) throws IOException {
         AppUser loggedInUser = sessionService.getSessionUser();
 
@@ -45,7 +49,7 @@ public class TestSessionController extends Controller {
 
         TestSession testSession = testSessionService.createTestSession(testId, loggedInUser);
 
-        return ok(views.html.test.test_session.render(testSessionService.randomizeTestSession(testSession)));
+        return ok(views.html.test.test_session.render(testSessionService.randomizeTestSession(testSession), configuration));
     }
 
     @ValidationAction.ValidationActivity(validationActionType = TestSession.class)
