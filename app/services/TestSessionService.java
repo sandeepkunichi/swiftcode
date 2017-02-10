@@ -71,11 +71,15 @@ public class TestSessionService {
     public List<TestSession> getActiveTestSessions(Long testId){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
+        Test test = Test.find.byId(testId);
+        if(test == null){
+            return new ArrayList<>();
+        }
         return TestSession.find.all().stream()
                 .filter(x -> {
                     Date now = new Date();
                     calendar.setTime(x.startTime);
-                    calendar.add(Calendar.MINUTE, 30);
+                    calendar.add(Calendar.MINUTE, Integer.valueOf(test.testDuration.toString()));
                     return !x.submitted && now.before(calendar.getTime()) && Objects.equals(x.test.id, testId);
                 }).collect(Collectors.toList());
     }
