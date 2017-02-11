@@ -11,7 +11,14 @@
         <div class="list-group-item">
             <h3 class="list-group-item-heading">Candidate Information</h3>
             <br>
-            @information_view(userStats.getAppUser.candidateInformation)
+            <div class="row">
+                <div class="col-md-8">
+                    @information_view(userStats.getAppUser.candidateInformation)
+                </div>
+                <div class="col-md-4">
+                    <center><img class="img-rounded" src="/user/@userStats.getAppUser.id/dp" width="170" height="170"></center>
+                </div>
+            </div>
         </div>
         <div class="list-group-item">
             <h3 class="list-group-item-heading">Resume</h3>

@@ -22,7 +22,7 @@
         <script type="text/javascript" charset="utf-8">
 
             if (!!window.EventSource) {
-                var stringSource = new EventSource("/test/liveClock/@testSession.id");
+                var stringSource = new EventSource("/test/liveClock/@testSession.startTime.getTime()/@testSession.test.testDuration");
                 stringSource.addEventListener('message', function(e) {
                     if(e.data <= 0){
                         $("input:radio").attr('disabled',true);

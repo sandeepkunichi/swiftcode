@@ -4,55 +4,55 @@
 
 # An example controller showing a sample home page
 
-GET     /admin                      controllers.admin.HomeController.index()
+GET     /admin                                  controllers.admin.HomeController.index()
 
-POST    /test/create                controllers.test.TestController.createTest()
-GET     /test/edit/:testId          controllers.test.TestController.editTestView(testId: Long)
-GET     /test/clone/:testId         controllers.test.TestController.cloneTest(testId: Long)
-POST    /test/edit                  controllers.test.TestController.editTest()
-DELETE  /test/delete/:testId        controllers.test.TestController.deleteTest(testId: Long)
-POST    /test/activate/:testId      controllers.test.TestController.activateTest(testId: Long)
-POST    /test/deactivate/:testId    controllers.test.TestController.deactivateTest(testId: Long)
+POST    /test/create                            controllers.test.TestController.createTest()
+GET     /test/edit/:testId                      controllers.test.TestController.editTestView(testId: Long)
+GET     /test/clone/:testId                     controllers.test.TestController.cloneTest(testId: Long)
+POST    /test/edit                              controllers.test.TestController.editTest()
+DELETE  /test/delete/:testId                    controllers.test.TestController.deleteTest(testId: Long)
+POST    /test/activate/:testId                  controllers.test.TestController.activateTest(testId: Long)
+POST    /test/deactivate/:testId                controllers.test.TestController.deactivateTest(testId: Long)
 
-GET     /languages                  engine.controllers.LanguageController.getLanguages()
-GET     /language/:name/configure   engine.controllers.LanguageController.configureLanguage(name: String)
+GET     /languages                              engine.controllers.LanguageController.getLanguages()
+GET     /language/:name/configure               engine.controllers.LanguageController.configureLanguage(name: String)
 
-GET     /stats/test/:testId         controllers.admin.StatsController.getTestStats(testId: Long)
-GET     /stats/user/:userId         controllers.admin.StatsController.getUserStats(userId: Long)
-GET     /stats/session/:id          controllers.admin.StatsController.getTestSessionStats(id: Long)
+GET     /stats/test/:testId                     controllers.admin.StatsController.getTestStats(testId: Long)
+GET     /stats/user/:userId                     controllers.admin.StatsController.getUserStats(userId: Long)
+GET     /stats/session/:id                      controllers.admin.StatsController.getTestSessionStats(id: Long)
 
-DELETE  /test/session/:sessionId    controllers.test.TestSessionController.deleteSession(sessionId: Long)
-GET     /test/start/:testId         controllers.test.TestSessionController.startTest(testId: Long)
-POST    /test/submit                controllers.test.TestSessionController.submitTest()
+DELETE  /test/session/:sessionId                controllers.test.TestSessionController.deleteSession(sessionId: Long)
+GET     /test/start/:testId                     controllers.test.TestSessionController.startTest(testId: Long)
+POST    /test/submit                            controllers.test.TestSessionController.submitTest()
 
-GET     /dashboard                  controllers.dashboard.HomeController.index()
+GET     /dashboard                              controllers.dashboard.HomeController.index()
 
-GET     /login                      controllers.LoginController.login()
-GET     /logout                     controllers.LoginController.logout()
-POST    /login                      controllers.LoginController.authenticate()
+GET     /login                                  controllers.LoginController.login()
+GET     /logout                                 controllers.LoginController.logout()
+POST    /login                                  controllers.LoginController.authenticate()
 
-GET     /                           controllers.SignupController.loadSignupPage()
-GET     /signup                     controllers.SignupController.loadSignupPage()
-POST    /signup                     controllers.SignupController.signup()
+GET     /                                       controllers.SignupController.loadSignupPage()
+GET     /signup                                 controllers.SignupController.loadSignupPage()
+POST    /signup                                 controllers.SignupController.signup()
 
-POST    /user/:id/information       controllers.dashboard.HomeController.updateCIF(id: Long)
-GET     /user/:id/dp                controllers.dashboard.HomeController.profilePicture(id: Long)
-POST    /user/:id/dp                controllers.dashboard.HomeController.uploadProfilePic(id: Long)
+POST    /user/:id/information                   controllers.dashboard.HomeController.updateCIF(id: Long)
+GET     /user/:id/dp                            controllers.dashboard.HomeController.profilePicture(id: Long)
+POST    /user/:id/dp                            controllers.dashboard.HomeController.uploadProfilePic(id: Long)
 
-GET    /test/liveClock/:id          controllers.test.TimerController.streamClock(id: Long)
+GET    /test/liveClock/:start/:duration         controllers.test.TimerController.streamClock(start: Long, duration: Long)
 
-GET    /external_auth               controllers.LoginController.externalLogin()
-GET    /messages/:channelId         controllers.dashboard.HomeController.getMessages(channelId: String)
+GET    /external_auth                           controllers.LoginController.externalLogin()
+GET    /messages/:channelId                     controllers.dashboard.HomeController.getMessages(channelId: String)
 
-POST   /resume/upload               controllers.dashboard.HomeController.uploadResume
+POST   /resume/upload                           controllers.dashboard.HomeController.uploadResume
 
-GET    /slack                       controllers.dashboard.HomeController.slackRedirect
+GET    /slack                                   controllers.dashboard.HomeController.slackRedirect
 
-POST   /program/compile             engine.controllers.ProgramController.compile
-POST   /program/execute             engine.controllers.ProgramController.execute
+POST   /program/compile                         engine.controllers.ProgramController.compile
+POST   /program/execute                         engine.controllers.ProgramController.execute
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
-GET     /stylesheets/*file          @controllers.Assets.at(path="/public/stylesheets", file)
-GET     /javascripts/*file          @controllers.Assets.at(path="/public/javascripts", file)
-GET     /images/*file               @controllers.Assets.at(path="/public/images", file)
+GET     /assets/*file                           controllers.Assets.versioned(path="/public", file: Asset)
+GET     /stylesheets/*file                      @controllers.Assets.at(path="/public/stylesheets", file)
+GET     /javascripts/*file                      @controllers.Assets.at(path="/public/javascripts", file)
+GET     /images/*file                           @controllers.Assets.at(path="/public/images", file)
