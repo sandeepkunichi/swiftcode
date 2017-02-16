@@ -84,16 +84,20 @@ public class HomeController extends Controller implements MessageService {
 
     public Result uploadResume() throws IOException {
         AppUser loggedInUser = sessionService.getSessionUser();
-        Http.MultipartFormData body = request().body().asMultipartFormData();
-        Http.MultipartFormData.FilePart document = body.getFile("resume");
-        Drive service = DriveService.getDriveService();
-        java.io.File file = (java.io.File)document.getFile();
-        String uploadDirectory = configuration.getString("drive.resume.directory");
-        DriveService.insertFile(new Document(service, loggedInUser.email, loggedInUser.email+"'s resume", uploadDirectory, "application/pdf", file));
-        loggedInUser.resumeSubmitted=true;
-        loggedInUser.update();
-        sessionService.saveUserInSession(loggedInUser);
-        return ok();
+        try{
+            Http.MultipartFormData body = request().body().asMultipartFormData();
+            Http.MultipartFormData.FilePart document = body.getFile("resume");
+            Drive service = DriveService.getDriveService();
+            java.io.File file = (java.io.File)document.getFile();
+            String uploadDirectory = configuration.getString("drive.resume.directory");
+            DriveService.insertFile(new Document(service, loggedInUser.email, loggedInUser.email+"'s resume", uploadDirectory, "application/pdf", file));
+            loggedInUser.resumeSubmitted=true;
+            loggedInUser.update();
+            sessionService.saveUserInSession(loggedInUser);
+            return ok("/dashboard?alert=UPLOAD_SUCCESS");
+        }catch(Exception ignored){
+            return ok("/dashboard?alert=UPLOAD_FAILURE");
+        }
     }
 
     public Result updateCIF(Long userId) throws ParseException {

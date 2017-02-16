@@ -181,6 +181,8 @@
     </div>
 </div>
 <script>
+    window.history.pushState('SwiftCode', 'SwiftCode', resetToken(location.href, "alert"));
+
     $("#profilePicture").on('change', function() {
         var size = this.files[0].size/1024;
         if(size > 512){
@@ -209,10 +211,7 @@
                 url: '/resume/upload',
                 type: 'POST',
                 success: function(data){
-                    window.location='/dashboard?alert=UPLOAD_SUCCESS';
-                },
-                error: function(data){
-                    window.location='/dashboard?alert=UPLOAD_FAILURE';
+                    window.location = data;
                 },
                 data: formData,
                 cache: false,
@@ -241,5 +240,32 @@
                 window.location = '/test/start/' + testId;
             }
         });
+    }
+
+    function resetToken(url, parameter) {
+        var tab = "";
+
+        if(url.split("#")[1]){
+            tab = "#" + url.split("#")[1];
+        }
+
+        var urlparts = url.split("?");
+
+        if (urlparts.length>=2) {
+
+            var prefix= encodeURIComponent(parameter)+'=';
+            var pars= urlparts[1].split(/[&;]/g);
+
+            for (var i= pars.length; i-- > 0;) {
+                if (pars[i].lastIndexOf(prefix, 0) !== -1) {
+                    pars.splice(i, 1);
+                }
+            }
+
+            url= urlparts[0] + (pars.length > 0 ? "?" + pars.join("&") : "") + tab;
+            return url;
+        } else {
+            return url;
+        }
     }
 </script>
