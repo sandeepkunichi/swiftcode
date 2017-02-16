@@ -25,11 +25,14 @@
                 var stringSource = new EventSource("/test/liveClock/@testSession.startTime.getTime()/@testSession.test.testDuration");
                 stringSource.addEventListener('message', function(e) {
                     if(e.data <= 0){
+                        stringSource.close();
+                        $("#clock").html("");
+                        $("#title").html("");
                         $("input:radio").attr('disabled',true);
                         $("#testSubmit").click();
                     }
                     $("#clock").html(secondsToHms(e.data));
-                    $("#title").html("SwiftCode - " + secondsToHms(e.data));
+                    $("#title").html("@testSession.test.title - " + secondsToHms(e.data));
                 });
             } else {
                 alert("Sorry. This browser doesn't seem to support our test. Check http://html5test.com/compare/feature/communication-eventSource.html for browser compatibility.");
