@@ -57,7 +57,7 @@ public class TestSessionService {
                 .map(testSession -> {
                     testSession.test = Test.find.byId(testSession.test.id);
                     testSession.testTaker = AppUser.find.byId(testSession.testTaker.id);
-                    testSession.timeTaken = Minutes.minutesBetween(new DateTime(testSession.startTime), new DateTime(testSession.endTime)).getMinutes() % 60;
+                    testSession.timeTaken = (int)(((testSession.endTime.getTime() - testSession.startTime.getTime()) / 1000) / 60);
                     return testSession;
                 })
                 .sorted((t1, t2) -> Long.compare(t2.score, t1.score))

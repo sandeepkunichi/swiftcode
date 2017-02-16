@@ -1,13 +1,12 @@
 package services;
 
-import models.test.Test;
-import models.test.TestAnswer;
-import models.test.TestProgram;
-import models.test.TestQuestion;
+import models.test.*;
 
 import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import models.test.CodeSessionConfiguration;
 
 /**
  * Created by Sandeep.K on 9/12/2016.
@@ -40,6 +39,8 @@ public class TestService {
         newTest.testStatus = Test.TestStatus.DRAFT;
         newTest.title = test.title + " (Clone)";
         newTest.testTakerCount = 0L;
+        newTest.instructions = test.instructions;
+        newTest.testDuration = test.testDuration;
         newTest.testQuestions = test.testQuestions.stream()
                 .map(question ->
                         new TestQuestion(question.question, question.testAnswers
@@ -51,6 +52,14 @@ public class TestService {
         newTest.testPrograms = test.testPrograms.stream()
                 .map(programmingQuestion -> new TestProgram(programmingQuestion.programQuestion))
                 .collect(Collectors.toList());
+        test.codeSessionConfiguration = CodeSessionConfiguration.find.byId(test.codeSessionConfiguration.id);
+        if (test.codeSessionConfiguration != null) {
+            newTest.codeSessionConfiguration = new CodeSessionConfiguration();
+            newTest.codeSessionConfiguration.compile = test.codeSessionConfiguration.compile;
+            newTest.codeSessionConfiguration.execute = test.codeSessionConfiguration.execute;
+            newTest.codeSessionConfiguration.languages = test.codeSessionConfiguration.languages;
+            CodeSessionConfiguration.db().insert(newTest.codeSessionConfiguration);
+        }
         Test.db().insert(newTest);
         return newTest;
     }
