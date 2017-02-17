@@ -49,6 +49,7 @@ public class ProgramController extends Controller {
     }
 
     @ValidationAction.ValidationActivity(validationActionType = ProgramSubmission.class)
+    @NoAuthRequired
     public CompletionStage<Result> compile() throws IOException, InterruptedException, ExecutionException {
         Form<ProgramSubmission> programSubmissionForm = formFactory.form(ProgramSubmission.class).bindFromRequest();
 
@@ -68,6 +69,7 @@ public class ProgramController extends Controller {
     }
 
     @ValidationAction.ValidationActivity(validationActionType = ProgramSubmission.class)
+    @NoAuthRequired
     public CompletionStage<Result> execute() throws IOException, InterruptedException, ExecutionException {
         Form<ProgramSubmission> programSubmissionForm = formFactory.form(ProgramSubmission.class).bindFromRequest();
 
