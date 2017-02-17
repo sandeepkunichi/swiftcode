@@ -1,8 +1,7 @@
 package engine.actors;
 
-import akka.actor.ActorRef;
-import akka.actor.Props;
-import akka.actor.UntypedActor;
+import akka.actor.*;
+import akka.remote.routing.RemoteRouterConfig;
 import akka.routing.RoundRobinPool;
 import engine.events.ProgramCompilationEvent;
 import engine.events.ProgramCreationEvent;
@@ -16,6 +15,7 @@ import java.util.concurrent.CompletionStage;
 
 import static akka.pattern.Patterns.ask;
 import static play.mvc.Results.ok;
+
 /**
  * Created by Sandeep.K on 28-01-2017.
  */
@@ -25,9 +25,14 @@ public class DispatcherActor extends UntypedActor {
 
     public ProgramExecutionResponse programExecutionResponse = new ProgramExecutionResponse();
 
-    ActorRef creationRouter = getContext().actorOf(new RoundRobinPool(5).props(Props.create(ProgramCreationActor.class)), "creationRouter");
-    ActorRef compilationRouter = getContext().actorOf(new RoundRobinPool(5).props(Props.create(ProgramCompilationActor.class)), "compilationRouter");
-    ActorRef executionRouter = getContext().actorOf(new RoundRobinPool(5).props(Props.create(ProgramExecutionActor.class)), "executionRouter");
+    Address[] creationRouterAddresses = {new Address("akka.tcp", "localhost", "127.0.0.1", 9001), AddressFromURIString.parse("akka.tcp://localhost@127.0.0.1:9001")};
+    ActorRef creationRouter = getContext().actorOf(new RemoteRouterConfig(new RoundRobinPool(5), creationRouterAddresses).props(Props.create(ProgramCreationActor.class)));
+
+    Address[] compilationRouterAddresses = {new Address("akka.tcp", "localhost", "127.0.0.1", 9002), AddressFromURIString.parse("akka.tcp://localhost@127.0.0.1:9002")};
+    ActorRef compilationRouter = getContext().actorOf(new RemoteRouterConfig(new RoundRobinPool(5), compilationRouterAddresses).props(Props.create(ProgramCompilationActor.class)));
+
+    Address[] executionRouterAddresses = {new Address("akka.tcp", "localhost", "127.0.0.1", 9003), AddressFromURIString.parse("akka.tcp://localhost@127.0.0.1:9003")};
+    ActorRef executionRouter = getContext().actorOf(new RemoteRouterConfig(new RoundRobinPool(5), executionRouterAddresses).props(Props.create(ProgramExecutionActor.class)));
 
     @Override
     public void onReceive(Object message) throws Exception {
