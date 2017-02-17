@@ -26,9 +26,9 @@ public class ProgramExecutionConfigurationData {
                 this.setSubmissionDirectory(
                         binaryRoot +
                                 String.valueOf(this.getSubmitter().id + "_" + this.getSubmitter().email) +
-                                "\\" +
+                                directoryDelimiter +
                                 this.getProgramSubmission().programIndex +
-                                "\\"
+                                directoryDelimiter
                 );
             }
         }
