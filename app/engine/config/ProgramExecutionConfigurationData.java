@@ -10,12 +10,14 @@ import models.test.TestSession;
 public class ProgramExecutionConfigurationData {
 
     private String binaryRoot;
+    private String directoryDelimiter;
     private ProgramSubmission programSubmission;
     private AppUser submitter;
     private String submissionDirectory;
 
-    public ProgramExecutionConfigurationData(String binaryRoot, ProgramSubmission programSubmission){
+    public ProgramExecutionConfigurationData(String binaryRoot, String directoryDelimiter, ProgramSubmission programSubmission){
         this.setBinaryRoot(binaryRoot);
+        this.directoryDelimiter = directoryDelimiter;
         this.setProgramSubmission(programSubmission);
         TestSession testSession = TestSession.find.byId(programSubmission.testSession.id);
         if (testSession != null) {
@@ -25,7 +27,8 @@ public class ProgramExecutionConfigurationData {
                         binaryRoot +
                                 String.valueOf(this.getSubmitter().id + "_" + this.getSubmitter().email) +
                                 "\\" +
-                                this.getProgramSubmission().programIndex + "\\"
+                                this.getProgramSubmission().programIndex +
+                                "\\"
                 );
             }
         }
@@ -37,6 +40,14 @@ public class ProgramExecutionConfigurationData {
 
     public void setBinaryRoot(String binaryRoot) {
         this.binaryRoot = binaryRoot;
+    }
+
+    public String getDirectoryDelimiter() {
+        return directoryDelimiter;
+    }
+
+    public void setDirectoryDelimiter(String directoryDelimiter) {
+        this.directoryDelimiter = directoryDelimiter;
     }
 
     public ProgramSubmission getProgramSubmission() {

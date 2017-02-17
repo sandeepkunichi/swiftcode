@@ -3,6 +3,7 @@ package engine.controllers;
 import actions.ValidationAction;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
+import controllers.NoAuthRequired;
 import engine.actors.DispatcherActor;
 import engine.config.*;
 import engine.events.ProgramCompilationEvent;
@@ -96,13 +97,13 @@ public class ProgramController extends Controller {
     private ProgramExecutionConfiguration getProgramConfiguration(ProgramSubmission programSubmission){
         switch (programSubmission.languageType){
             case JAVA:
-                return new JavaExecutionConfiguration(configuration.getString("binaryRoot"), programSubmission);
+                return new JavaExecutionConfiguration(configuration.getString("engine.binaryRoot"), configuration.getString("engine.directoryDelimiter"), programSubmission);
             case PYTHON:
-                return new PythonExecutionConfiguration(configuration.getString("binaryRoot"), programSubmission);
+                return new PythonExecutionConfiguration(configuration.getString("engine.binaryRoot"), configuration.getString("engine.directoryDelimiter"), programSubmission);
             case C:
-                return new CProgramConfiguration(configuration.getString("binaryRoot"), programSubmission);
+                return new CProgramConfiguration(configuration.getString("engine.binaryRoot"), configuration.getString("engine.directoryDelimiter"), programSubmission);
             case CPP:
-                return new CPPProgramConfiguration(configuration.getString("binaryRoot"), programSubmission);
+                return new CPPProgramConfiguration(configuration.getString("engine.binaryRoot"), configuration.getString("engine.directoryDelimiter"), programSubmission);
             default:
                 return null;
         }

@@ -7,8 +7,8 @@ import models.test.ProgramSubmission;
  */
 public class CPPProgramConfiguration extends ProgramExecutionConfigurationData implements ProgramExecutionConfiguration {
 
-    public CPPProgramConfiguration(String binaryRoot, ProgramSubmission programSubmission){
-        super(binaryRoot, programSubmission);
+    public CPPProgramConfiguration(String binaryRoot, String directoryDelimiter, ProgramSubmission programSubmission){
+        super(binaryRoot, directoryDelimiter, programSubmission);
     }
 
     @Override

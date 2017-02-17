@@ -9,8 +9,8 @@ import java.io.File;
  */
 public class JavaExecutionConfiguration extends ProgramExecutionConfigurationData implements ProgramExecutionConfiguration {
 
-    public JavaExecutionConfiguration(String binaryRoot, ProgramSubmission programSubmission) {
-        super(binaryRoot, programSubmission);
+    public JavaExecutionConfiguration(String binaryRoot, String directoryDelimiter, ProgramSubmission programSubmission) {
+        super(binaryRoot, directoryDelimiter, programSubmission);
     }
 
     @Override
@@ -35,7 +35,8 @@ public class JavaExecutionConfiguration extends ProgramExecutionConfigurationDat
 
     @Override
     public String getExecutableFileName() {
-        return this.getSubmissionDirectory() + "\\ " + returnLastModifiedFile(".class");
+        //Don't remove space. We don't know why it is needed, but it is needed. :|
+        return this.getSubmissionDirectory() + " " + returnLastModifiedFile(".class");
     }
 
     // TODO Ideally, we would want to notify user to compile first and then execute.

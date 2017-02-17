@@ -7,8 +7,8 @@ import models.test.ProgramSubmission;
  */
 public class PythonExecutionConfiguration extends ProgramExecutionConfigurationData implements ProgramExecutionConfiguration {
 
-    public PythonExecutionConfiguration(String binaryRoot, ProgramSubmission programSubmission) {
-        super(binaryRoot, programSubmission);
+    public PythonExecutionConfiguration(String binaryRoot, String directoryDelimiter, ProgramSubmission programSubmission) {
+        super(binaryRoot, directoryDelimiter, programSubmission);
     }
 
     @Override
