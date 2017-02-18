@@ -194,8 +194,8 @@
 
     $("#resume").on('change', function() {
         var size = this.files[0].size/1024;
-        if(size > 512){
-            alert("File too big. Maximum is 512KB");
+        if(size > 256){
+            alert("File too big. Maximum is 256KB");
             $("#resume").val("");
         }
     });
