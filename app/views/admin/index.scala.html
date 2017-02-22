@@ -108,73 +108,10 @@
                                 @create_test()
                             </div>
                             <div class="tab-pane" id="users" role="tabpanel">
-                                @if(users.length == 0){
-                                <p>No users created yet</p>
-                                }else{
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <h3>Email</h3>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <h3>Role</h3>
-                                    </div>
-                                    <div class="col-sm-3"> </div>
-                                </div>
-                                }
-                                @for(user <- users){
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <p>@user.email</p>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <p>@user.role</p>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input class="btn btn-default btn-sm logoutbtn" type="button" value="View" onclick="showUser('@user.id')"/>
-                                    </div>
-                                </div>
-                                }
+                                @user_list(users: List[models.AppUser])
                             </div><!-- /.users -->
                             <div class="tab-pane" id="results" role="tabpanel">
-                                @if(testSessions.length == 0){
-                                <p>No test sessions taken</p>
-                                }else{
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <h3>Test Title</h3>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <h3>Score</h3>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <h3>Email</h3>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <h3>Time (Minutes)</h3>
-                                    </div>
-                                    <div class="col-sm-2">
-                                    </div>
-                                </div>
-                                }
-                                @for(testSession <- testSessions){
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <p>@testSession.test.title</p>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <p>@testSession.score</p>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <p>@testSession.testTaker.email</p>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <p>@testSession.timeTaken</p>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <input id="view-test-session" class="btn btn-default btn-sm logoutbtn" type="button" value="View" onclick="viewTestSession('@testSession.id')"/>
-                                    </div>
-                                </div>
-                                }
+                                @result_list(testSessions: List[models.test.TestSession])
                             </div><!-- /.results -->
                             <div class="tab-pane" id="languages" role="tabpanel">@language_console(languages)</div>
                         </div><!-- /.tab-content -->
@@ -203,6 +140,12 @@
     </div>
 </div>
 <script>
+
+    $(document).ready(function () {
+        $('#usersTable').DataTable();
+        $('#resultsTable').DataTable();
+    });
+
     function activateTest(testId){
         $("#activate-test").prop('disabled',true);
         $.ajax({

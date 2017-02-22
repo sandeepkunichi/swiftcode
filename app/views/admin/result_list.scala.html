@@ -1,0 +1,25 @@
+@(testSessions: List[models.test.TestSession])
+@if(testSessions.length == 0){
+<p>No test sessions taken</p>
+}else{
+<table id="resultsTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+        <th>Test Title</th>
+        <th>Score</th>
+        <th>Time (Minutes)</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @for(testSession <- testSessions){
+    <tr>
+        <td>@testSession.test.title</td>
+        <td>@testSession.testTaker.email</td>
+        <td>@testSession.timeTaken</td>
+        <td><input id="view-test-session" class="btn btn-default btn-sm logoutbtn" type="button" value="View" onclick="viewTestSession('@testSession.id')"/></td>
+    </tr>
+    }
+    </tbody>
+</table>
+}
