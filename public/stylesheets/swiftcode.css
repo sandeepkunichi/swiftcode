@@ -1,0 +1,466 @@
+﻿
+/* --- CSS Imports --- */
+@import url(https://fonts.googleapis.com/css?family=Lato:700,400);
+@import url(https://fonts.googleapis.com/css?family=Kanit:700,600,500,400);
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,500);
+@import url('https://fonts.googleapis.com/css?family=Coustard');
+
+
+/* --------------------------------------
+   Global Styles
+   -------------------------------------- */
+
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    margin : 0px;
+    padding : 0px;
+    font-family:'Open Sans', sans-serif;
+    font-size: 16px;
+}
+
+body h1 {
+    font-size: 3em;
+    text-align: center;
+}
+
+body h2 {
+    font-size: 2.5em;
+    text-align: center;
+}
+
+body h3 {
+    font-size: 2em;
+    text-align: center;
+}
+
+body h4 {
+    font-size: 1.5em;
+    text-align: center;
+}
+
+
+/* --------------------------------------
+   Global Styles
+   -------------------------------------- */
+
+.small-caps {
+    font-variant: small-caps;
+}
+
+.btn-primary-light {
+
+    display: inline-block;
+    font-family:'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 1.25em;
+    text-align: center;
+    text-decoration: none;
+    padding: 0.4em 1em;
+
+    background-color: #ff9500;
+    border-radius: 5px;
+
+    border-radius: 3px;
+    box-shadow: 0px 1px 2px #888888;
+    color: #FFFFFF;
+
+    cursor: pointer;
+
+}
+
+.btn-primary-dark {
+
+    display: inline-block;
+    font-family:'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 1.25em;
+    text-align: center;
+    text-decoration: none;
+    padding: 0.4em 1em;
+
+    background-color: #ff9500;
+    border-radius: 5px;
+
+    border-radius: 3px;
+    box-shadow: 0px 1px 2px #888888;
+    color: #000000;
+
+    cursor: pointer;
+
+}
+
+.btn-primary-light:hover{
+    text-decoration: none;
+    color: #FFFFFF;
+    background-color: #FF8500;
+}
+
+.heading-underline-thick {
+    border: none;
+    width: 150px;
+    margin : 0.5em auto 1em auto;
+    height: 4px;
+    background-color: #ff9500;
+}
+
+.heading-underline-normal {
+    border: none;
+    width: 200px;
+    margin : 0.5em auto 1em auto;
+    height: 2px;
+    background-color: #ff9500;
+}
+
+.heading-underline-thin {
+    border: none;
+    width: 300px;
+    margin : 2em auto 2em auto;
+    height: 1px;
+    background-color: #ff9500;
+}
+
+.glowing-border {
+    border: none;
+    border-radius: 7px;
+}
+
+.glowing-border:focus {
+    outline: none;
+    box-shadow: 0 0 10px #ff9500;
+}
+
+/* --- Global Navbar --- */
+#mainNavbar {
+    color : #ffffff;
+    background-color: #000000;
+    margin: 0px;
+    border: none;
+    height: 50px;
+    border-radius: 0px;
+}
+
+#mainNavbar .container-fluid {
+    padding: 0px 15px 0px 15px;
+    height: 100%;
+}
+
+#mainNavbar #mainNavbarHeader {
+    height:  100%;
+}
+
+#mainNavbar .navbar-brand {
+    height: 100%;
+    margin: 0px;
+    padding: 5px;
+    color : inherit;
+    font-size : 1.5em;
+    font-variant: small-caps;
+}
+
+#mainNavbar #mainNavbarHeader img {
+    display: inline;
+    height: 100%;
+}
+
+#mainNavbar #mainNavbarContent {
+    height: 100% !important;
+}
+
+#mainNavbar #mainNavbarContent img{
+    display: inline;
+    height: 100%;
+}
+
+#mainNavbar #mainNavbarContent li a {
+    color: inherit;
+}
+
+/* --- Global Footer ---*/
+footer {
+    width: 100%;
+    display: block;
+    background: #333333;
+    background-size: cover;
+    color: #EEEEEE;
+    font-size: 11px;
+    padding: 20px;
+}
+
+footer a:link {
+    color: #FFFFFF !important;
+}
+
+footer a:hover {
+    color: #ff9550 !important;
+    text-decoration: none;
+}
+
+footer a:visited {
+    color: #ff9500 !important;
+}
+
+footer .container .row #copyrights{
+    display: inline-block;
+    margin-top: 4em;
+}
+
+footer .container .row #connect{
+    display: inline-block;
+    margin-top: 4em;
+}
+
+footer .container .row #navigate{
+    display: inline-block;
+    margin-top: 4em;
+}
+
+footer .container .row .row-heading{
+    text-align: center;
+    display: block;
+    font-size: 1.75em;
+}
+
+footer .container .row .row-content{
+    position: relative;
+    display: inline-block;
+    margin-top: 1em;
+    padding-left: 1em;
+    left: 50%;
+    transform: translate(-50%, 0%);
+
+
+    font-size: 1.25em;
+}
+
+footer #connect .list-heading{
+    display: inline-block;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 0.3em;
+}
+
+footer #connect .list-unstyled{
+    padding-left: 1em;
+}
+
+footer .social-link-list li a {
+    font-family: "proxima-nova","Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+footer .social-link-list .fa-fw {
+    text-align: left;
+}
+
+#swiftcode .light-container {
+
+    background-color: #ffffff;
+    padding: 5em 0em 5em 0em;
+
+}
+
+#swiftcode .dark-container {
+    background-color: #ccddee;
+    padding: 5em 0em 5em 0em;
+}
+
+#swiftcode #canvas-container {
+    overflow:hidden;
+}
+
+#swiftcode #canvas-container #canvas-stats {
+    visibility: hidden;
+    position: absolute !important;
+    top: 50px !important;
+    left: 0% !important;
+}
+
+#swiftcode #canvas-container #main-canvas{
+    display: block;
+    padding: 0px;
+}
+
+#swiftcode #signup {
+    position: absolute;
+    height: 60%;
+    width: 100%;
+    top: 50px;
+    padding: 0px;
+
+    color: #ffffff;
+    background-color: rgba(100,100,100,0) ;
+}
+
+#swiftcode #signup #signup-wrapper{
+    position: relative;
+    top: 40%;
+    transform: translate(0%, -50%);
+}
+
+#swiftcode #signup #form-signup {
+    position: relative;
+    display: inline-block;
+    margin-top: 1em;
+    left : 50%;
+    transform: translate(-50%, 0%);
+}
+
+#swiftcode #signup .input-textfield {
+
+    color: #000000;
+    font-size: 1.25em;
+    border-radius: 8px;
+    width: 300px;
+    padding: 7px;
+    margin: 0.5em;
+}
+
+#swiftcode #signup #file-input {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+#swiftcode #signup #file-input-label {
+    position: relative;
+    width: 90%;
+    left: 50%;
+    padding: 0.4em;
+    transform: translate(-50%, 0%);
+}
+
+#swiftcode #signup #signup-button{
+    position: relative;
+    width: 60%;
+    left: 50%;
+    margin: 0.5em 0 0 0;
+    transform: translate(-50%, 0%);
+
+    transition-timing-function: ease;
+    transition: width 0.3s;
+    -webkit-transition: width 0.3s; /* Safari */
+
+}
+
+#swiftcode #signup #signup-button:hover{
+    width: 80%;
+}
+
+
+#swiftcode #description {
+
+    text-align: center;
+
+}
+
+#swiftcode #techstack .row{
+
+    height: 10em;
+
+}
+
+#swiftcode #techstack .col-sm-4{
+    height: 100%;
+    padding: 1em;
+}
+
+#swiftcode #techstack .col-xs-6{
+    height: 100%;
+    padding: 1em;
+}
+
+#swiftcode  #techstack .techstack-img{
+    position: relative;
+    height: 100%;
+
+    left: 50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+}
+
+#swiftcode #overview .col-md-6{
+    margin-top: 2.5em;
+}
+
+#swiftcode #overview .col-sm-12{
+    margin-top: 4em;
+}
+
+#swiftcode #overview .overview-image {
+    position: relative;
+    width: 5em;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+#swiftcode #overview .overview-description {
+    text-align: center;
+    padding: 1em 2em 1em 2em;
+}
+
+#swiftcode #overview .overview-testmonials {
+    padding: 1em;
+    text-align: center;
+}
+
+#swiftcode #overview .overview-testmonials .testmonial-quote {
+    font-size: 1.5em;
+    font-style: italic;
+}
+
+
+
+
+/* --------------------------------------
+   Media Queries
+   -------------------------------------- */
+
+/* Portrait Phone */
+@media screen and (max-width: 425px) {
+
+    /* --- Global --- */
+    body {
+        font-size: 12px;
+    }
+
+}
+
+
+/* Landscape Phone to Portrait Tablet */
+@media screen and (min-width: 426px) and (max-width: 767px) {
+
+    /* --- Global --- */
+    body {
+        font-size: 12px;
+    }
+}
+
+
+/* Landscape Tablet to Small Desktop*/
+@media screen and (min-width:768px) and (max-width: 991px) {
+
+    /* --- Global --- */
+    body {
+        font-size: 14px;
+    }
+
+}
+
+
+/* Small Desktop to Medium Desktop*/
+@media screen and (min-width:992px) and (max-width: 1199px) {
+
+    /* --- Global --- */
+    body {
+        font-size: 14px;
+    }
+
+}

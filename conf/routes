@@ -4,6 +4,9 @@
 
 # An example controller showing a sample home page
 
+GET     /                                       controllers.Application.index()
+GET     /swiftcode                              controllers.Application.swiftcode()
+
 GET     /admin                                  controllers.admin.HomeController.index()
 
 POST    /test/create                            controllers.test.TestController.createTest()
@@ -31,9 +34,9 @@ GET     /login                                  controllers.LoginController.logi
 GET     /logout                                 controllers.LoginController.logout()
 POST    /login                                  controllers.LoginController.authenticate()
 
-GET     /                                       controllers.SignupController.loadSignupPage()
 GET     /signup                                 controllers.SignupController.loadSignupPage()
 POST    /signup                                 controllers.SignupController.signup()
+POST    /register                               controllers.SignupController.register()
 
 POST    /user/:id/information                   controllers.dashboard.HomeController.updateCIF(id: Long)
 GET     /user/:id/dp                            controllers.dashboard.HomeController.profilePicture(id: Long)

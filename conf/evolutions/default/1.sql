@@ -85,6 +85,13 @@ create table program_submission (
   constraint pk_program_submission primary key (id)
 );
 
+create table registration (
+  id                            bigint auto_increment not null,
+  name                          varchar(255),
+  email                         varchar(255),
+  constraint pk_registration primary key (id)
+);
+
 create table test (
   id                            bigint auto_increment not null,
   title                         varchar(255),
@@ -212,6 +219,8 @@ drop table if exists language;
 drop table if exists profile_picture;
 
 drop table if exists program_submission;
+
+drop table if exists registration;
 
 drop table if exists test;
 

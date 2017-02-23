@@ -1,4 +1,11 @@
-@(tests: List[models.test.Test], user: models.AppUser, users: List[models.AppUser], testSessions: List[models.test.TestSession], languages: List[models.Language])
+@(
+tests: List[models.test.Test],
+user: models.AppUser,
+users: List[models.AppUser],
+testSessions: List[models.test.TestSession],
+registrations: List[models.Registration],
+languages: List[models.Language]
+)
 @shared.header()
 <!-- TODO Indent file!!!-->
 <!-- TODO Why hasn't it included header? -->
@@ -45,6 +52,9 @@
                             </li>
                             <li role="presentation">
                                 <a aria-controls="home" data-target="#results" data-toggle="tab" role="tab" style="cursor:default">Results</a>
+                            </li>
+                            <li role="presentation">
+                                <a aria-controls="home" data-target="#registrations" data-toggle="tab" role="tab" style="cursor:default">Registration</a>
                             </li>
                             <li role="presentation">
                                 <a aria-controls="home" data-target="#languages" data-toggle="tab" role="tab" style="cursor:default">Languages</a>
@@ -113,7 +123,12 @@
                             <div class="tab-pane" id="results" role="tabpanel">
                                 @result_list(testSessions: List[models.test.TestSession])
                             </div><!-- /.results -->
-                            <div class="tab-pane" id="languages" role="tabpanel">@language_console(languages)</div>
+                            <div class="tab-pane" id="registrations" role="tabpanel">
+                                @registration_list(registrations)
+                            </div><!-- /.registrations -->
+                            <div class="tab-pane" id="languages" role="tabpanel">
+                                @language_console(languages)
+                            </div><!-- /.languages -->
                         </div><!-- /.tab-content -->
                         <br />
                         <div class="tab-content">
@@ -144,6 +159,7 @@
     $(document).ready(function () {
         $('#usersTable').DataTable();
         $('#resultsTable').DataTable();
+        $('#registrationsTable').DataTable();
     });
 
     function activateTest(testId){

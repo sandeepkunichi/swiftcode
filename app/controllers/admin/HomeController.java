@@ -1,6 +1,7 @@
 package controllers.admin;
 
 import models.Language;
+import models.Registration;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.AppUserService;
@@ -35,6 +36,7 @@ public class HomeController extends Controller {
                 sessionService.getSessionUser(),
                 appUserService.findAllAppUsers(),
                 testSessionService.findAllTestSessions(),
+                Registration.find.all(),
                 Language.find.all()
         ));
     }

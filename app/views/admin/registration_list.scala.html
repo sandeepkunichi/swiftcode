@@ -1,0 +1,21 @@
+@(registrations: List[models.Registration])
+@if(registrations.length == 0){
+<p>No registrations</p>
+}else{
+<table id="registrationsTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    @for(registration <- registrations){
+    <tr>
+        <td>@registration.name</td>
+        <td>@registration.email</td>
+    </tr>
+    }
+    </tbody>
+</table>
+}
