@@ -6,8 +6,6 @@ import models.test.TestSession;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by Sandeep.K on 26-01-2017.
