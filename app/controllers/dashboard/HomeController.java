@@ -21,11 +21,8 @@ import services.*;
 
 import javax.inject.Inject;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.concurrent.ExecutionException;
 
@@ -91,24 +88,11 @@ public class HomeController extends Controller implements MessageService {
             Http.MultipartFormData body = request().body().asMultipartFormData();
             Http.MultipartFormData.FilePart document = body.getFile("resume");
             java.io.File file = (java.io.File)document.getFile();
+
             String uploadDirectory = configuration.getString("drive.resume.directory");
-            Files.createDirectories(Paths.get(uploadDirectory));
-            byte[] data = Files.readAllBytes(file.toPath());
-            File resume = new File(uploadDirectory + loggedInUser.email + ".pdf");
-            Boolean fileCreated = resume.createNewFile();
-            if(!fileCreated){
-                loggedInUser.resumeSubmitted=true;
-                loggedInUser.update();
-                sessionService.saveUserInSession(loggedInUser);
-                return ok("/dashboard?alert=UPLOAD_SUCCESS");
-            }
-            OutputStream out = new FileOutputStream(resume);
-            out.write(data);
-            out.close();
-            /*
-            Drive service = DriveService.getDriveService();
+            Drive service = DriveService.getDriveService(configuration, wsClient);
             DriveService.insertFile(new Document(service, loggedInUser.email, loggedInUser.email+"'s resume", uploadDirectory, "application/pdf", file));
-            */
+
             loggedInUser.resumeSubmitted=true;
             loggedInUser.update();
             sessionService.saveUserInSession(loggedInUser);

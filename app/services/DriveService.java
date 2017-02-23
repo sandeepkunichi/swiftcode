@@ -1,10 +1,9 @@
 package services;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.FileContent;
 import com.google.api.client.http.HttpTransport;
@@ -15,12 +14,19 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 import data.Document;
+import data.DriveAuthRequest;
+import data.DriveAuthResponse;
+import play.Configuration;
+import play.libs.ws.WSClient;
+import play.libs.ws.WSResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Sandeep.K on 4/8/2016.
@@ -64,15 +70,19 @@ public class DriveService {
      * @return an authorized Credential object.
      * @throws IOException
      */
-    public static Credential authorize() throws IOException {
+    public static Credential authorize(DriveAuthResponse driveAuthResponse) throws Exception {
+
         InputStream in = DriveService.class.getResourceAsStream("/client_secret.json");
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                .setDataStoreFactory(DATA_STORE_FACTORY)
-                .setAccessType("offline")
-                .build();
-        return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
+        Credential credential = new GoogleCredential.Builder()
+                .setJsonFactory(JSON_FACTORY)
+                .setTransport(HTTP_TRANSPORT)
+                .setClientSecrets(clientSecrets).build();
+
+        credential.setAccessToken(driveAuthResponse.getAccessToken());
+        credential.setRefreshToken(driveAuthResponse.getRefreshToken());
+
+        return credential;
     }
 
     /**
@@ -80,8 +90,8 @@ public class DriveService {
      * @return an authorized Drive client service
      * @throws IOException
      */
-    public static Drive getDriveService() throws IOException {
-        Credential credential = authorize();
+    public static Drive getDriveService(Configuration configuration, WSClient wsClient) throws Exception {
+        Credential credential = authorize(getDriveAuthResponse(configuration, wsClient));
         return new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential).setApplicationName(APPLICATION_NAME).build();
     }
 
@@ -93,6 +103,28 @@ public class DriveService {
         body.setParents(Collections.singletonList(document.getParentId()));
         FileContent mediaContent = new FileContent(document.getMimeType(), document.getFile());
         return document.getService().files().create(body, mediaContent).execute();
+    }
+
+    public static DriveAuthResponse getDriveAuthResponse(Configuration configuration, WSClient wsClient) throws ExecutionException, InterruptedException {
+
+        DriveAuthRequest driveAuthRequest = new DriveAuthRequest(
+                configuration.getString("drive.refresh_token"),
+                configuration.getString("drive.client_id"),
+                configuration.getString("drive.client_secret")
+        );
+
+        CompletableFuture<JsonNode> wsRequest = wsClient
+                .url(configuration.getString("drive.auth_endpoint"))
+                .setContentType("application/x-www-form-urlencoded")
+                .post(driveAuthRequest.getRequestBody())
+                .thenApply(WSResponse::asJson)
+                .toCompletableFuture();
+        try {
+            wsRequest.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new DriveAuthResponse(wsRequest.get().get("access_token").asText(), driveAuthRequest.getRefreshToken());
     }
 
 }
