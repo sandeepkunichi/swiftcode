@@ -9,7 +9,7 @@ import play.mvc.Result;
 public class Application extends Controller {
     @NoAuthRequired
     public Result index() {
-        return redirect("/swiftcode");
+        return ok(views.html.site.index.render());
     }
 
     @NoAuthRequired

@@ -6,6 +6,7 @@
     <thead>
     <tr>
         <th>Test Title</th>
+        <th>Email</th>
         <th>Score</th>
         <th>Time (Minutes)</th>
         <th></th>
@@ -16,6 +17,7 @@
     <tr>
         <td>@testSession.test.title</td>
         <td>@testSession.testTaker.email</td>
+        <td>@testSession.score</td>
         <td>@testSession.timeTaken</td>
         <td><input id="view-test-session" class="btn btn-default btn-sm logoutbtn" type="button" value="View" onclick="viewTestSession('@testSession.id')"/></td>
     </tr>
