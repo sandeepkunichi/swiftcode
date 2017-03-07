@@ -8,6 +8,7 @@ GET     /                                       controllers.Application.index()
 GET     /swiftcode                              controllers.Application.swiftcode()
 
 GET     /admin                                  controllers.admin.HomeController.index()
+POST    /user                                   controllers.admin.HomeController.createUser()
 
 POST    /test/create                            controllers.test.TestController.createTest()
 GET     /test/edit/:testId                      controllers.test.TestController.editTestView(testId: Long)

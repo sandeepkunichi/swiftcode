@@ -1,7 +1,12 @@
 package controllers.admin;
 
+import forms.SignupForm;
+import models.AppUser;
+import models.CandidateInformation;
 import models.Language;
 import models.Registration;
+import play.data.Form;
+import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.AppUserService;
@@ -29,6 +34,9 @@ public class HomeController extends Controller {
     @Inject
     TestService testService;
 
+    @Inject
+    FormFactory formFactory;
+
     @AdminOnly
     public Result index() throws IOException {
         return ok(views.html.admin.index.render(
@@ -39,6 +47,16 @@ public class HomeController extends Controller {
                 Registration.find.all(),
                 Language.find.all()
         ));
+    }
+
+    @AdminOnly
+    public Result createUser() {
+        Form<SignupForm> userForm = formFactory.form(SignupForm.class).bindFromRequest();
+        AppUser appUser = new AppUser(userForm.data().get("email"), userForm.data().get("password"));
+        appUser.candidateInformation = new CandidateInformation();
+        CandidateInformation.db().save(appUser.candidateInformation);
+        AppUser.db().save(appUser);
+        return redirect("/admin");
     }
 
 }

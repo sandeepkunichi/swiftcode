@@ -1,4 +1,30 @@
 @(users: List[models.AppUser])
+<div class="row">
+    <div class="col-md-12">
+        <form id="user-form" action="/user" method="POST">
+            <div class="row">
+                <div class="col-md-3">
+                    Email
+                </div>
+                <div class="col-md-9"><input type="email" name="email" class="form-control"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">
+                    Password
+                </div>
+                <div class="col-md-9"><input type="password" name="password" class="form-control"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-10"> </div>
+                <div class="col-md-2 pull-right"><input type="submit" class="btn btn-primary btn-sm" value="CREATE"></div>
+            </div>
+            <br>
+        </form>
+    </div>
+</div>
+<hr>
 @if(users.length == 0){
 <p>No users created yet</p>
 }else{
