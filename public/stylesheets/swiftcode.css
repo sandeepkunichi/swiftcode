@@ -282,6 +282,8 @@ footer .social-link-list .fa-fw {
 }
 
 #swiftcode #canvas-container #main-canvas{
+    width: 100%;
+    height: 60%;
     display: block;
     padding: 0px;
 }

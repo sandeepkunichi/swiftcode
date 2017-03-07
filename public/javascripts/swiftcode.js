@@ -66,6 +66,7 @@ function init() {
     // Global Variables
     noise.seed(Math.random());
     container = document.getElementById("canvas-container");
+    canvas = document.getElementById("main-canvas");
     loader = new THREE.JSONLoader();
     stats = new Stats();
     stats.domElement.id = "canvas-stats";
@@ -73,14 +74,12 @@ function init() {
     container.appendChild(stats.domElement);
 
     // Renderer
-    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
     renderer.setClearColor(0x000000);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-    renderer.domElement.id = "main-canvas";
-    container.appendChild(renderer.domElement);
 
     // Camera and Controls
     camera = new THREE.PerspectiveCamera(fov, SCREEN_ASPECT_RATIO, 0.1, 1000);
