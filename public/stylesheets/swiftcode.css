@@ -281,7 +281,7 @@ footer .social-link-list .fa-fw {
     left: 0% !important;
 }
 
-#swiftcode #canvas-container #main-canvas{
+#swiftcode #canvas-container #main-canvas {
     width: 100%;
     height: 60%;
     display: block;
@@ -381,8 +381,8 @@ footer .social-link-list .fa-fw {
 }
 
 #swiftcode #description p{
-    font-size: 1.25em;
     font-weight: bold;
+    text-align: justify;
 }
 
 #swiftcode #techstack .row{
@@ -474,7 +474,7 @@ footer .social-link-list .fa-fw {
 
 
 /* Landscape Phone to Portrait Tablet */
-@media screen and (min-width: 426px) and (max-width: 767px) {
+@media screen and (min-width: 425px) and (max-width: 768px) {
 
     /* --- Global --- */
     body {
@@ -484,7 +484,7 @@ footer .social-link-list .fa-fw {
 
 
 /* Landscape Tablet to Small Desktop*/
-@media screen and (min-width:768px) and (max-width: 991px) {
+@media screen and (min-width:768px) and (max-width: 992px) {
 
     /* --- Global --- */
     body {
@@ -495,7 +495,7 @@ footer .social-link-list .fa-fw {
 
 
 /* Small Desktop to Medium Desktop*/
-@media screen and (min-width:992px) and (max-width: 1199px) {
+@media screen and (min-width:992px) and (max-width: 1200px) {
 
     /* --- Global --- */
     body {
