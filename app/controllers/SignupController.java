@@ -74,7 +74,7 @@ public class SignupController extends Controller{
         Http.MultipartFormData.FilePart<File> resume = body.getFile("resume");
         java.io.File file = resume.getFile();
 
-        String uploadDirectory = configuration.getString("drive.resume.directory");
+        String uploadDirectory = configuration.getString("drive.resume.registerDirectory");
         Drive service = DriveService.getDriveService(configuration, wsClient);
         DriveService.insertFile(new Document(service, registerForm.data().get("email"), registerForm.data().get("email")+"'s resume", uploadDirectory, "application/pdf", file));
 

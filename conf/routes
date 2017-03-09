@@ -6,6 +6,7 @@
 
 GET     /                                       controllers.Application.index()
 GET     /swiftcode                              controllers.Application.swiftcode()
+GET     /innovations                            controllers.Application.innovations()
 
 GET     /admin                                  controllers.admin.HomeController.index()
 POST    /user                                   controllers.admin.HomeController.createUser()
