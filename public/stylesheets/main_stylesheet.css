@@ -64,11 +64,12 @@ body h4 {
 
 /* --- Global Navbar --- */
 #mainNavbar {
-    color : #000000;
-    background-color: #55bbff;
+    color : #ffffff;
+    background-color: #000000;
     margin: 0px;
     border: none;
     height: 50px;
+    border-radius: 0px;
 }
 
 #mainNavbar .container-fluid {
@@ -202,6 +203,7 @@ footer .social-link-list .fa-fw {
 
 #homepage .dark-container .row .text-holder .product-description{
     margin: 2em 0em 0em 0em;
+    text-align: justify;
 }
 
 #homepage .dark-container .text-holder{
