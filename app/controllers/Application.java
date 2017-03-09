@@ -9,11 +9,16 @@ import play.mvc.Result;
 public class Application extends Controller {
     @NoAuthRequired
     public Result index() {
-        return ok(views.html.site.index.render());
+        return redirect("https://betsol.com");
     }
 
     @NoAuthRequired
     public Result swiftcode() {
-        return ok(views.html.site.index.render());
+        return ok(views.html.site.swiftcode.render());
+    }
+
+    @NoAuthRequired
+    public Result innovations() {
+        return ok(views.html.site.innovations.render());
     }
 }
