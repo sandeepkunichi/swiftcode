@@ -257,163 +257,29 @@ footer .social-link-list .fa-fw {
     text-align: left;
 }
 
-#swiftcode .light-container {
+#code-editor #code-form{
 
-    background-color: #ffffff;
-    padding: 5em 0em 5em 0em;
-
-}
-
-#swiftcode .dark-container {
-    background-color: #ccddee;
-    padding: 5em 0em 5em 0em;
-}
-
-#swiftcode #canvas-container {
-    overflow:hidden;
-}
-
-#swiftcode #canvas-container #canvas-stats {
-    visibility: hidden;
-    position: absolute !important;
-    top: 50px !important;
-    left: 0% !important;
-}
-
-#swiftcode #canvas-container #main-canvas{
-    display: block;
-    padding: 0px;
-}
-
-#swiftcode #signup {
-    position: absolute;
-    height: 60%;
-    width: 100%;
-    top: 50px;
-    padding: 0px;
-
-    color: #ffffff;
-    background-color: rgba(100,100,100,0) ;
-}
-
-#swiftcode #signup #signup-wrapper{
-    position: relative;
-    top: 40%;
-    transform: translate(0%, -50%);
-}
-
-#swiftcode #signup #form-signup {
-    position: relative;
-    display: inline-block;
-    margin-top: 1em;
-    left : 50%;
-    transform: translate(-50%, 0%);
-}
-
-#swiftcode #signup .input-textfield {
-
-    color: #000000;
-    font-size: 1.25em;
-    border-radius: 8px;
-    width: 300px;
-    padding: 7px;
-    margin: 0.5em;
-}
-
-#swiftcode #signup #file-input {
-	width: 0.1px;
-	height: 0.1px;
-	opacity: 0;
-	overflow: hidden;
-	position: absolute;
-	z-index: -1;
-}
-
-#swiftcode #signup #file-input-label {
-    position: relative;
-    width: 90%;
-    left: 50%;
-    padding: 0.4em;
-    transform: translate(-50%, 0%);
-}
-
-#swiftcode #signup #signup-button{
-    position: relative;
-    width: 60%;
-    left: 50%;
-    margin: 0.5em 0 0 0;
-    transform: translate(-50%, 0%);
-
-    transition-timing-function: ease;
-    transition: width 0.3s;
-    -webkit-transition: width 0.3s; /* Safari */
-    
-}
-
-#swiftcode #signup #signup-button:hover{
+    padding: 1em;
     width: 80%;
-}
-
-
-#swiftcode #description {
-
-    text-align: center;
+    height: 80%;
 
 }
 
-#swiftcode #techstack .row{
+#code-editor #code-text {
 
-    height: 10em;
+    width: 60%;
+    height: 500px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
 
 }
 
-#swiftcode #techstack .col-sm-4{
-    height: 100%;
-    padding: 1em;
-}
 
-#swiftcode #techstack .col-xs-6{
-    height: 100%;
-    padding: 1em;
-}
-
-#swiftcode  #techstack .techstack-img{
-    position: relative;
-    height: 100%;
-
-    left: 50%;
-    top:50%;
-    transform: translate(-50%, -50%);
-}
-
-#swiftcode #overview .col-md-6{
-    margin-top: 2.5em;
-}
-
-#swiftcode #overview .col-sm-12{
-    margin-top: 4em;
-}
-
-#swiftcode #overview .overview-image {
-    position: relative;
-    width: 5em;
-    left: 50%;
-    transform: translate(-50%, 0%);
-}
-
-#swiftcode #overview .overview-description {
-    text-align: center;
-    padding: 1em 2em 1em 2em;
-}
-
-#swiftcode #overview .overview-testmonials {
-    padding: 1em;
-    text-align: center;
-}
-
-#swiftcode #overview .overview-testmonials .testmonial-quote {
-    font-size: 1.5em;
-    font-style: italic;
+#code-editor #code-output {
+    width: 60%;
+    height: 200px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
 }
 
 

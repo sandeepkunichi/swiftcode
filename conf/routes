@@ -61,3 +61,5 @@ GET     /assets/*file                           controllers.Assets.versioned(pat
 GET     /stylesheets/*file                      @controllers.Assets.at(path="/public/stylesheets", file)
 GET     /javascripts/*file                      @controllers.Assets.at(path="/public/javascripts", file)
 GET     /images/*file                           @controllers.Assets.at(path="/public/images", file)
+GET     /json/*file                             @controllers.Assets.at(path="/public/json", file)
+GET     /fonts/*file                            @controllers.Assets.at(path="/public/fonts", file)
