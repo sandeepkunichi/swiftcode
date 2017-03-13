@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Betsol Innovation Labs</title>
+	<meta charset="utf-8" />
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/images/favicons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/images/favicons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Stylesheets -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/code_editor.css" />
+
+    
+    
+
+
+</head>
+<body id="code-editor">
+
+    <nav class="navbar navbar-default" id="mainNavbar">
+        <div class="container-fluid" >
+            <div class="navbar-header" id="mainNavbarHeader">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavbarContent">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a class="navbar-brand" href="/"> <img src="/images/BIL Logo 2.png" height="10px" /> Betsol Innovation Labs</a>
+            </div>
+
+            <div class="collapse navbar-collapse navbar-right" id="mainNavbarContent">
+                <ul class="nav navbar-nav">
+                    <li> <a href="/">Training </a> </li>
+                    <li> <a href="/">Automation </a> </li>
+                    <li> <a href="/">IoT </a> </li>
+                    <li> <a href="/">Machine Learning </a> </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="code-form" >
+<textarea id="code-text" value="">
+#include<stdio.h>
+
+int main(){
+    int i;
+    for(i=0; i<5; i++ ){
+        printf("Hello %d\n", i);
+    }
+}
+</textarea>
+        <select id="code-lang">
+            <option value="11">C</option>
+            <option value="44">C++14</option>
+            <option value="10">Java</option>
+            <option value="116">Python 3</option>
+        </select>
+
+        <button class="btn btn-primary" id="code-form-submit"> RUN </button>
+        <br />
+        <textarea id="code-output"></textarea>
+    </div>
+
+    
+
+    <!-- Scripts -->
+    <script src="/javascripts/jquery-3.1.1.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+    <script src="/javascripts/code_editor.js"></script>
+</body>
+</html>
