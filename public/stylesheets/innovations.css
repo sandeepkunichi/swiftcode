@@ -64,11 +64,12 @@ body h4 {
 
 /* --- Global Navbar --- */
 #mainNavbar {
-    color : #000000;
-    background-color: #55bbff;
+    color : #ffffff;
+    background-color: #000000;
     margin: 0px;
     border: none;
     height: 50px;
+    border-radius: 0px;
 }
 
 #mainNavbar .container-fluid {
@@ -80,7 +81,7 @@ body h4 {
     height:  100%;
 }
 
-#mainNavbar #mainNavbarHeader .navbar-brand {
+#mainNavbar .navbar-brand {
     height: 100%;
     margin: 0px;
     padding: 5px;
@@ -89,16 +90,22 @@ body h4 {
     font-variant: small-caps;
 }
 
-#mainNavbar #mainNavbarHeader .navbar-brand img {
+#mainNavbar #mainNavbarHeader img {
     display: inline;
     height: 100%;
+}
 
+#mainNavbar #mainNavbarContent {
+    height: 100% !important;
+}
+
+#mainNavbar #mainNavbarContent img{
+    display: inline;
+    height: 100%;
 }
 
 #mainNavbar #mainNavbarContent li a {
-
     color: inherit;
-
 }
 
 
@@ -188,16 +195,24 @@ footer .social-link-list .fa-fw {
     background-color: #DDDDDD;
 }
 
-#homepage #products-container .row img {
-    width: 100%;
-}
-
 #homepage #products-container .row {
     margin-top: 8em;
 }
 
+
+#homepage .dark-container .row .col-sm-6 {
+    display: table-cell;
+    float: none;
+    vertical-align: middle;
+}
+
+#homepage .dark-container .row .col-sm-6 img{
+    width: 100%;
+}
+
 #homepage .dark-container .row .text-holder{
     margin: 3em 2em 2em 2em;
+    text-align: justify;
 }
 
 #homepage .dark-container .row .text-holder .product-description{
@@ -304,6 +319,11 @@ footer .social-link-list .fa-fw {
         font-size: 12px;
     }
 
+    /* --- Homepage --- */
+    #homepage .dark-container .row .col-sm-6 {
+        display: block;
+        float: left;
+    }
 }
 
 
@@ -313,6 +333,12 @@ footer .social-link-list .fa-fw {
     /* --- Global --- */
     body {
         font-size: 12px;
+    }
+
+    /* --- Homepage --- */
+    #homepage .dark-container .row .col-sm-6 {
+        display: block;
+        float: left;
     }
 }
 
