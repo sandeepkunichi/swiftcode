@@ -18,7 +18,7 @@ $(document).ready(function (e) {
             filename = "Upload Resume";
         }
         if (filename.length >= 20) {
-            filename = filename.substr(0, 17)+"...";
+            filename = filename.substr(0, 17) + "...";
 
         }
         $('#file-input-label').html(filename);
@@ -35,7 +35,7 @@ $(document).ready(function (e) {
 // THREE.JS
 
 var SCREEN_WIDTH = window.innerWidth;
-var SCREEN_HEIGHT = window.innerHeight*3/5;
+var SCREEN_HEIGHT = window.innerHeight * 3 / 5;
 var SCREEN_ASPECT_RATIO = SCREEN_WIDTH / SCREEN_HEIGHT;
 
 var container, loader, stats;
@@ -66,6 +66,7 @@ function init() {
     // Global Variables
     noise.seed(Math.random());
     container = document.getElementById("canvas-container");
+    canvas = document.getElementById("main-canvas");
     loader = new THREE.JSONLoader();
     stats = new Stats();
     stats.domElement.id = "canvas-stats";
@@ -73,14 +74,12 @@ function init() {
     container.appendChild(stats.domElement);
 
     // Renderer
-    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
     renderer.setClearColor(0x000000);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-    renderer.domElement.id = "main-canvas";
-    container.appendChild(renderer.domElement);
 
     // Camera and Controls
     camera = new THREE.PerspectiveCamera(fov, SCREEN_ASPECT_RATIO, 0.1, 1000);
@@ -120,7 +119,7 @@ function init() {
             if (j < planeWidth - squareSize) {
                 lineGeometry.vertices.push(new THREE.Vector3(j, 0, i));
                 lineGeometry.vertices.push(new THREE.Vector3(j + squareSize, 0, i));
-                lineGeometry.colors.push(new THREE.Color((1 - jfac), (1 - jfac) * 0.35 + jfac*0.3, jfac * 1));
+                lineGeometry.colors.push(new THREE.Color((1 - jfac), (1 - jfac) * 0.35 + jfac * 0.3, jfac * 1));
                 lineGeometry.colors.push(new THREE.Color((1 - jfac), (1 - jfac) * 0.35 + jfac * 0.3, jfac * 1));
             }
         }
@@ -174,7 +173,7 @@ function render() {
 
 function onWindowResize() {
     SCREEN_WIDTH = window.innerWidth;
-    SCREEN_HEIGHT = window.innerHeight * 2/3 - 50;
+    SCREEN_HEIGHT = window.innerHeight * 2 / 3 - 50;
     SCREEN_ASPECT_RATIO = SCREEN_WIDTH / SCREEN_HEIGHT;
     camera.aspect = SCREEN_ASPECT_RATIO;
     camera.updateProjectionMatrix();
@@ -198,20 +197,20 @@ init();
 animate();
 
 
-$("#file-input").on('change', function() {
-    var size = this.files[0].size/1024;
-    if(size > 512){
+$("#file-input").on('change', function () {
+    var size = this.files[0].size / 1024;
+    if (size > 512) {
         $("#signup-message").html("File size too big. Maximum size is 512KB");
         $("#file-input").val("");
         $("#file-input-label").val("Upload Resume");
     }
 });
 
-$("#signup-button").on("click", function(){
+$("#signup-button").on("click", function () {
 
     var ext = $('#file-input').val().split('.').pop().toLowerCase();
 
-    if($('#file-input').val() && $.inArray(ext, ['pdf']) == -1) {
+    if ($('#file-input').val() && $.inArray(ext, ['pdf']) == -1) {
         $('#signup-message').html("Please select a PDF file");
         return;
     }
@@ -223,12 +222,12 @@ $("#signup-button").on("click", function(){
     $.ajax({
         url: '/register',
         type: 'POST',
-        success: function(data){
+        success: function (data) {
             $('#signup-message').html(data);
             $('#form-signup')[0].reset();
             $('#file-input-label').html("Upload Resume");
         },
-        error: function(data){},
+        error: function (data) { },
         data: formData,
         cache: false,
         contentType: false,

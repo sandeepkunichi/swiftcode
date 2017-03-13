@@ -1,5 +1,4 @@
-﻿
-/* --- CSS Imports --- */
+﻿/* --- CSS Imports --- */
 @import url(https://fonts.googleapis.com/css?family=Lato:700,400);
 @import url(https://fonts.googleapis.com/css?family=Kanit:700,600,500,400);
 @import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,500);
@@ -16,11 +15,11 @@ html {
 }
 
 body {
-    width: 100%; 
+    width: 100%;
     height: 100%;
     margin : 0px;
     padding : 0px;
-    font-family:'Open Sans', sans-serif;
+    font-family:'Lato', sans-serif;
     font-size: 16px;
 }
 
@@ -41,7 +40,7 @@ body h3 {
 
 body h4 {
     font-size: 1.5em;
-    text-align: center; 
+    text-align: center;
 }
 
 
@@ -65,7 +64,7 @@ body h4 {
 
     background-color: #ff9500;
     border-radius: 5px;
-    
+
     border-radius: 3px;
     box-shadow: 0px 1px 2px #888888;
     color: #FFFFFF;
@@ -86,7 +85,7 @@ body h4 {
 
     background-color: #ff9500;
     border-radius: 5px;
-    
+
     border-radius: 3px;
     box-shadow: 0px 1px 2px #888888;
     color: #000000;
@@ -130,7 +129,7 @@ body h4 {
     border-radius: 7px;
 }
 
-.glowing-border:focus { 
+.glowing-border:focus {
     outline: none;
     box-shadow: 0 0 10px #ff9500;
 }
@@ -233,7 +232,7 @@ footer .container .row .row-content{
     padding-left: 1em;
     left: 50%;
     transform: translate(-50%, 0%);
-    
+
 
     font-size: 1.25em;
 }
@@ -260,16 +259,17 @@ footer .social-link-list .fa-fw {
 #swiftcode .light-container {
 
     background-color: #ffffff;
-    padding: 5em 0em 5em 0em;
+    padding: 3em 0em 5em 0em;
 
 }
 
 #swiftcode .dark-container {
-    background-color: #ccddee;
-    padding: 5em 0em 5em 0em;
+    background-color: #d0ddff;
+    padding: 3em 0em 5em 0em;
 }
 
 #swiftcode #canvas-container {
+    height: 60%;
     overflow:hidden;
 }
 
@@ -280,7 +280,9 @@ footer .social-link-list .fa-fw {
     left: 0% !important;
 }
 
-#swiftcode #canvas-container #main-canvas{
+#swiftcode #canvas-container #main-canvas {
+    width: 100%;
+    height: 60%;
     display: block;
     padding: 0px;
 }
@@ -317,7 +319,7 @@ footer .social-link-list .fa-fw {
     border-radius: 8px;
     width: 300px;
     padding: 7px;
-    margin: 0.5em;
+    margin: 0.3em;
 }
 
 #swiftcode #signup #file-input {
@@ -334,6 +336,7 @@ footer .social-link-list .fa-fw {
     width: 90%;
     left: 50%;
     padding: 0.4em;
+    margin: 0.3em 0 0.3em 0;
     transform: translate(-50%, 0%);
 }
 
@@ -341,24 +344,44 @@ footer .social-link-list .fa-fw {
     position: relative;
     width: 60%;
     left: 50%;
-    margin: 0.5em 0 0 0;
+    margin: 0.3em 0 0.3em 0;
     transform: translate(-50%, 0%);
 
     transition-timing-function: ease;
     transition: width 0.3s;
     -webkit-transition: width 0.3s; /* Safari */
-    
+
 }
 
 #swiftcode #signup #signup-button:hover{
     width: 80%;
 }
 
-
 #swiftcode #description {
-
     text-align: center;
+}
 
+ #swiftcode #description .video-container {
+    position: relative;
+    
+    width: 80%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+	padding-bottom: 45%;
+    margin: 0em 0em 2em 0em;
+}
+
+#swiftcode #description .video-container iframe{
+	position: absolute;
+    top: 0;
+	left: 0%;
+    width: 100%!important;
+    height: 100%!important;
+}
+
+#swiftcode #description p{
+    font-weight: bold;
+    text-align: justify;
 }
 
 #swiftcode #techstack .row{
@@ -416,8 +439,23 @@ footer .social-link-list .fa-fw {
     font-style: italic;
 }
 
+#swiftcode #faq hr {
+    margin-bottom: 3em;
+}
+
+#swiftcode #faq p{
+    margin: 0;
+}
+
+#swiftcode #faq .question{
+    margin: 2em 0em 0.5em 0em;
+    font-weight: bold;
+}
+
+#swiftcode #faq .answer{
 
 
+}
 
 /* --------------------------------------
    Media Queries
@@ -435,7 +473,7 @@ footer .social-link-list .fa-fw {
 
 
 /* Landscape Phone to Portrait Tablet */
-@media screen and (min-width: 426px) and (max-width: 767px) {
+@media screen and (min-width: 425px) and (max-width: 768px) {
 
     /* --- Global --- */
     body {
@@ -445,7 +483,7 @@ footer .social-link-list .fa-fw {
 
 
 /* Landscape Tablet to Small Desktop*/
-@media screen and (min-width:768px) and (max-width: 991px) {
+@media screen and (min-width:768px) and (max-width: 992px) {
 
     /* --- Global --- */
     body {
@@ -456,7 +494,7 @@ footer .social-link-list .fa-fw {
 
 
 /* Small Desktop to Medium Desktop*/
-@media screen and (min-width:992px) and (max-width: 1199px) {
+@media screen and (min-width:992px) and (max-width: 1200px) {
 
     /* --- Global --- */
     body {
