@@ -1,0 +1,339 @@
+
+
+/* --- CSS Imports --- */
+@import url(https://fonts.googleapis.com/css?family=Lato:700,400);
+@import url(https://fonts.googleapis.com/css?family=Kanit:700,600,500,400);
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,500);
+
+
+
+/* --------------------------------------
+   Global Styles
+   -------------------------------------- */
+
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100%; 
+    height: 100%;
+    margin : 0px;
+    padding : 0px;
+    font-family:'Lato', sans-serif;
+    font-size: 16px;
+}
+
+body h1 {
+    font-size: 3em;
+    text-align: center;
+    font-variant: small-caps;
+}
+
+body h2 {
+    font-size: 2.5em;
+    text-align: center;
+    font-variant: small-caps;
+}
+
+body h3 {
+    font-size: 2em;
+    text-align: center;
+    font-variant: small-caps;
+}
+
+body h4 {
+    font-size: 1.5em;
+    text-align: center;
+    font-variant: small-caps;
+}
+
+/* --------------------------------------
+   Global Styles
+   -------------------------------------- */
+
+.heading-underline{
+    border: none;
+    width: 100px;
+    margin : 1em auto 0.2em auto;
+    height: 4px;
+    color: #55bbff;
+    background-color: #55bbff;
+}
+
+/* --- Global Navbar --- */
+#mainNavbar {
+    color : #000000;
+    background-color: #55bbff;
+    margin: 0px;
+    border: none;
+    height: 50px;
+}
+
+#mainNavbar .container-fluid {
+    padding: 0px 15px 0px 15px;
+    height: 100%;
+}
+
+#mainNavbar #mainNavbarHeader {
+    height:  100%;
+}
+
+#mainNavbar #mainNavbarHeader .navbar-brand {
+    height: 100%;
+    margin: 0px;
+    padding: 5px;
+    color : inherit;
+    font-size : 1.5em;
+    font-variant: small-caps;
+}
+
+#mainNavbar #mainNavbarHeader .navbar-brand img {
+    display: inline;
+    height: 100%;
+
+}
+
+#mainNavbar #mainNavbarContent li a {
+
+    color: inherit;
+
+}
+
+
+/* --- Global Footer ---*/
+footer {
+    width: 100%;
+    display: block;
+    background: #333333;
+    background-size: cover;
+    color: #EEEEEE;
+    font-size: 11px;
+    padding: 20px;
+}
+
+footer a:link {
+    color: #FFFFFF !important;
+}
+
+footer a:hover {
+    color: #94ceff !important;
+    text-decoration: none;
+}
+
+footer a:visited {
+    color: #30a0ff !important;
+}
+
+footer .container .row #copyrights{
+    display: inline-block;
+    margin-top: 4em;
+}
+
+footer .container .row #connect{
+    display: inline-block;
+    margin-top: 4em;
+}
+
+footer .container .row #navigate{
+    display: inline-block;
+    margin-top: 4em;
+}
+
+footer .container .row .row-heading{
+    text-align: center;
+    display: block;
+    font-size: 1.75em;
+}
+
+footer .container .row .row-content{
+    position: relative;
+    display: inline-block;
+    margin-top: 1em;
+    padding-left: 1em;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    
+
+    font-size: 1.25em;
+}
+
+footer #connect .list-heading{
+    display: inline-block;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 0.3em;
+}
+
+footer #connect .list-unstyled{
+    padding-left: 1em;
+}
+
+footer .social-link-list li a {
+    font-family: "proxima-nova","Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+footer .social-link-list .fa-fw {
+    text-align: left;
+}
+
+
+/* --------------------------------------
+   Homepage Styles
+   -------------------------------------- */
+
+#homepage .dark-container {
+    padding: 6em 5em 6em 5em;
+    background-color: #DDDDDD;
+}
+
+#homepage #products-container .row img {
+    width: 100%;
+}
+
+#homepage #products-container .row {
+    margin-top: 8em;
+}
+
+#homepage .dark-container .row .text-holder{
+    margin: 3em 2em 2em 2em;
+}
+
+#homepage .dark-container .row .text-holder .product-description{
+    margin: 2em 0em 0em 0em;
+}
+
+#homepage .dark-container .text-holder{
+    float: left;
+    margin: 1em;
+}
+
+#homepage #canvas-container {
+    overflow:hidden;
+    height: 100%;
+}
+
+#homepage #canvas-container #canvas-stats {
+    display: none;
+    position: absolute !important;
+    top: 50px !important;
+    left: 0% !important;
+}
+
+#homepage #canvas-container #main-canvas{
+    display: block;
+    padding: 0px;
+}
+
+#homepage #landing-image-wrapper {
+    
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0px;
+    
+    
+    
+
+}
+
+#homepage #landing-image-wrapper .icon-container {
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    z-index: 1;
+    perspective: 1000;
+}
+
+#homepage #landing-image-wrapper .icon-container .icon-card{
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: all 0.8s ease;
+}
+
+#homepage #landing-image-wrapper .icon-container:hover .icon-card{
+    transform: rotateY(180deg);
+}
+
+#homepage #landing-image-wrapper .icon-card img{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+
+}
+
+#homepage #landing-image-wrapper .back{
+    transform: rotateY(180deg);
+}
+
+#homepage #landing-image-wrapper #training-icon{
+    left : 75px;
+    top : 75px;
+}
+
+#homepage #landing-image-wrapper #automation-icon{
+    left : 225px;
+    top : 75px;
+}
+
+#homepage #landing-image-wrapper #iot-icon{
+    left : 75px;
+    top : 225px;
+}
+
+#homepage #landing-image-wrapper #ml-icon{
+    left : 225px;
+    top : 225px;
+}
+
+/* --------------------------------------
+   Media Queries
+   -------------------------------------- */
+
+/* Portrait Phone */
+@media screen and (max-width: 425px) {
+
+    /* --- Global --- */
+    body {
+        font-size: 12px;
+    }
+
+}
+
+
+/* Landscape Phone to Portrait Tablet */
+@media screen and (min-width: 426px) and (max-width: 767px) {
+
+    /* --- Global --- */
+    body {
+        font-size: 12px;
+    }
+}
+
+
+/* Landscape Tablet to Small Desktop*/
+@media screen and (min-width:768px) and (max-width: 991px) {
+
+    /* --- Global --- */
+    body {
+        font-size: 14px;
+    }
+
+}
+
+
+/* Small Desktop to Medium Desktop*/
+@media screen and (min-width:992px) and (max-width: 1199px) {
+
+    /* --- Global --- */
+    body {
+        font-size: 14px;
+    }
+
+}
