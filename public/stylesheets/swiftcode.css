@@ -384,6 +384,24 @@ footer .social-link-list .fa-fw {
     text-align: justify;
 }
 
+#swiftcode #description .video-container {
+    position: relative;
+
+    width: 80%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+	padding-bottom: 45%;
+    margin: 0em 0em 2em 0em;
+}
+
+#swiftcode #description .video-container iframe{
+	position: absolute;
+    top: 0;
+	left: 0%;
+    width: 100%!important;
+    height: 100%!important;
+}
+
 #swiftcode #techstack .row{
 
     height: 10em;
