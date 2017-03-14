@@ -1,10 +1,9 @@
-
-
+﻿
 /* --- CSS Imports --- */
 @import url(https://fonts.googleapis.com/css?family=Lato:700,400);
 @import url(https://fonts.googleapis.com/css?family=Kanit:700,600,500,400);
 @import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,500);
-
+@import url('https://fonts.googleapis.com/css?family=Coustard');
 
 
 /* --------------------------------------
@@ -21,45 +20,119 @@ body {
     height: 100%;
     margin : 0px;
     padding : 0px;
-    font-family:'Lato', sans-serif;
+    font-family:'Open Sans', sans-serif;
     font-size: 16px;
 }
 
 body h1 {
     font-size: 3em;
     text-align: center;
-    font-variant: small-caps;
 }
 
 body h2 {
     font-size: 2.5em;
     text-align: center;
-    font-variant: small-caps;
 }
 
 body h3 {
     font-size: 2em;
     text-align: center;
-    font-variant: small-caps;
 }
 
 body h4 {
     font-size: 1.5em;
-    text-align: center;
-    font-variant: small-caps;
+    text-align: center; 
 }
+
 
 /* --------------------------------------
    Global Styles
    -------------------------------------- */
 
-.heading-underline{
+.small-caps {
+    font-variant: small-caps;
+}
+
+.btn-primary-light {
+
+    display: inline-block;
+    font-family:'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 1.25em;
+    text-align: center;
+    text-decoration: none;
+    padding: 0.4em 1em;
+
+    background-color: #ff9500;
+    border-radius: 5px;
+    
+    border-radius: 3px;
+    box-shadow: 0px 1px 2px #888888;
+    color: #FFFFFF;
+
+    cursor: pointer;
+
+}
+
+.btn-primary-dark {
+
+    display: inline-block;
+    font-family:'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 1.25em;
+    text-align: center;
+    text-decoration: none;
+    padding: 0.4em 1em;
+
+    background-color: #ff9500;
+    border-radius: 5px;
+    
+    border-radius: 3px;
+    box-shadow: 0px 1px 2px #888888;
+    color: #000000;
+
+    cursor: pointer;
+
+}
+
+.btn-primary-light:hover{
+    text-decoration: none;
+    color: #FFFFFF;
+    background-color: #FF8500;
+}
+
+.heading-underline-thick {
     border: none;
-    width: 100px;
-    margin : 1em auto 0.2em auto;
+    width: 150px;
+    margin : 0.5em auto 1em auto;
     height: 4px;
-    color: #55bbff;
-    background-color: #55bbff;
+    background-color: #ff9500;
+}
+
+.heading-underline-normal {
+    border: none;
+    width: 200px;
+    margin : 0.5em auto 1em auto;
+    height: 2px;
+    background-color: #ff9500;
+}
+
+.heading-underline-thin {
+    border: none;
+    width: 300px;
+    margin : 2em auto 2em auto;
+    height: 1px;
+    background-color: #ff9500;
+}
+
+.glowing-border {
+    border: none;
+    border-radius: 7px;
+}
+
+.glowing-border:focus { 
+    outline: none;
+    box-shadow: 0 0 10px #ff9500;
 }
 
 /* --- Global Navbar --- */
@@ -81,7 +154,7 @@ body h4 {
     height:  100%;
 }
 
-#mainNavbar #mainNavbarHeader .navbar-brand {
+#mainNavbar .navbar-brand {
     height: 100%;
     margin: 0px;
     padding: 5px;
@@ -90,18 +163,23 @@ body h4 {
     font-variant: small-caps;
 }
 
-#mainNavbar #mainNavbarHeader .navbar-brand img {
+#mainNavbar #mainNavbarHeader img {
     display: inline;
     height: 100%;
+}
 
+#mainNavbar #mainNavbarContent {
+    height: 100% !important;
+}
+
+#mainNavbar #mainNavbarContent img{
+    display: inline;
+    height: 100%;
 }
 
 #mainNavbar #mainNavbarContent li a {
-
     color: inherit;
-
 }
-
 
 /* --- Global Footer ---*/
 footer {
@@ -119,12 +197,12 @@ footer a:link {
 }
 
 footer a:hover {
-    color: #94ceff !important;
+    color: #ff9550 !important;
     text-decoration: none;
 }
 
 footer a:visited {
-    color: #30a0ff !important;
+    color: #ff9500 !important;
 }
 
 footer .container .row #copyrights{
@@ -179,120 +257,33 @@ footer .social-link-list .fa-fw {
     text-align: left;
 }
 
+#code-editor #code-form{
 
-/* --------------------------------------
-   Homepage Styles
-   -------------------------------------- */
-
-#homepage .dark-container {
-    padding: 6em 5em 6em 5em;
-    background-color: #DDDDDD;
-}
-
-#homepage #products-container .row img {
-    width: 100%;
-}
-
-#homepage #products-container .row {
-    margin-top: 8em;
-}
-
-#homepage .dark-container .row .text-holder{
-    margin: 3em 2em 2em 2em;
-}
-
-#homepage .dark-container .row .text-holder .product-description{
-    margin: 2em 0em 0em 0em;
-    text-align: justify;
-}
-
-#homepage .dark-container .text-holder{
-    float: left;
-    margin: 1em;
-}
-
-#homepage #canvas-container {
-    overflow:hidden;
-    height: 100%;
-}
-
-#homepage #canvas-container #canvas-stats {
-    display: none;
-    position: absolute !important;
-    top: 50px !important;
-    left: 0% !important;
-}
-
-#homepage #canvas-container #main-canvas{
-    display: block;
-    padding: 0px;
-}
-
-#homepage #landing-image-wrapper {
-    
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    padding: 0px;
-    
-    
-    
+    padding: 1em;
+    width: 80%;
+    height: 80%;
 
 }
 
-#homepage #landing-image-wrapper .icon-container {
-    position: absolute;
-    width: 0px;
-    height: 0px;
-    z-index: 1;
-    perspective: 1000;
-}
+#code-editor #code-text {
 
-#homepage #landing-image-wrapper .icon-container .icon-card{
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    transition: all 0.8s ease;
-}
-
-#homepage #landing-image-wrapper .icon-container:hover .icon-card{
-    transform: rotateY(180deg);
-}
-
-#homepage #landing-image-wrapper .icon-card img{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
+    width: 60%;
+    height: 500px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
 
 }
 
-#homepage #landing-image-wrapper .back{
-    transform: rotateY(180deg);
+
+#code-editor #code-output {
+    width: 60%;
+    height: 200px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
 }
 
-#homepage #landing-image-wrapper #training-icon{
-    left : 75px;
-    top : 75px;
-}
 
-#homepage #landing-image-wrapper #automation-icon{
-    left : 225px;
-    top : 75px;
-}
 
-#homepage #landing-image-wrapper #iot-icon{
-    left : 75px;
-    top : 225px;
-}
-
-#homepage #landing-image-wrapper #ml-icon{
-    left : 225px;
-    top : 225px;
-}
 
 /* --------------------------------------
    Media Queries

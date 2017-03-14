@@ -21,4 +21,9 @@ public class Application extends Controller {
     public Result innovations() {
         return ok(views.html.site.innovations.render());
     }
+
+	@NoAuthRequired
+    public Result code_editor() {
+        return ok(views.html.site.code_editor.render());
+    }
 }

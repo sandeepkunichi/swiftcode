@@ -7,6 +7,7 @@
 GET     /                                       controllers.Application.index()
 GET     /swiftcode                              controllers.Application.swiftcode()
 GET     /innovations                            controllers.Application.innovations()
+GET     /code_editor                            controllers.Application.code_editor()
 
 GET     /admin                                  controllers.admin.HomeController.index()
 POST    /user                                   controllers.admin.HomeController.createUser()
@@ -61,3 +62,5 @@ GET     /assets/*file                           controllers.Assets.versioned(pat
 GET     /stylesheets/*file                      @controllers.Assets.at(path="/public/stylesheets", file)
 GET     /javascripts/*file                      @controllers.Assets.at(path="/public/javascripts", file)
 GET     /images/*file                           @controllers.Assets.at(path="/public/images", file)
+GET     /json/*file                             @controllers.Assets.at(path="/public/json", file)
+GET     /fonts/*file                            @controllers.Assets.at(path="/public/fonts", file)

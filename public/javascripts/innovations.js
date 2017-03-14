@@ -7,28 +7,28 @@
 // Animate Logo Sizes
 $(document).ready(function (e) {
 
-    $("#training-image").animate({
+    $("#training-icon").animate({
         "width": "150px",
         "height": "150px",
         "top": "0px",
         "left": "0px",
     }, 'normal');
 
-    $("#automation-image").delay(300).animate({
+    $("#automation-icon").delay(300).animate({
         "width": "150px",
         "height": "150px",
         "top": "0px",
         "left": "150px",
     }, 'normal');
 
-    $("#iot-image").delay(600).animate({
+    $("#iot-icon").delay(600).animate({
         "width": "150px",
         "height": "150px",
         "top": "150px",
         "left": "0px",
     }, 'normal');
 
-    $("#ml-image").delay(900).animate({
+    $("#ml-icon").delay(900).animate({
         "width": "150px",
         "height": "150px",
         "top": "150px",
@@ -98,7 +98,7 @@ function init() {
     stats = new Stats();
     stats.domElement.id = "canvas-stats";
 
-    //container.appendChild(stats.domElement);
+    container.appendChild(stats.domElement);
 
 
     // Renderer
@@ -179,7 +179,7 @@ function init() {
     pointLightHelper = new THREE.PointLightHelper(pointLight, 0.1);
 
     //Add Stuff to Scene
-    scene.add(pointLightHelper);
+    //scene.add(pointLightHelper);
     scene.add(ambientLight);
     scene.add(pointLight);
 
