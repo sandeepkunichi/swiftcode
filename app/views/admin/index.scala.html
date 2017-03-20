@@ -1,11 +1,4 @@
-@(
-tests: List[models.test.Test],
-user: models.AppUser,
-users: List[models.AppUser],
-testSessions: List[models.test.TestSession],
-registrations: List[models.Registration],
-languages: List[models.Language]
-)
+@(user: models.AppUser)
 @shared.header()
 <!-- TODO Indent file!!!-->
 <!-- TODO Why hasn't it included header? -->
@@ -42,93 +35,34 @@ languages: List[models.Language]
                         <ul class="nav nav-tabs" role="tablist">
                             @if(user.role.toString == "ADMIN"){
                             <li class="active" role="presentation">
-                                <a aria-controls="home" data-target="#tests" data-toggle="tab" role="tab" style="cursor:default">All Tests</a>
+                                <a class="tab" aria-controls="tests" data-target="#tests" data-toggle="tab" role="tab" style="cursor:default">All Tests</a>
                             </li>
                             <li role="presentation">
-                                <a aria-controls="profile" data-target="#createtest" data-toggle="tab" role="tab" style="cursor:default">Create Test</a>
+                                <a class="tab" aria-controls="createTest" data-target="#createTest" data-toggle="tab" role="tab" style="cursor:default">Create Test</a>
                             </li>
                             <li role="presentation">
-                                <a aria-controls="home" data-target="#users" data-toggle="tab" role="tab" style="cursor:default">All Users</a>
+                                <a class="tab" aria-controls="users" data-target="#users" data-toggle="tab" role="tab" style="cursor:default">All Users</a>
                             </li>
                             <li role="presentation">
-                                <a aria-controls="home" data-target="#results" data-toggle="tab" role="tab" style="cursor:default">Results</a>
+                                <a class="tab" aria-controls="results" data-target="#results" data-toggle="tab" role="tab" style="cursor:default">Results</a>
                             </li>
                             <li role="presentation">
-                                <a aria-controls="home" data-target="#registrations" data-toggle="tab" role="tab" style="cursor:default">Registration</a>
+                                <a class="tab" aria-controls="registrations" data-target="#registrations" data-toggle="tab" role="tab" style="cursor:default">Registration</a>
                             </li>
                             <li role="presentation">
-                                <a aria-controls="home" data-target="#languages" data-toggle="tab" role="tab" style="cursor:default">Languages</a>
+                                <a class="tab" aria-controls="languages" data-target="#languages" data-toggle="tab" role="tab" style="cursor:default">Languages</a>
                             </li>
                             }else{
                             <script>window.location = "/logout"</script>
                             }
                         </ul><!-- Tab panes -->
                         <div class="tab-content">
-                            <div class="tab-pane active" id="tests" role="tabpanel">
-                                @if(tests.length == 0){
-                                <p>No tests created yet</p>
-                                }else{
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <h3>Title</h3>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <h3>Count</h3>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <h3>Status</h3>
-                                    </div>
-                                    <div class="col-sm-7">
-                                        <h3></h3>
-                                    </div>
-                                </div>
-                                }
-                                @for(test <- tests){
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <p>@test.title</p>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <p>@test.testTakerCount</p>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <p>@test.testStatus</p>
-                                    </div>
-                                    <div class="col-sm-7">
-                                        <div class="row">
-                                            <div class="col-sm-8 col-md-offset-1">
-                                                @if(test.testStatus == models.test.Test.TestStatus.DRAFT){
-                                                <input id="activate-test" class="btn btn-default btn-sm logoutbtn" type="button" value="Activate" onclick="activateTest('@test.id')"/>
-                                                <input id="edit-test" class="btn btn-default btn-sm logoutbtn" type="button" value="Edit" onclick="editTest('@test.id')"/>
-                                                <input id="clone-test" class="btn btn-default btn-sm logoutbtn" type="button" value="Clone" onclick="cloneTest('@test.id')"/>
-                                                <input id="delete-test" class="btn btn-default btn-sm logoutbtn" type="button" value="Delete" onclick="deleteTest('@test.id')"/>
-                                                }else{
-                                                <input id="deactivate-test" class="btn btn-default btn-sm logoutbtn" type="button" value="Deactivate" onclick="deactivateTest('@test.id')"/>
-                                                }
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <input class="btn btn-default btn-sm logoutbtn" type="button" value="Statistics" onclick="getTestStats('@test.id')"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                }
-                            </div>
-                            <div class="tab-pane" id="createtest" role="tabpanel">
-                                @create_test()
-                            </div>
-                            <div class="tab-pane" id="users" role="tabpanel">
-                                @user_list(users: List[models.AppUser])
-                            </div><!-- /.users -->
-                            <div class="tab-pane" id="results" role="tabpanel">
-                                @result_list(testSessions: List[models.test.TestSession])
-                            </div><!-- /.results -->
-                            <div class="tab-pane" id="registrations" role="tabpanel">
-                                @registration_list(registrations)
-                            </div><!-- /.registrations -->
-                            <div class="tab-pane" id="languages" role="tabpanel">
-                                @language_console(languages)
-                            </div><!-- /.languages -->
+                            <div class="tab-pane active" id="tests" role="tabpanel"></div><!-- /.tests -->
+                            <div class="tab-pane" id="createTest" role="tabpanel"></div><!-- /.createTest -->
+                            <div class="tab-pane" id="users" role="tabpanel"></div><!-- /.users -->
+                            <div class="tab-pane" id="results" role="tabpanel"></div><!-- /.results -->
+                            <div class="tab-pane" id="registrations" role="tabpanel"></div><!-- /.registrations -->
+                            <div class="tab-pane" id="languages" role="tabpanel"></div><!-- /.languages -->
                         </div><!-- /.tab-content -->
                         <br />
                         <div class="tab-content">
@@ -157,9 +91,7 @@ languages: List[models.Language]
 <script>
 
     $(document).ready(function () {
-        $('#usersTable').DataTable();
-        $('#resultsTable').DataTable();
-        $('#registrationsTable').DataTable();
+        loadTab("tests");
     });
 
     function activateTest(testId){
@@ -250,6 +182,22 @@ languages: List[models.Language]
             type: 'GET',
             success: function(data){
                 $("#user-stats").html(data);
+            }
+        });
+    }
+
+    $(".tab").click(function(){
+        var id = $($(this).data("target")).attr('id');
+        loadTab(id);
+    });
+
+    function loadTab(id){
+        $("#"+id).html('@shared.loader()');
+        $.ajax({
+            url: '/admin/' + id,
+            type: 'GET',
+            success: function(data){
+                $("#"+id).html(data);
             }
         });
     }

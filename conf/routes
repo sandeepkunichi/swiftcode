@@ -10,6 +10,13 @@ GET     /innovations                            controllers.Application.innovati
 GET     /code_editor                            controllers.Application.code_editor()
 
 GET     /admin                                  controllers.admin.HomeController.index()
+GET     /admin/tests                            controllers.admin.HomeController.testList()
+GET     /admin/createTest                       controllers.admin.HomeController.createTest()
+GET     /admin/users                            controllers.admin.HomeController.userList()
+GET     /admin/results                          controllers.admin.HomeController.resultList()
+GET     /admin/registrations                    controllers.admin.HomeController.registrationList()
+GET     /admin/languages                        controllers.admin.HomeController.languageConsole()
+
 POST    /user                                   controllers.admin.HomeController.createUser()
 
 POST    /test/create                            controllers.test.TestController.createTest()

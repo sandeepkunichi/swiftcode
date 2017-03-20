@@ -39,14 +39,37 @@ public class HomeController extends Controller {
 
     @AdminOnly
     public Result index() throws IOException {
-        return ok(views.html.admin.index.render(
-                testService.findAllTests(),
-                sessionService.getSessionUser(),
-                appUserService.findAllAppUsers(),
-                testSessionService.findAllTestSessions(),
-                Registration.find.all(),
-                Language.find.all()
-        ));
+        return ok(views.html.admin.index.render(sessionService.getSessionUser()));
+    }
+
+    @AdminOnly
+    public Result testList() {
+        return ok(views.html.admin.test_list.render(testService.findAllTests()));
+    }
+
+    @AdminOnly
+    public Result createTest() {
+        return ok(views.html.admin.create_test.render());
+    }
+
+    @AdminOnly
+    public Result userList() {
+        return ok(views.html.admin.user_list.render(appUserService.findAllAppUsers()));
+    }
+
+    @AdminOnly
+    public Result resultList() {
+        return ok(views.html.admin.result_list.render(testSessionService.findAllTestSessions()));
+    }
+
+    @AdminOnly
+    public Result registrationList() {
+        return ok(views.html.admin.registration_list.render(Registration.find.all()));
+    }
+
+    @AdminOnly
+    public Result languageConsole() {
+        return ok(views.html.admin.language_console.render(Language.find.all()));
     }
 
     @AdminOnly
